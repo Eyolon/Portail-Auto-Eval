@@ -1,0 +1,7 @@
+<h1>Voici la liste des utilisateurs</h1>
+<ul ng-repeat="user in DeveloppeurCtrl.resultUserList track by user.id">
+	<li>{{user.id}}</li>
+	<li>{{user.lastname}}</li>
+	<li>{{user.firstname}}</li>
+	<li>{{user.birthday}}</li>
+</ul>

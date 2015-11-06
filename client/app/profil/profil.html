@@ -1,0 +1,54 @@
+<form role="form" class="form-horizontal">
+    <h1>Changer les informations de votre profil</h1>
+    <br/>
+    <div data-ng-show="!ProfilCtrl.isProfilModified">
+        <div class="form-group">
+            <label for="email" class="col-xs-4 col-sm-4 col-md-3 col-lg-3 control-label">Email:</label>
+            <input type="email" class="form-control col-xs-7 col-sm-7 col-sm-7 col-md-5 col-lg-5" id="email" data-ng-model="ProfilCtrl.user.adresseMail" required>
+        </div>
+        <div class="form-group">
+            <label for="nom" class="col-xs-4 col-sm-4 col-md-3 col-lg-3 control-label">Nom:</label>
+            <input type="text" class="form-control col-xs-7 col-sm-7 col-sm-7 col-md-5 col-lg-5" id="nom" data-ng-model="ProfilCtrl.user.lastname" required>
+        </div>
+        <div class="form-group">
+            <label for="prenom" class="col-xs-4 col-sm-4 col-md-3 col-lg-3 control-label">Prénom:</label>
+            <input type="text" class="form-control col-xs-7 col-sm-7 col-sm-7 col-md-5 col-lg-5" id="prenom" data-ng-model="ProfilCtrl.user.firstname" required>
+        </div>
+        <div class="form-group">
+            <label for="newpwd" class="col-xs-4 col-sm-4 col-md-3 col-lg-3 control-label">Nouveau Mot de passe:</label>
+            <input type="password" class="form-control col-xs-7 col-sm-7 col-sm-7 col-md-5 col-lg-5" id="newpwd" data-ng-model="ProfilCtrl.user.pwd">
+        </div>
+        <div class="form-group">
+            <label for="pwdC" class="col-xs-4 col-sm-4 col-md-3 col-lg-3 control-label">Confirmer Mot de passe:</label>
+            <input type="password" class="form-control col-xs-7 col-sm-7 col-sm-7 col-md-5 col-lg-5" id="pwdC" data-ng-model="ProfilCtrl.userPwd">
+        </div>
+        <div class="form-group">
+            <label for="datenaissance" class="col-xs-4 col-sm-4 col-md-3 col-lg-3 control-label">Date de naissance :</label>
+            <input type="date" class="form-control col-xs-7 col-sm-7 col-sm-7 col-md-5 col-lg-5" id="datenaissance" data-ng-model="ProfilCtrl.user.birthday" required>
+        </div>
+        <div class="form-group">
+            <label for="adresseRue" class="col-xs-4 col-sm-4 col-md-3 col-lg-3 control-label">Adresse:</label>
+            <input type="text" class="form-control col-xs-7 col-sm-7 col-sm-7 col-md-5 col-lg-5" id="adresseRue" data-ng-model="ProfilCtrl.user.adresseRue" required>
+        </div>
+        <div class="form-group">
+            <label for="adresseCodepostale" class="col-xs-4 col-sm-4 col-md-3 col-lg-3 control-label">Code postal:</label>
+            <input type="text" class="form-control col-xs-7 col-sm-7 col-sm-7 col-md-5 col-lg-5" id="adresseCodePostal" data-ng-model="ProfilCtrl.user.adresseCodePostal" required>
+        </div>
+        <div class="form-group">
+            <label for="addressVille" class="col-xs-4 col-sm-4 col-md-3 col-lg-3 control-label">Ville:</label>
+            <input type="text" class="form-control col-xs-7 col-sm-7 col-sm-7 col-md-5 col-lg-5" id="adresseVille" data-ng-model="ProfilCtrl.user.adresseVille" required>
+        </div>
+        <div class="form-group">
+            <label for="telephone" class="col-xs-4 col-sm-4 col-md-3 col-lg-3 control-label">Téléphone:</label>
+            <input type="tel" class="form-control col-xs-7 col-sm-7 col-sm-7 col-md-5 col-lg-5" id="telephone" data-ng-model="ProfilCtrl.user.telephone" required>
+        </div>
+        <div class="form-group">
+            <label for="pwd" class="col-xs-4 col-sm-4 col-md-3 col-lg-3 control-label">Mot de passe:</label>
+            <input type="password" class="form-control col-xs-7 col-sm-7 col-sm-7 col-md-5 col-lg-5" id="pwd" data-ng-model="ProfilCtrl.currentPwd" required>
+        </div>
+        <button type="submit" class="btn btn-default" data-ng-click="ProfilCtrl.save()">Enregistrer</button>
+    </div>
+    <div class="alert alert-success col-xs-12 col-lg-offset-4 col-sm-12 col-md-4 col-md-offset-4 col-lg-4" style="margin-top: 20px" data-ng-show="ProfilCtrl.isProfilModified">
+        Profile modifié avec succès !
+    </div>
+</form>

@@ -1,0 +1,46 @@
+{
+  "name": "Portail Auto Eval",
+  "version": "0.0.1",
+  "description": "Web application project",
+  "authors": [
+    "Saint-Jean Pierrick"
+  ],
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "latest",
+    "angular": "latest",
+    "angular-mocks": "latest",
+    "angular-sanitize": "latest",
+    "angular-touch": "latest",
+    "angular-animate": "latest",
+    "angular-resource": "latest",
+    "angular-cookies": "latest",
+    "angular-messages": "latest",
+    "bootstrap": "latest",
+    "angular-bootstrap": "latest",
+    "angular-loading-bar": "latest",
+    "angular-locker": "latest",
+    "angular-smart-table": "latest",
+    "angular-moment": "latest",
+    "angular-ui-router": "latest",
+    "angular-utils-pagination": "latest",
+    "bignumber.js": "latest",
+    "moment-range": "latest",
+    "tinycolor": "latest",
+    "ui-router-extras": "latest",
+    "angular-cookie": "latest",
+    "angular-carousel": "latest"
+  },
+  "resolutions": {
+    "angular": "latest",
+    "angular-mocks": "latest"
+  },
+  "devDependencies": {}
+}

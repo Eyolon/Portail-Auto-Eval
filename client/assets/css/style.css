@@ -1,0 +1,63 @@
+body {
+  padding-top: 50px;
+}
+.starter-template {
+  padding: 40px 15px;
+  text-align: center;
+  
+}
+.alignLeft {
+	text-align: left;
+}
+.alignRight {
+	text-align: right;
+}
+.alignCenter {
+	text-align: center; 
+
+}
+.alignJustify {
+	text-align: justify; 
+
+}
+.souligne
+{
+    text-decoration: underline;
+}
+.connexion
+{
+	margin-top: 10px;
+}
+.margin
+{
+	margin-left: 40px;
+}
+.sommaire
+{
+margin-left: 40px;
+text-decoration: underline;
+text-align: left;
+}
+
+ul[rn-carousel] > li {
+  position: relative;
+  margin-left: -100%;
+}
+
+ul[rn-carousel] > li:first-child {
+  margin-left: 0;
+}
+
+ul[rn-carousel] img {
+  max-width: 100%;
+}
+
+.custom-indicator span {
+  transition: all 0.3s ease-in;
+}
+.custom-indicator span.active {
+  color:black!important;
+}
+.custom-indicator span.inactive {
+  color:lightgray;
+}
