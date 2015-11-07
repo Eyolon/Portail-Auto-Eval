@@ -1,6 +1,10 @@
 {
   "name": "Portail-Auto-Eval",
   "version": "0.0.1",
+  "engines": {
+    "node": "4.2.2",
+	"npm": "3.3.12"
+  },
   "devDependencies": {
     "bower": "latest",
     "grunt": "latest",
