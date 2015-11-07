@@ -46,7 +46,7 @@ public class BDDUtils {
 	
 	protected static SessionFactory sessionFactory;
 	
-	private static Properties createDBProperties() {
+	public static Properties createDBProperties() {
 		Properties configDB = new Properties();
 		
 		configDB.setProperty("hibernate.bytecode.use_reflection_optimizer", String.valueOf(BYTECODE_REFLECTION_OPTIMIZER));
@@ -78,28 +78,54 @@ public class BDDUtils {
 			configDB.setProperty("hibernate.hikari.dataSourceClassName", CLASS);
 		}
 		
-		if(URL != null && !URL.equals("")) {
-			configDB.setProperty("hibernate.hikari.dataSource.url", URL);
-		}
-		
-		if(URL == null && SERVER != null && SERVER.equals("")){
-			configDB.setProperty("hibernate.hikari.dataSource.serverName", SERVER);
-		}
-		
-		if(NAME != null && !NAME.equals("")) {
-			configDB.setProperty("hibernate.hikari.dataSource.databaseName", NAME);
-		}
-		
-		if(PORT != null && PORT != 0) {
-			configDB.setProperty("hibernate.hikari.dataSource.portNumber", String.valueOf(PORT));
-		}
-		
-		if(USER != null && !USER.equals("")) {
-			configDB.setProperty("hibernate.hikari.dataSource.user", USER);
-		}
-		
-		if(PASSWORD != null && !PASSWORD.equals("")) {
-			configDB.setProperty("hibernate.hikari.dataSource.password", PASSWORD);
+		if(URL != null && !URL.equals("") && !URL.startsWith("jdbc")) {
+			//USER
+			String subURL = URL.substring(11);
+			String tmpValue = subURL.substring(0, subURL.indexOf(":"));
+			configDB.setProperty("hibernate.hikari.dataSource.user", tmpValue);
+			
+			//PASSWORD
+			subURL = subURL.substring(subURL.indexOf(":") + 1);
+			tmpValue =  subURL.substring(0, subURL.indexOf("@"));
+			configDB.setProperty("hibernate.hikari.dataSource.password", tmpValue);
+			
+			//SERVER
+			subURL = subURL.substring(subURL.indexOf("@") + 1);
+			tmpValue =  subURL.substring(0, subURL.indexOf(":"));
+			configDB.setProperty("hibernate.hikari.dataSource.serverName", tmpValue);
+			
+			//PORT
+			subURL = subURL.substring(subURL.indexOf(":") + 1);
+			tmpValue =  subURL.substring(0, subURL.indexOf("/"));
+			configDB.setProperty("hibernate.hikari.dataSource.portNumber", tmpValue);
+			
+			//NAME
+			subURL = subURL.substring(subURL.indexOf("/") + 1);
+			configDB.setProperty("hibernate.hikari.dataSource.databaseName", subURL);
+		} else {
+			if(URL != null && !URL.equals("") && URL.startsWith("jdbc")) {
+				configDB.setProperty("hibernate.hikari.dataSource.url", URL);
+			} else {
+				if(SERVER != null && SERVER.equals("")){
+					configDB.setProperty("hibernate.hikari.dataSource.serverName", SERVER);
+				}
+				
+				if(NAME != null && !NAME.equals("")) {
+					configDB.setProperty("hibernate.hikari.dataSource.databaseName", NAME);
+				}
+				
+				if(PORT != null && PORT != 0) {
+					configDB.setProperty("hibernate.hikari.dataSource.portNumber", String.valueOf(PORT));
+				}
+			}
+			
+			if(USER != null && !USER.equals("")) {
+				configDB.setProperty("hibernate.hikari.dataSource.user", USER);
+			}
+			
+			if(PASSWORD != null && !PASSWORD.equals("")) {
+				configDB.setProperty("hibernate.hikari.dataSource.password", PASSWORD);
+			}
 		}
 		
 		return configDB;
@@ -114,10 +140,10 @@ public class BDDUtils {
 			
 			//Ajout des classes
 			config.addAnnotatedClass(hibernate.model.Connexion.class)
-			.addAnnotatedClass(hibernate.model.Genre.class)
-			.addAnnotatedClass(hibernate.model.Ville.class)
-			.addAnnotatedClass(hibernate.model.TypeUtilisateur.class)
-			.addAnnotatedClass(hibernate.model.Utilisateur.class);
+				.addAnnotatedClass(hibernate.model.Genre.class)
+				.addAnnotatedClass(hibernate.model.Ville.class)
+				.addAnnotatedClass(hibernate.model.TypeUtilisateur.class)
+				.addAnnotatedClass(hibernate.model.Utilisateur.class);
 			
 			StandardServiceRegistry ssr = new StandardServiceRegistryBuilder().applySettings(config.getProperties()).build();
 			sessionFactory = config.buildSessionFactory(ssr);
