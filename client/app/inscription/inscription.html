@@ -3,54 +3,54 @@
 
 <div class="form-group alignLeft" required><br/><br/> 
 <label for="nom" class="col-xs-4 col-sm-4  col-md-3 col-lg-3 control-label">Genre :</label>
-<input type="radio" name="genre" data-ng-model="InscriptionCtrl.user.genre" value="Woman" checked>Woman
-<input type="radio" name="genre" data-ng-model="InscriptionCtrl.user.genre" value="Man">Man
+<input type="radio" name="genre" data-ng-model="InscriptionCtrl.user.genre" value="Femme" checked>Femme
+<input type="radio" name="genre" data-ng-model="InscriptionCtrl.user.genre" value="Homme">Homme
 
 </div>
 <div class="form-group">
-    <label for="nom" class="col-xs-4 col-sm-4  col-md-3 col-lg-3 control-label">Last Name :</label>
+    <label for="nom" class="col-xs-4 col-sm-4  col-md-3 col-lg-3 control-label">Nom: </label>
     <input type="text" class="form-control col-xs-7  col-sm-7  col-md-5 col-lg-5" id="nom" data-ng-model="InscriptionCtrl.user.lastname" required>
   </div>
   <div class="form-group">
-    <label for="prenom" class="col-xs-4 col-sm-4   col-md-3 col-lg-3  control-label">First Name:</label>
+    <label for="prenom" class="col-xs-4 col-sm-4   col-md-3 col-lg-3  control-label">Prénom: </label>
     <input type="text" class="form-control col-xs-7 col-sm-7  col-md-5 col-lg-5" id="prenom"  data-ng-model="InscriptionCtrl.user.firstname" required>
   </div>
   <div class="form-group">
-    <label for="email" class="col-xs-4 col-sm-4  col-md-3 col-lg-3 control-label">Email address:</label>
+    <label for="email" class="col-xs-4 col-sm-4  col-md-3 col-lg-3 control-label">Email: </label>
     <input type="email" class="form-control col-xs-7 col-sm-7 col-md-5 col-lg-5" id="mail" data-ng-model="InscriptionCtrl.user.adresseMail" required>
   </div>
   <div class="form-group">
-    <label for="pwd" class="col-xs-4 col-sm-4  col-md-3 col-lg-3 control-label">Password:</label>
+    <label for="pwd" class="col-xs-4 col-sm-4  col-md-3 col-lg-3 control-label">Mot de passe: </label>
     <input type="password" class="form-control col-xs-7 col-sm-7 col-sm-7  col-md-5 col-lg-5" id="pwd"  data-ng-model="InscriptionCtrl.user.pwd" required>
   
   </div>
   <div class="form-group">
-    <label for="pwd" class="col-xs-4 col-sm-4 col-md-3 col-lg-3 control-label">Confirmer Password:</label>
+    <label for="pwd" class="col-xs-4 col-sm-4 col-md-3 col-lg-3 control-label">Confirmer mot de passe: </label>
     <input type="password" class="form-control col-xs-7 col-sm-7  col-md-5 col-lg-5" id="pwdC" data-ng-model="InscriptionCtrl.pwdCheck" required>
   </div> 
   <div class="form-group">
-    <label for="datenaissance" class="col-xs-4 col-sm-4  col-md-3 col-lg-3 control-label">Birthday:</label>
+    <label for="datenaissance" class="col-xs-4 col-sm-4  col-md-3 col-lg-3 control-label">Date de naissance: </label>
     <input type="date" class="form-control col-xs-7 col-sm-7  col-md-5 col-lg-5" id="datenaissance"   placeholder="YYYY-MM-DD" data-ng-model="InscriptionCtrl.user.birthday" required>
   </div>
   <div class="form-group">
-    <label for="adresse" class="col-xs-4 col-sm-4  col-md-3 col-lg-3 control-label">Address:</label>
+    <label for="adresse" class="col-xs-4 col-sm-4  col-md-3 col-lg-3 control-label">Adresse: </label>
     <input type="text" class="form-control col-xs-7 col-sm-7  col-md-5 col-lg-5" id="adresse"  data-ng-model="InscriptionCtrl.user.adresseRue" required>
   </div>
    <div class="form-group">
-    <label for="codepostale"  class="col-xs-4 col-sm-4  col-md-3 col-lg-3 control-label">Zip Code:</label>
+    <label for="codepostale"  class="col-xs-4 col-sm-4  col-md-3 col-lg-3 control-label">Code Postal: </label>
     <input type="text" class="form-control col-xs-7 col-sm-7 col-sm-7  col-md-5 col-lg-5" id="codepostale"  data-ng-model="InscriptionCtrl.user.adresseCodePostal" required>
   </div>
   <div class="form-group">
-    <label for="ville"  class="col-xs-4 col-sm-4  col-md-3 col-lg-3 control-label">City:</label>
+    <label for="ville"  class="col-xs-4 col-sm-4  col-md-3 col-lg-3 control-label">Ville: </label>
     <input type="text" class="form-control col-xs-7 col-sm-7 col-sm-7  col-md-5 col-lg-5" id="ville" data-ng-model="InscriptionCtrl.user.adresseVille" required>
   </div>
   <div class="form-group">
-    <label for="telephone" class="col-xs-4 col-sm-4  col-md-3 col-lg-3 control-label">Phone:</label>
+    <label for="telephone" class="col-xs-4 col-sm-4  col-md-3 col-lg-3 control-label">Téléphone: </label>
     <input type="tel" class="form-control col-xs-7 col-sm-7  col-md-5 col-lg-5" id="telephone" data-ng-model="InscriptionCtrl.user.telephone" required>
   </div>
   <div class="checkbox">
-    <label><input type="checkbox" data-ng-model="InscriptionCtrl.user.isAgree" required>I have read and agree Terms and Conditions</label>
-  <a ui-sref="cgu">here</a></div>
+    <label><input type="checkbox" data-ng-model="InscriptionCtrl.user.isAgree" required>J'ai lu et j'accepte les termes et conditions d'utilisation</label>
+  <a ui-sref="cgu">ici</a></div>
   <div style="margin-top:15px;">
-  <button type="submit" class="btn btn-default" data-ng-click="InscriptionCtrl.sInscrire()">Sent</button></div>
+  <button type="submit" class="btn btn-default" data-ng-click="InscriptionCtrl.sInscrire()">Envoyer</button></div>
 </form>

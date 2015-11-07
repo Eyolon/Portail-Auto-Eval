@@ -5,68 +5,68 @@ import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Transaction;
 
-import hibernate.model.Genre;
+import hibernate.model.Ville;
 
-public class GenreDAO {
+public class VilleDAO {
 
-	public static Genre findById(Long id) {
-		Genre g = null;
+	public static Ville findById(Long id) {
+		Ville c = null;
 		Transaction tx = null;
 		boolean isActive = BDDUtils.getTransactionStatus();
 		try {
 			tx = BDDUtils.beginTransaction(isActive);
 			Query q = null;
 			q = BDDUtils.getCurrentSession().createQuery(
-					"SELECT g FROM Genre g " +
-					"WHERE g.id = :id");
+					"SELECT v FROM Ville v " +
+					"WHERE v.id = :id");
 			q.setParameter("id", id);
-			g = (Genre) q.uniqueResult();
+			c = (Ville) q.uniqueResult();
 			BDDUtils.commit(isActive, tx);
 		}
 		catch(Exception ex) {
 			System.out.println("Hibernate failure : "+ ex.getMessage());
 			BDDUtils.rollback(isActive, tx);
 		}
-		return g;
+		return c;
 	}
 	
-	public static Genre getGenreByLibelle(String libelle) {
-		Genre g = null;
+	public static Ville getVilleByNom(String nom) {
+		Ville c = null;
 		Transaction tx = null;
 		boolean isActive = BDDUtils.getTransactionStatus();
 		try {
 			tx = BDDUtils.beginTransaction(isActive);
 			Query q = null;
 			q = BDDUtils.getCurrentSession().createQuery(
-					"SELECT g FROM Genre g " +
-					"WHERE LOWER(g.genre) = :libelle");
-			q.setParameter("libelle", libelle.toLowerCase());
-			g = (Genre) q.uniqueResult();
+					"SELECT v FROM Ville v " +
+					"WHERE LOWER(v.nom) = :nom");
+			q.setParameter("nom", nom.toLowerCase());
+			c = (Ville) q.uniqueResult();
 			BDDUtils.commit(isActive, tx);
 		}
 		catch(Exception ex) {
 			System.out.println("Hibernate failure : "+ ex.getMessage());
 			BDDUtils.rollback(isActive, tx);
 		}
-		return g;
+		return c;
 	}
 	
 	@SuppressWarnings("unchecked")
-	public static List<Genre> getAllGenres() {
-		List<Genre> lg = null;
+	public static List<Ville> getAllVilles() {
+		List<Ville> lc = null;
 		Transaction tx = null;
 		boolean isActive = BDDUtils.getTransactionStatus();
 		try {
 			tx = BDDUtils.beginTransaction(isActive);
 			Query q = null;
-			q = BDDUtils.getCurrentSession().createQuery("SELECT g FROM Genre g");
-			lg = (List<Genre>) q.list();
+			q = BDDUtils.getCurrentSession().createQuery("SELECT v FROM Ville v");
+			lc = (List<Ville>) q.list();
 			BDDUtils.commit(isActive, tx);
 		}
 		catch(Exception ex) {
 			System.out.println("Hibernate failure : "+ ex.getMessage());
 			BDDUtils.rollback(isActive, tx);
 		}
-		return lg;
+		return lc;
 	}
 }

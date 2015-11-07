@@ -115,6 +115,7 @@ public class BDDUtils {
 			//Ajout des classes
 			config.addAnnotatedClass(hibernate.model.Connexion.class)
 			.addAnnotatedClass(hibernate.model.Genre.class)
+			.addAnnotatedClass(hibernate.model.Ville.class)
 			.addAnnotatedClass(hibernate.model.TypeUtilisateur.class)
 			.addAnnotatedClass(hibernate.model.Utilisateur.class);
 			
@@ -143,6 +144,18 @@ public class BDDUtils {
 			return getSessionFactory().getCurrentSession().beginTransaction();
 		}
 		return null;
+	}
+	
+	public static void insert(Object o) throws HibernateException {
+		getCurrentSession().save(o);
+	}
+	
+	public static void update(Object o) throws HibernateException {
+		getCurrentSession().update(o);
+	}
+	
+	public static void delete(Object o) throws HibernateException {
+		getCurrentSession().delete(o);
 	}
 	
 	public static void commit(boolean isActive, Transaction tx) throws HibernateException {

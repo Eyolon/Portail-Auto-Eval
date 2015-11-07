@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -28,7 +29,7 @@ public class Utilisateur implements Serializable {
 	private String prenom = null;
 	private Calendar datenaissance = null;
 	private String adresseRue = null;
-	private String adresseVille = null;
+	private Ville ville = null;
 	private String adresseCodePostal = null;
 	private String adresseMail = null;
 	private String telephone = null;
@@ -38,12 +39,13 @@ public class Utilisateur implements Serializable {
 	
 	public Utilisateur(){}
 	
-	public Utilisateur(Long id, String nom, String prenom, Calendar datenaissance, String adresse, String adresseMail, String telephone, TypeUtilisateur typeUtilisateur, Connexion connexion, Genre genre) {
+	public Utilisateur(Long id, String nom, String prenom, Calendar datenaissance, String adresseRue, Ville ville, String adresseMail, String telephone, TypeUtilisateur typeUtilisateur, Connexion connexion, Genre genre) {
 		this.id = id;
 		this.nom = nom;
 		this.prenom = prenom;
 		this.datenaissance = datenaissance;
-		this.adresseRue = adresse;
+		this.adresseRue = adresseRue;
+		this.ville = ville;
 		this.adresseMail = adresseMail;
 		this.telephone = telephone;
 		this.typeUtilisateur = typeUtilisateur;
@@ -51,11 +53,12 @@ public class Utilisateur implements Serializable {
 		this.genre = genre;
 	}
 	
-	public Utilisateur(String nom, String prenom, Calendar datenaissance, String adresse, String adresseMail, String telephone, TypeUtilisateur typeUtilisateur, Connexion connexion, Genre genre) {
+	public Utilisateur(String nom, String prenom, Calendar datenaissance, String adresseRue, Ville ville, String adresseMail, String telephone, TypeUtilisateur typeUtilisateur, Connexion connexion, Genre genre) {
 		this.nom = nom;
 		this.prenom = prenom;
 		this.datenaissance = datenaissance;
-		this.adresseRue = adresse;
+		this.adresseRue = adresseRue;
+		this.ville = ville;
 		this.adresseMail = adresseMail;
 		this.telephone = telephone;
 		this.typeUtilisateur = typeUtilisateur;
@@ -138,7 +141,7 @@ public class Utilisateur implements Serializable {
 		this.typeUtilisateur = typeUtilisateur;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_connexion", nullable = false)
 	public Connexion getConnexion() {
 		return connexion;
@@ -158,13 +161,14 @@ public class Utilisateur implements Serializable {
 		this.genre = genre;
 	}
 	
-	@Column(name="adresse_ville")
-	public String getAdresseVille() {
-		return adresseVille;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "id_ville", nullable = false)
+	public Ville getVille() {
+		return ville;
 	}
 
-	public void setAdresseVille(String adresseVille) {
-		this.adresseVille = adresseVille;
+	public void setVille(Ville ville) {
+		this.ville = ville;
 	}
 
 	@Column(name="adresse_code_postal")
@@ -180,7 +184,7 @@ public class Utilisateur implements Serializable {
 	@Override
 	public String toString() {
 		return "User:{ id:"+id+", prenom: \'"+prenom+"\' , nom: \'"+nom+"\', dateanniversaire: \'"+Tools.formatDateToDisplay(datenaissance)+"\'"+
-				"\', adresse: \'"+adresseRue+ " " + adresseCodePostal + " " + adresseVille +"\', adresseMail: \'"+adresseMail+"\', telephone: \'"+telephone+"\', genre: \'"+genre.toString()+"\', typeUtilisateur: \'"+typeUtilisateur.toString()+"\', connexion: \'"+connexion.toString()+"}";
+				"\', adresse: \'"+adresseRue+ " " + adresseCodePostal + " " + ville +"\', adresseMail: \'"+adresseMail+"\', telephone: \'"+telephone+"\', genre: \'"+genre.toString()+"\', typeUtilisateur: \'"+typeUtilisateur.toString()+"\', connexion: \'"+connexion.toString()+"}";
 	}
 
 	@Override

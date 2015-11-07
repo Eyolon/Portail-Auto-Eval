@@ -24,7 +24,7 @@ public class ConstructJSONObjects {
 		.put("firstname", u.getPrenom())
 		//.put("pwd", u.getConnexion().getPassword())
 		.put("adresseRue", u.getAdresse())
-		.put("adresseVille", u.getAdresseVille())
+		.put("adresseVille", u.getVille().getNom())
 		.put("adresseCodePostal", u.getAdresseCodePostal())
 		.put("adresseMail", u.getAdresseMail())
 		.put("telephone", u.getTelephone())

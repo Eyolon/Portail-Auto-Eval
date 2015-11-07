@@ -21,7 +21,7 @@
     "grunt-shell": "latest",
     "grunt-wrap": "latest",
     "jasmine-core": "latest",
-    "karma": "latest",
+    "karma": "^0.13.15",
     "karma-brackets": "latest",
     "karma-chrome-launcher": "latest",
     "karma-firefox-launcher": "latest",

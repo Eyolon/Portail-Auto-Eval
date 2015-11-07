@@ -37,10 +37,5 @@
     "ui-router-extras": "latest",
     "angular-cookie": "latest",
     "angular-carousel": "latest"
-  },
-  "resolutions": {
-    "angular": "latest",
-    "angular-mocks": "latest"
-  },
-  "devDependencies": {}
+  }
 }

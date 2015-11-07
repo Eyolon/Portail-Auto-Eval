@@ -6,6 +6,7 @@ import java.util.GregorianCalendar;
 import java.util.Locale;
 
 import org.apache.commons.codec.binary.Base64;
+import org.hibernate.HibernateException;
 import org.hibernate.Transaction;
 import org.json.JSONObject;
 import org.mindrot.jbcrypt.BCrypt;
@@ -18,8 +19,10 @@ import hibernate.dao.BDDUtils;
 import hibernate.dao.GenreDAO;
 import hibernate.dao.TypeUtilisateurDAO;
 import hibernate.dao.UtilisateurDAO;
+import hibernate.dao.VilleDAO;
 import hibernate.model.Connexion;
 import hibernate.model.Utilisateur;
+import hibernate.model.Ville;
 import play.Logger;
 import play.libs.F.Promise;
 import play.mvc.Controller;
@@ -29,7 +32,7 @@ public class Personne extends Controller {
 	public static DateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.FRANCE);
 	
 	public static Promise<Result> checkUser(String email) {
-		Promise<String> promise = Promise.promise(() -> 
+		Promise<Result> promiseOfResult = Promise.promise(() -> 
 		{
 			String newToken = null;
 			String pwd = null;
@@ -55,7 +58,7 @@ public class Personne extends Controller {
 					} else {
 						newToken = generateToken(u);
 					}
-				} else if(u.getConnexion().getPassword().equals(pwd)) {
+				} else if(BCrypt.checkpw(pwd, u.getConnexion().getPassword())) {
 					newToken = generateToken(u);
 				} else {
 					u = null;
@@ -64,45 +67,50 @@ public class Personne extends Controller {
 				BDDUtils.commit(isActive, tx);
 			}
 			catch(Exception ex) {
-				System.out.println("Hibernate failure : "+ ex.getMessage());
+				Logger.error("Hibernate failure : "+ ex.getMessage());
 				BDDUtils.rollback(isActive, tx);
+				return internalServerError("Une erreur est survenue pendant la transaction avec la base de données.");
 			}
 			if(u == null){
-				return null;
+				return notFound("Utilisateur introuvable.");
 			} else {
-				return new JSONObject()
+				return ok(new JSONObject()
 					.put("utilisateur", ConstructJSONObjects.getJSONforUser(u))
-					.put("token", newToken).toString();
-			}
-		});
-		Promise<Result> promiseOfResult = promise.map(result -> {
-			if(result != null) {
-				return ok(result);
-			} else {
-				return notFound();
+					.put("token", newToken).toString());
 			}
 		});
 		return promiseOfResult;
 	}
 	
 	public static Promise<Result> insertUser() {
-		Promise<Boolean> promise = Promise.promise(() -> 
+		Promise<Result> promiseOfResult = Promise.promise(() -> 
 		{
 			JsonNode jsonN = request().body().asJson();
-			boolean isInserted = false;
+			Utilisateur u = null;
 			if(jsonN != null && jsonN.get("id") == null) {
 				Transaction tx = null;
 				boolean isActive = BDDUtils.getTransactionStatus();
 				try {
 					tx = BDDUtils.beginTransaction(isActive);
 					
-					Utilisateur u = UtilisateurDAO.getUtilisateurByEmail(jsonN.get("adresseMail").asText());
+					u = UtilisateurDAO.getUtilisateurByEmail(jsonN.get("adresseMail").asText());
 					if(u == null) {
 						u = new Utilisateur();
-						u.setConnexion(new Connexion(BCrypt.hashpw(jsonN.get("pwd").asText(), BCrypt.gensalt())));
+						
+						Connexion connexion = new Connexion(BCrypt.hashpw(jsonN.get("pwd").asText(), BCrypt.gensalt()));
+						BDDUtils.insert(connexion);
+						u.setConnexion(connexion);
+						
 						u.setAdresse(jsonN.get("adresseRue").asText());
 						u.setAdresseCodePostal(jsonN.get("adresseCodePostal").asText());
-						u.setAdresseVille(jsonN.get("adresseVille").asText());
+						
+						Ville ville = VilleDAO.getVilleByNom(jsonN.get("adresseVille").asText());
+						if(ville == null) {
+							ville = new Ville(jsonN.get("adresseVille").asText());
+							BDDUtils.insert(ville);
+						}
+						u.setVille(ville);
+						
 						u.setAdresseMail(jsonN.get("adresseMail").asText());
 						u.setTelephone(jsonN.get("telephone").asText());
 						u.setGenre(GenreDAO.getGenreByLibelle(jsonN.get("genre").asText()));
@@ -110,32 +118,35 @@ public class Personne extends Controller {
 						u.setPrenom(jsonN.get("firstname").asText());
 						u.setDateNaissance(GregorianCalendar.from(Tools.parseDateToZonedDateTime(df.parse(jsonN.get("birthday").asText()))));
 						u.setTypeUtilisateur(TypeUtilisateurDAO.findById(2l));
-						BDDUtils.getCurrentSession().save(u);
-						isInserted = true;
+						BDDUtils.insert(u);
+					} else {
+						throw new Exception("Adresse mail déjà utilisée.");
 					}
 					
 					BDDUtils.commit(isActive, tx);
-				}
-				catch(Exception ex) {
-					System.out.println("Hibernate failure : "+ ex.getMessage());
+				} catch(HibernateException ex) {
+					Logger.error("Hibernate failure : "+ ex.getMessage());
 					BDDUtils.rollback(isActive, tx);
-					isInserted = false;
+					return internalServerError("Une erreur est survenue pendant la transaction avec la base de données.");
+				} catch(Exception ex) {
+					BDDUtils.rollback(isActive, tx);
+					if(ex.getMessage().equalsIgnoreCase("Adresse mail déjà utilisée.")) {
+						Logger.info("Adresse mail \"" + jsonN.get("adresseMail").asText() + " déjà utilisée.");
+						return forbidden("Adresse mail \"" + jsonN.get("adresseMail").asText() + " déjà utilisée.");
+					} else {
+						Logger.error("Error : "+ ex.getMessage());
+						return internalServerError("Une erreur est survenue pendant la transaction avec la base de données.");
+					}
 				}
-			}
-			return isInserted;
-		});
-		Promise<Result> promiseOfResult = promise.map(result -> {
-			if(result) {
 				return ok();
-			} else {
-				return notFound();
 			}
+			return notFound();
 		});
 		return promiseOfResult;
 	}
 	
 	public static Promise<Result> updateUser() {
-		Promise<String> promise = Promise.promise(() -> 
+		Promise<Result> promiseOfResult = Promise.promise(() -> 
 		{
 			JsonNode jsonN = request().body().asJson();
 			JSONObject js = null;
@@ -149,14 +160,21 @@ public class Personne extends Controller {
 					u.getConnexion().setPassword(BCrypt.hashpw(jsonN.get("pwd").asText(), BCrypt.gensalt()));
 					u.setAdresse(jsonN.get("adresseRue").asText());
 					u.setAdresseCodePostal(jsonN.get("adresseCodePostal").asText());
-					u.setAdresseVille(jsonN.get("adresseVille").asText());
+					
+					Ville ville = VilleDAO.getVilleByNom(jsonN.get("adresseVille").asText());
+					if(ville == null) {
+						ville = new Ville(jsonN.get("adresseVille").asText());
+						BDDUtils.insert(ville);
+					}
+					u.setVille(ville);
+					
 					u.setAdresseMail(jsonN.get("adresseMail").asText());
 					u.setTelephone(jsonN.get("telephone").asText());
 					u.setGenre(GenreDAO.getGenreByLibelle(jsonN.get("genre").asText()));
 					u.setNom(jsonN.get("lastname").asText());
 					u.setPrenom(jsonN.get("firstname").asText());
 					u.setDateNaissance(GregorianCalendar.from(Tools.parseDateToZonedDateTime(df.parse(jsonN.get("birthday").asText()))));
-					BDDUtils.getCurrentSession().update(u);
+					BDDUtils.update(u);
 					
 					js = new JSONObject();
 					js.put("user", ConstructJSONObjects.getJSONforUser(u))
@@ -165,21 +183,15 @@ public class Personne extends Controller {
 					BDDUtils.commit(isActive, tx);
 				}
 				catch(Exception ex) {
-					System.out.println("Hibernate failure : "+ ex.getMessage());
+					Logger.error("Hibernate failure : "+ ex.getMessage());
 					BDDUtils.rollback(isActive, tx);
+					return internalServerError("Une erreur est survenue pendant la transaction avec la base de données.");
 				}
 			}
 			if(js == null) {
-				return null;
+				return notFound("Utilisateur introuvable.");
 			} else {
-				return js.toString();
-			}
-		});
-		Promise<Result> promiseOfResult = promise.map(result -> {
-			if(result != null) {
-				return ok(result);
-			} else {
-				return notFound();
+				return ok(js.toString());
 			}
 		});
 		return promiseOfResult;
@@ -210,13 +222,13 @@ public class Personne extends Controller {
 				BDDUtils.commit(isActive, tx);
 			}
 			catch(Exception ex) {
-				System.out.println("Hibernate failure : "+ ex.getMessage());
+				Logger.error("Hibernate failure : "+ ex.getMessage());
 				BDDUtils.rollback(isActive, tx);
-				return internalServerError();
+				return internalServerError("Une erreur est survenue pendant la transaction avec la base de données.");
 			}
 			
 			if(js == null) {
-				return notFound();
+				return notFound("Utilisateur introuvable.");
 			} else {
 				return ok(js.toString());
 			}
@@ -255,12 +267,12 @@ public class Personne extends Controller {
 				BDDUtils.commit(isActive, tx);
 			}
 			catch(Exception ex) {
-				System.out.println("Hibernate failure : "+ ex.getMessage());
+				Logger.error("Hibernate failure : "+ ex.getMessage());
 				BDDUtils.rollback(isActive, tx);
-				return internalServerError();
+				return internalServerError("Une erreur est survenue pendant la transaction avec la base de données.");
 			}
 			if(js == null) {
-				return notFound();
+				return notFound("Utilisateur introuvable.");
 			} else {
 				return ok(js.toString());
 			}
@@ -270,7 +282,7 @@ public class Personne extends Controller {
 	}
 	
 	private static String generateToken(Utilisateur user) {
-		String keySource = user.getId() + "/" + user.getNom() + user.getPrenom() + user.getAdresseMail() + user.getConnexion().getPassword() +"pmce&1802";
+		String keySource = user.getId() + "/" + user.getNom() + user.getPrenom() + user.getAdresseMail() + user.getConnexion().getPassword() +"psj@1802";
 		byte [] tokenByte = Base64.encodeBase64(keySource.getBytes());
 		String token = new String(tokenByte);
 		return token;

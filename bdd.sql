@@ -13,7 +13,7 @@ CREATE TABLE public.Utilisateur(
         prenom                VARCHAR (30)  ,
         dateNaissance         DATE   ,
         adresse_rue           VARCHAR (250)  ,
-		adresse_ville         VARCHAR (100)  ,
+		id_ville         	  bigserial  ,
 		adresse_code_postal   VARCHAR (5)  ,
         adresseMail           VARCHAR (25)  ,
         telephone             VARCHAR (10)   ,
@@ -21,6 +21,15 @@ CREATE TABLE public.Utilisateur(
         id_Connexion          bigserial   ,
         id_Genre              bigserial   ,
         CONSTRAINT prk_constraint_Utilisateur PRIMARY KEY (id)
+)WITHOUT OIDS;
+
+------------------------------------------------------------
+-- Table: Ville
+------------------------------------------------------------
+CREATE TABLE public.Ville(
+        id             bigserial  NOT NULL ,
+        nom     VARCHAR ,
+        CONSTRAINT prk_constraint_Ville PRIMARY KEY (id)
 )WITHOUT OIDS;
 
 ------------------------------------------------------------
@@ -50,6 +59,7 @@ CREATE TABLE public.Genre(
         CONSTRAINT prk_constraint_Genre PRIMARY KEY (id)
 )WITHOUT OIDS;
 
+ALTER TABLE public.Utilisateur ADD CONSTRAINT FK_Utilisateur_id_Ville FOREIGN KEY (id_Ville) REFERENCES public.Ville(id);
 ALTER TABLE public.Utilisateur ADD CONSTRAINT FK_Utilisateur_id_Type_d_utilisateur FOREIGN KEY (id_Type_d_utilisateur) REFERENCES public.Type_d_utilisateur(id);
 ALTER TABLE public.Utilisateur ADD CONSTRAINT FK_Utilisateur_id_Connexion FOREIGN KEY (id_Connexion) REFERENCES public.Connexion(id);
 ALTER TABLE public.Utilisateur ADD CONSTRAINT FK_Utilisateur_id_Genre FOREIGN KEY (id_Genre) REFERENCES public.Genre(id);
