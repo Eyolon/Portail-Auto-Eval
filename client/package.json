@@ -127,6 +127,8 @@
   },
   "dependencies": {
     "del": "^1.1.1",
-    "grunt-sync": "latest"
+    "grunt-sync": "latest",
+	"array-uniq": "latest",
+	"extend": "latest"
   }
 }
