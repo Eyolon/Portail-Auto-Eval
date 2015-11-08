@@ -16,7 +16,7 @@ import play.Play;
 public class BDDUtils {
 	
 	//public static String CONFIG_FILE = Play.application().getFile("hibernate.cfg.xml").getAbsolutePath();
-	public static Boolean BYTECODE_REFLECTION_OPTIMIZER = Play.application().configuration().getBoolean("DB_BYTECODE_REFLECTION_OPTIMIZER");
+	public static Boolean BYTECODE_REFLECTION_OPTIMIZER = Play.application().configuration().getBoolean("DB_BYTECODE_REFLECTION_OPTIMIZER", false);
 	public static Boolean SHOW_SQL = Play.application().configuration().getBoolean("DB_SHOW_SQL", false);
 	public static Boolean FORMAT_SQL = Play.application().configuration().getBoolean("DB_FORMAT_SQL", false);
 	public static String HBM2DDL_AUTO = Play.application().configuration().getString("DB_HBM2DDL_AUTO", "validate");
@@ -24,7 +24,7 @@ public class BDDUtils {
 	public static Boolean ID_NEW_GENERATOR_MAPPING = Play.application().configuration().getBoolean("DB_ID_NEW_GENERATOR_MAPPING", true);
 	public static String CURRENT_SESSION_CONTEXT = Play.application().configuration().getString("DB_CURRENT_SESSION_CONTEXT", "thread");
     public static Boolean AUTO_COMMIT = Play.application().configuration().getBoolean("DB_AUTO_COMMIT", false);
-	public static Integer MAXIMUM_POOLSIZE = Play.application().configuration().getInt("DB_MAXIMUM_POOLSIZE", 10);
+	public static Integer MAXIMUM_POOLSIZE = Play.application().configuration().getInt("DB_MAXIMUM_POOLSIZE", 15);
 	public static Integer IDLE_TIMEOUT = Play.application().configuration().getInt("DB_IDLE_TIMEOUT", 300000);
 	public static Boolean USE_SECOND_LEVEL_CACHE = Play.application().configuration().getBoolean("DB_USE_SECOND_LEVEL_CACHE", false);
     public static Boolean USE_QUERY_CACHE = Play.application().configuration().getBoolean("DB_USE_QUERY_CACHE", false);
@@ -37,12 +37,12 @@ public class BDDUtils {
 	
 	public static String URL = Play.application().configuration().getString("DB_URL");
 	
-	public static String SERVER = Play.application().configuration().getString("DB_SERVER");
+	public static String SERVER = Play.application().configuration().getString("DB_SERVER", "localhost");
 	public static String NAME = Play.application().configuration().getString("DB_NAME");
-	public static Integer PORT = Play.application().configuration().getInt("DB_PORT");
+	public static Integer PORT = Play.application().configuration().getInt("DB_PORT", 5432);
 	
-	public static String USER = Play.application().configuration().getString("DB_USER");
-	public static String PASSWORD = Play.application().configuration().getString("DB_PASSWORD");
+	public static String USER = Play.application().configuration().getString("DB_USER", "postgres");
+	public static String PASSWORD = Play.application().configuration().getString("DB_PASSWORD", "password");
 	
 	protected static SessionFactory sessionFactory;
 	
@@ -80,43 +80,83 @@ public class BDDUtils {
 		
 		if(URL != null && !URL.equals("") && !URL.startsWith("jdbc")) {
 			//USER
-			String subURL = URL.substring(11);
-			String tmpValue = subURL.substring(0, subURL.indexOf(":"));
-			configDB.setProperty("hibernate.hikari.dataSource.user", tmpValue);
+			String subURL = URL.substring(URL.indexOf("://") + 3);
+			String user = subURL.substring(0, subURL.indexOf(":"));
+			configDB.setProperty("hibernate.hikari.dataSource.user", user);
 			
 			//PASSWORD
 			subURL = subURL.substring(subURL.indexOf(":") + 1);
-			tmpValue =  subURL.substring(0, subURL.indexOf("@"));
-			configDB.setProperty("hibernate.hikari.dataSource.password", tmpValue);
+			String pwd =  subURL.substring(0, subURL.indexOf("@"));
+			configDB.setProperty("hibernate.hikari.dataSource.password", pwd);
 			
 			//SERVER
 			subURL = subURL.substring(subURL.indexOf("@") + 1);
-			tmpValue =  subURL.substring(0, subURL.indexOf(":"));
-			configDB.setProperty("hibernate.hikari.dataSource.serverName", tmpValue);
+			String server =  subURL.substring(0, subURL.indexOf(":"));
+			configDB.setProperty("hibernate.hikari.dataSource.serverName", server);
 			
 			//PORT
 			subURL = subURL.substring(subURL.indexOf(":") + 1);
-			tmpValue =  subURL.substring(0, subURL.indexOf("/"));
-			configDB.setProperty("hibernate.hikari.dataSource.portNumber", tmpValue);
+			String port =  subURL.substring(0, subURL.indexOf("/"));
+			configDB.setProperty("hibernate.hikari.dataSource.portNumber", port);
 			
 			//NAME
 			subURL = subURL.substring(subURL.indexOf("/") + 1);
 			configDB.setProperty("hibernate.hikari.dataSource.databaseName", subURL);
+			
+			//URL JDBC
+			configDB.setProperty("hibernate.hikari.dataSource.url", "jdbc:postgresql://" + server + ":" + port + "/" + subURL);
 		} else {
 			if(URL != null && !URL.equals("") && URL.startsWith("jdbc")) {
 				configDB.setProperty("hibernate.hikari.dataSource.url", URL);
-			} else {
-				if(SERVER != null && SERVER.equals("")){
-					configDB.setProperty("hibernate.hikari.dataSource.serverName", SERVER);
+				
+				//SERVER
+				String subURL = URL.substring(URL.indexOf("://") + 3);
+				String server = null;
+				if(subURL.indexOf(":") != -1) {
+					//SERVER
+					server = subURL.substring(0, subURL.indexOf(":"));
+					configDB.setProperty("hibernate.hikari.dataSource.serverName", server);
+					
+					//PORT
+					subURL = subURL.substring(subURL.indexOf(":") + 1);
+					String port =  subURL.substring(0, subURL.indexOf("/"));
+					configDB.setProperty("hibernate.hikari.dataSource.portNumber", port);
+				} else {
+					//PORT (default)
+					configDB.setProperty("hibernate.hikari.dataSource.portNumber", "5432");
+					
+					//SERVER
+					server = subURL.substring(0, subURL.indexOf("/"));
+					configDB.setProperty("hibernate.hikari.dataSource.serverName", server);
 				}
 				
-				if(NAME != null && !NAME.equals("")) {
-					configDB.setProperty("hibernate.hikari.dataSource.databaseName", NAME);
+				//NAME
+				subURL = subURL.substring(subURL.indexOf("/") + 1);
+				configDB.setProperty("hibernate.hikari.dataSource.databaseName", subURL);
+			} else {
+				String url = "jdbc:postgresql://";
+				if(SERVER != null && SERVER.equals("")){
+					configDB.setProperty("hibernate.hikari.dataSource.serverName", SERVER);
+					url += SERVER;
+				} else {
+					url += "localhost";
 				}
 				
 				if(PORT != null && PORT != 0) {
 					configDB.setProperty("hibernate.hikari.dataSource.portNumber", String.valueOf(PORT));
+					url += ":" + String.valueOf(PORT);
+				} else {
+					url += ":5432";
 				}
+				
+				if(NAME != null && !NAME.equals("")) {
+					configDB.setProperty("hibernate.hikari.dataSource.databaseName", NAME);
+					url += "/" + NAME;
+				} else {
+					url += "default";
+				}
+				
+				configDB.setProperty("hibernate.hikari.dataSource.url", url);
 			}
 			
 			if(USER != null && !USER.equals("")) {
