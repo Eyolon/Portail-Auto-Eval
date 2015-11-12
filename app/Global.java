@@ -11,7 +11,6 @@ public class Global extends GlobalSettings {
 		Logger.info("Application has started.");
 		try {
 			BDDUtils.getCurrentSession();
-			Logger.info(BDDUtils.createDBProperties().toString());
 		} catch (HibernateException he) {
 			Logger.error("Impossible de se connecter à la base de donnée.");
 			Logger.error(BDDUtils.createDBProperties().toString());
