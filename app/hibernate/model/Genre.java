@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -29,7 +30,9 @@ public class Genre implements Serializable {
 		this.genre = genre;
 	}
 	
-	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Id 
+	@SequenceGenerator(name="genre_id_seq", sequenceName="genre_id_seq", allocationSize=1)
+	@GeneratedValue(generator = "genre_id_seq", strategy = GenerationType.SEQUENCE)
 	@Column(name="id", unique=true, nullable=false)
 	public Long getId() {
 		return id;

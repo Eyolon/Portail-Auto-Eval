@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -66,7 +67,9 @@ public class Utilisateur implements Serializable {
 		this.genre = genre;
 	}
 	
-	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Id
+	@SequenceGenerator(name="utilisateur_id_seq", sequenceName="utilisateur_id_seq", allocationSize=1)
+	@GeneratedValue(generator = "utilisateur_id_seq", strategy = GenerationType.SEQUENCE)
 	@Column(name="id", unique=true, nullable=false)
 	public Long getId() {
 		return id;
