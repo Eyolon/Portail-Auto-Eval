@@ -16,7 +16,7 @@ import javax.persistence.Transient;
 public class TypeUtilisateur implements Serializable {
 	private static final long serialVersionUID = -1118303401403366726L;
 	
-	private Long id;
+	private Long id = null;
 	private String libelle = null;
 	
 	public TypeUtilisateur(){}

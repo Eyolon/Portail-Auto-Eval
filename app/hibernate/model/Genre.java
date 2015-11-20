@@ -16,7 +16,7 @@ import javax.persistence.Transient;
 public class Genre implements Serializable {
 	private static final long serialVersionUID = -2381710710838826641L;
 	
-	private Long id;
+	private Long id = null;
 	private String genre = null;
 	
 	public Genre(){}

@@ -16,7 +16,7 @@ import javax.persistence.Transient;
 public class Ville implements Serializable {
 	private static final long serialVersionUID = -7601578587341446093L;
 	
-	private Long id;
+	private Long id = null;
 	private String nom = null;
 	
 	public Ville(){}

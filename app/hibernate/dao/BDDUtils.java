@@ -28,6 +28,7 @@ public class BDDUtils {
 	public static Integer IDLE_TIMEOUT = Play.application().configuration().getInt("DB_IDLE_TIMEOUT", 300000);
 	public static Boolean USE_SECOND_LEVEL_CACHE = Play.application().configuration().getBoolean("DB_USE_SECOND_LEVEL_CACHE", false);
     public static Boolean USE_QUERY_CACHE = Play.application().configuration().getBoolean("DB_USE_QUERY_CACHE", false);
+    public static Boolean READ_ONLY = Play.application().configuration().getBoolean("DB_READ_ONLY", false);
     
     public static Boolean SSL = Play.application().configuration().getBoolean("DB_SSL");
     public static String SSL_FACTORY = Play.application().configuration().getString("DB_SSL_FACTORY");
@@ -61,7 +62,8 @@ public class BDDUtils {
 		configDB.setProperty("hibernate.hikari.idleTimeout", String.valueOf(IDLE_TIMEOUT));
 	    configDB.setProperty("hibernate.cache.use_second_level_cache", String.valueOf(USE_SECOND_LEVEL_CACHE));
 		configDB.setProperty("hibernate.cache.use_query_cache", String.valueOf(USE_QUERY_CACHE));
-
+		configDB.setProperty("hibernate.hikari.readOnly", String.valueOf(READ_ONLY));
+		
 		if(SSL != null && !SSL.equals("")){
 			configDB.setProperty("hibernate.hikari.dataSource.ssl", String.valueOf(SSL));
 		}
@@ -207,7 +209,7 @@ public class BDDUtils {
 	
 	public static Transaction beginTransaction(boolean isActive) throws HibernateException {
 		if(!isActive) {
-			return getSessionFactory().getCurrentSession().beginTransaction();
+			return getCurrentSession().beginTransaction();
 		}
 		return null;
 	}
@@ -224,8 +226,16 @@ public class BDDUtils {
 		getCurrentSession().delete(o);
 	}
 	
+	public static void disconnect() {
+		if(sessionFactory != null) {
+			sessionFactory.close();
+			getCurrentSession().disconnect();
+		}
+	}
+	
 	public static void commit(boolean isActive, Transaction tx) throws HibernateException {
 		if(!isActive) {
+			//getCurrentSession().flush();
 			tx.commit();
 		}
 	}

@@ -25,7 +25,7 @@ import Tools.Tools;
 public class Utilisateur implements Serializable {
 	private static final long serialVersionUID = -7351729135012380019L;
 
-	private Long id;
+	private Long id = null;
 	private String nom = null;
 	private String prenom = null;
 	private Calendar datenaissance = null;
