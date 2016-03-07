@@ -320,5 +320,3 @@ ALTER TABLE public.note ADD CONSTRAINT fk_note_id_utilisateur FOREIGN KEY (id_ut
 REFERENCES public.utilisateur (id) MATCH SIMPLE
 ON DELETE NO ACTION ON UPDATE NO ACTION;
 -- ddl-end --
-
-

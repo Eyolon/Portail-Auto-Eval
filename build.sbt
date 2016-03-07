@@ -30,7 +30,7 @@ libraryDependencies ++= Seq(
   "org.mindrot" % "jbcrypt" % "0.3m"
 )
 
-herokuAppName in Compile := "poc-play"
+herokuAppName in Compile := "poc-play" 
 
 PlayKeys.externalizeResources := false
 routesGenerator := StaticRoutesGenerator
