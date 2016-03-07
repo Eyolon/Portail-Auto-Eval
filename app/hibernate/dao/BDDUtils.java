@@ -182,10 +182,14 @@ public class BDDUtils {
 			
 			//Ajout des classes
 			config.addAnnotatedClass(hibernate.model.Connexion.class)
-				.addAnnotatedClass(hibernate.model.Genre.class)
-				.addAnnotatedClass(hibernate.model.Ville.class)
+				.addAnnotatedClass(hibernate.model.Categorie.class)
+				.addAnnotatedClass(hibernate.model.Critere.class)
+				.addAnnotatedClass(hibernate.model.Formulaire.class)
+				.addAnnotatedClass(hibernate.model.Question.class)
 				.addAnnotatedClass(hibernate.model.TypeUtilisateur.class)
-				.addAnnotatedClass(hibernate.model.Utilisateur.class);
+				.addAnnotatedClass(hibernate.model.Service.class)
+				.addAnnotatedClass(hibernate.model.Utilisateur.class)
+				.addAnnotatedClass(hibernate.model.Note.class);
 			
 			StandardServiceRegistry ssr = new StandardServiceRegistryBuilder().applySettings(config.getProperties()).build();
 			sessionFactory = config.buildSessionFactory(ssr);

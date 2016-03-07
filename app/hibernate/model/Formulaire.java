@@ -12,27 +12,27 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 @Entity
-@Table(name="type_utilisateur")
-public class TypeUtilisateur implements Serializable {
-	private static final long serialVersionUID = -1118303401403366726L;
+@Table(name="formulaire")
+public class Formulaire implements Serializable {	
+	private static final long serialVersionUID = -32050276291138241L;
 	
 	private Long id = null;
-	private String libelle = null;
+	private String nom = null;
 	
-	public TypeUtilisateur(){}
+	public Formulaire(){}
 	
-	public TypeUtilisateur(Long id, String libelle) {
+	public Formulaire(Long id, String libelle) {
 		this.id = id;
-		this.libelle = libelle;
+		this.nom = libelle;
 	}
 	
-	public TypeUtilisateur(String libelle) {
-		this.libelle = libelle;
+	public Formulaire(String libelle) {
+		this.nom = libelle;
 	}
 	
 	@Id 
-	@SequenceGenerator(name="type_utilisateur_id_seq", sequenceName="type_utilisateur_id_seq", allocationSize=1)
-	@GeneratedValue(generator = "type_utilisateur_id_seq", strategy = GenerationType.SEQUENCE)
+	@SequenceGenerator(name="formulaire_id_seq", sequenceName="formulaire_id_seq", allocationSize=1)
+	@GeneratedValue(generator = "formulaire_id_seq", strategy = GenerationType.SEQUENCE)
 	@Column(name="id", unique=true, nullable=false)
 	public Long getId() {
 		return id;
@@ -42,19 +42,19 @@ public class TypeUtilisateur implements Serializable {
 		this.id = id;
 	}
 	
-	@Column(name="libelle")
+	@Column(name="nom")
 	public String getLibelle() {
-		return libelle;
+		return nom;
 	}
 	
 	public void setLibelle(String libelle) {
-		this.libelle = libelle;
+		this.nom = libelle;
 	}
 	
 	@Transient
 	@Override
 	public String toString() {
-		return "TypeUtilisateur:{ id:"+id+"\', libelle: \'"+libelle+"\'}";
+		return "Formulaire:{ id:"+id+"\', nom: \'"+nom+"\'}";
 	}
 
 	@Override
@@ -62,7 +62,7 @@ public class TypeUtilisateur implements Serializable {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((libelle == null) ? 0 : libelle.hashCode());
+		result = prime * result + ((nom == null) ? 0 : nom.hashCode());
 		return result;
 	}
 
@@ -74,16 +74,16 @@ public class TypeUtilisateur implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		TypeUtilisateur other = (TypeUtilisateur) obj;
+		Formulaire other = (Formulaire) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
 		} else if (!id.equals(other.id))
 			return false;
-		if (libelle == null) {
-			if (other.libelle != null)
+		if (nom == null) {
+			if (other.nom != null)
 				return false;
-		} else if (!libelle.equals(other.libelle))
+		} else if (!nom.equals(other.nom))
 			return false;
 		return true;
 	}

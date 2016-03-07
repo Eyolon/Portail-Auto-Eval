@@ -2,9 +2,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.Transaction;
 
 import hibernate.dao.BDDUtils;
-import hibernate.dao.GenreDAO;
 import hibernate.dao.TypeUtilisateurDAO;
-import hibernate.model.Genre;
 import hibernate.model.TypeUtilisateur;
 import play.Application;
 import play.GlobalSettings;
@@ -24,14 +22,6 @@ public class Global extends GlobalSettings {
 			}
 			if(TypeUtilisateurDAO.getTypeUtilisateurByLibelle("utilisateur") == null) {
 				BDDUtils.insert(new TypeUtilisateur("utilisateur"));
-			}
-			
-			//Default values for Genre
-			if(GenreDAO.getGenreByLibelle("Homme") == null) {
-				BDDUtils.insert(new Genre("Homme"));
-			}
-			if(GenreDAO.getGenreByLibelle("Femme") == null) {
-				BDDUtils.insert(new Genre("Femme"));
 			}
 			
 			BDDUtils.commit(isActive, tx);

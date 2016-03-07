@@ -11,25 +11,14 @@ public class ConstructJSONObjects {
 	
 	public static JSONObject getJSONforUser(Utilisateur u) {
 		return new JSONObject()
-		.put("id", u.getId())
-		.put("lastname", u.getNom())
-		.put("firstname", u.getPrenom())
-		.put("birthday", Tools.formatDateToDisplay(u.getDateNaissance()));
+		.put("id", u.getId());
 	}
 	
 	public static JSONObject getJSONforUserFull(Utilisateur u) {
 		return new JSONObject()
 		.put("id", u.getId())
-		.put("lastname", u.getNom())
-		.put("firstname", u.getPrenom())
-		//.put("pwd", u.getConnexion().getPassword())
-		.put("adresseRue", u.getAdresse())
-		.put("adresseVille", u.getVille().getNom())
-		.put("adresseCodePostal", u.getAdresseCodePostal())
-		.put("adresseMail", u.getAdresseMail())
-		.put("telephone", u.getTelephone())
-		.put("genre", u.getGenre().getGenre())
-		.put("birthday", Tools.formatDateToDisplay(u.getDateNaissance()));
+		.put("login", u.getLogin())
+		.put("email", u.getEmail());
 	}
 	
 	public static JSONArray getJSONArrayforListUsers(List<Utilisateur> lu) {

@@ -1,11 +1,6 @@
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static play.test.Helpers.contentAsString;
-import static play.test.Helpers.contentType;
 
 import org.junit.Test;
-
-import play.twirl.api.Content;
 
 
 /**

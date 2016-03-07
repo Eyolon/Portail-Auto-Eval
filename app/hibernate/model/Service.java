@@ -12,27 +12,27 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 @Entity
-@Table(name="ville")
-public class Ville implements Serializable {
-	private static final long serialVersionUID = -7601578587341446093L;
+@Table(name="service")
+public class Service implements Serializable {	
+	private static final long serialVersionUID = -32050276291138241L;
 	
 	private Long id = null;
-	private String nom = null;
+	private String libelle = null;
 	
-	public Ville(){}
+	public Service(){}
 	
-	public Ville(Long id, String nom) {
+	public Service(Long id, String libelle) {
 		this.id = id;
-		this.nom = nom;
+		this.libelle = libelle;
 	}
 	
-	public Ville(String nom) {
-		this.nom = nom;
+	public Service(String libelle) {
+		this.libelle = libelle;
 	}
 	
-	@Id
-	@SequenceGenerator(name="ville_id_seq", sequenceName="ville_id_seq", allocationSize=1)
-	@GeneratedValue(generator = "ville_id_seq", strategy = GenerationType.SEQUENCE)
+	@Id 
+	@SequenceGenerator(name="service_id_seq", sequenceName="service_id_seq", allocationSize=1)
+	@GeneratedValue(generator = "service_id_seq", strategy = GenerationType.SEQUENCE)
 	@Column(name="id", unique=true, nullable=false)
 	public Long getId() {
 		return id;
@@ -42,19 +42,19 @@ public class Ville implements Serializable {
 		this.id = id;
 	}
 	
-	@Column(name="nom")
-	public String getNom() {
-		return nom;
+	@Column(name="libelle")
+	public String getLibelle() {
+		return libelle;
 	}
 	
-	public void setNom(String nom) {
-		this.nom = nom;
+	public void setLibelle(String libelle) {
+		this.libelle = libelle;
 	}
 	
 	@Transient
 	@Override
 	public String toString() {
-		return "Ville:{ id:"+id+"\', nom: \'"+nom+"\'}";
+		return "Service:{ id:"+id+"\', libelle: \'"+libelle+"\'}";
 	}
 
 	@Override
@@ -62,8 +62,7 @@ public class Ville implements Serializable {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result
-				+ ((nom == null) ? 0 : nom.hashCode());
+		result = prime * result + ((libelle == null) ? 0 : libelle.hashCode());
 		return result;
 	}
 
@@ -75,16 +74,16 @@ public class Ville implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Ville other = (Ville) obj;
+		Service other = (Service) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
 		} else if (!id.equals(other.id))
 			return false;
-		if (nom == null) {
-			if (other.nom != null)
+		if (libelle == null) {
+			if (other.libelle != null)
 				return false;
-		} else if (!nom.equals(other.nom))
+		} else if (!libelle.equals(other.libelle))
 			return false;
 		return true;
 	}

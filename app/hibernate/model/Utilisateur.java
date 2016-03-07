@@ -1,7 +1,6 @@
 package hibernate.model;
 
 import java.io.Serializable;
-import java.util.Calendar;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,11 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.persistence.Transient;
-
-import Tools.Tools;
 
 @Entity
 @Table(name="utilisateur")
@@ -26,45 +21,29 @@ public class Utilisateur implements Serializable {
 	private static final long serialVersionUID = -7351729135012380019L;
 
 	private Long id = null;
-	private String nom = null;
-	private String prenom = null;
-	private Calendar datenaissance = null;
-	private String adresseRue = null;
-	private Ville ville = null;
-	private String adresseCodePostal = null;
-	private String adresseMail = null;
-	private String telephone = null;
+	private String email = null;
+	private String login = null;
 	private TypeUtilisateur typeUtilisateur = null;
 	private Connexion connexion = null;
-	private Genre genre = null;
+	private Service service = null;
 	
 	public Utilisateur(){}
 	
-	public Utilisateur(Long id, String nom, String prenom, Calendar datenaissance, String adresseRue, Ville ville, String adresseMail, String telephone, TypeUtilisateur typeUtilisateur, Connexion connexion, Genre genre) {
+	public Utilisateur(Long id, String email, String login, TypeUtilisateur typeUtilisateur, Connexion connexion, Service service) {
 		this.id = id;
-		this.nom = nom;
-		this.prenom = prenom;
-		this.datenaissance = datenaissance;
-		this.adresseRue = adresseRue;
-		this.ville = ville;
-		this.adresseMail = adresseMail;
-		this.telephone = telephone;
+		this.email = email;
+		this.login = login;
 		this.typeUtilisateur = typeUtilisateur;
 		this.connexion = connexion;
-		this.genre = genre;
+		this.service = service;
 	}
 	
-	public Utilisateur(String nom, String prenom, Calendar datenaissance, String adresseRue, Ville ville, String adresseMail, String telephone, TypeUtilisateur typeUtilisateur, Connexion connexion, Genre genre) {
-		this.nom = nom;
-		this.prenom = prenom;
-		this.datenaissance = datenaissance;
-		this.adresseRue = adresseRue;
-		this.ville = ville;
-		this.adresseMail = adresseMail;
-		this.telephone = telephone;
+	public Utilisateur(String email, String login, TypeUtilisateur typeUtilisateur, Connexion connexion, Service service) {
+		this.email = email;
+		this.login = login;
 		this.typeUtilisateur = typeUtilisateur;
 		this.connexion = connexion;
-		this.genre = genre;
+		this.service = service;
 	}
 	
 	@Id
@@ -78,64 +57,27 @@ public class Utilisateur implements Serializable {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	
-	@Column(name="nom")
-	public String getNom() {
-		return nom;
-	}
-	
-	public void setNom(String nom) {
-		this.nom = nom;
-	}
-	
-	@Column(name="prenom")
-	public String getPrenom() {
-		return prenom;
-	}
-	
-	public void setPrenom(String prenom) {
-		this.prenom = prenom;
+
+	@Column(name="email")
+	public String getEmail() {
+		return email;
 	}
 
-	@Column(name="datenaissance")
-	@Temporal(TemporalType.DATE)
-	public Calendar getDateNaissance() {
-		return datenaissance;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
-	public void setDateNaissance(Calendar datenaissance) {
-		this.datenaissance = datenaissance;
-	}
-	
-	@Column(name="adresse_rue")
-	public String getAdresse() {
-		return adresseRue;
+	@Column(name="login")
+	public String getLogin() {
+		return login;
 	}
 
-	public void setAdresse(String adresse) {
-		this.adresseRue = adresse;
-	}
-
-	@Column(name="adresse_mail")
-	public String getAdresseMail() {
-		return adresseMail;
-	}
-
-	public void setAdresseMail(String adresseMail) {
-		this.adresseMail = adresseMail;
-	}
-
-	@Column(name="telephone")
-	public String getTelephone() {
-		return telephone;
-	}
-
-	public void setTelephone(String telephone) {
-		this.telephone = telephone;
+	public void setLogin(String login) {
+		this.login = login;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_type_d_utilisateur", nullable = false)
+	@JoinColumn(name = "id_type_utilisateur", nullable = false)
 	public TypeUtilisateur getTypeUtilisateur() {
 		return typeUtilisateur;
 	}
@@ -153,62 +95,33 @@ public class Utilisateur implements Serializable {
 	public void setConnexion(Connexion connexion) {
 		this.connexion = connexion;
 	}
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_genre", nullable = false)
-	public Genre getGenre() {
-		return genre;
-	}
-
-	public void setGenre(Genre genre) {
-		this.genre = genre;
-	}
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_ville", nullable = false)
-	public Ville getVille() {
-		return ville;
+	@JoinColumn(name = "id_service", nullable = true)
+	public Service getService() {
+		return service;
 	}
 
-	public void setVille(Ville ville) {
-		this.ville = ville;
-	}
-
-	@Column(name="adresse_code_postal")
-	public String getAdresseCodePostal() {
-		return adresseCodePostal;
-	}
-
-	public void setAdresseCodePostal(String adresseCodePostal) {
-		this.adresseCodePostal = adresseCodePostal;
+	public void setService(Service service) {
+		this.service = service;
 	}
 
 	@Transient
 	@Override
 	public String toString() {
-		return "User:{ id:"+id+", prenom: \'"+prenom+"\' , nom: \'"+nom+"\', dateanniversaire: \'"+Tools.formatDateToDisplay(datenaissance)+"\'"+
-				"\', adresse: \'"+adresseRue+ " " + adresseCodePostal + " " + ville +"\', adresseMail: \'"+adresseMail+"\', telephone: \'"+telephone+"\', genre: \'"+genre.toString()+"\', typeUtilisateur: \'"+typeUtilisateur.toString()+"\', connexion: \'"+connexion.toString()+"}";
+		return "User:{ id:"+id+", adresseMail: \'"+email+"\', typeUtilisateur: \'"+typeUtilisateur.toString()+"\', connexion: \'"+connexion.toString()+"}";
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((adresseRue == null) ? 0 : adresseRue.hashCode());
-		result = prime * result
-				+ ((adresseMail == null) ? 0 : adresseMail.hashCode());
-		result = prime * result
-				+ ((connexion == null) ? 0 : connexion.hashCode());
-		result = prime * result
-				+ ((datenaissance == null) ? 0 : datenaissance.hashCode());
-		result = prime * result + ((genre == null) ? 0 : genre.hashCode());
+		result = prime * result + ((connexion == null) ? 0 : connexion.hashCode());
+		result = prime * result + ((email == null) ? 0 : email.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((nom == null) ? 0 : nom.hashCode());
-		result = prime * result + ((prenom == null) ? 0 : prenom.hashCode());
-		result = prime * result
-				+ ((telephone == null) ? 0 : telephone.hashCode());
-		result = prime * result
-				+ ((typeUtilisateur == null) ? 0 : typeUtilisateur.hashCode());
+		result = prime * result + ((login == null) ? 0 : login.hashCode());
+		result = prime * result + ((service == null) ? 0 : service.hashCode());
+		result = prime * result + ((typeUtilisateur == null) ? 0 : typeUtilisateur.hashCode());
 		return result;
 	}
 
@@ -221,50 +134,30 @@ public class Utilisateur implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Utilisateur other = (Utilisateur) obj;
-		if (adresseRue == null) {
-			if (other.adresseRue != null)
-				return false;
-		} else if (!adresseRue.equals(other.adresseRue))
-			return false;
-		if (adresseMail == null) {
-			if (other.adresseMail != null)
-				return false;
-		} else if (!adresseMail.equals(other.adresseMail))
-			return false;
 		if (connexion == null) {
 			if (other.connexion != null)
 				return false;
 		} else if (!connexion.equals(other.connexion))
 			return false;
-		if (datenaissance == null) {
-			if (other.datenaissance != null)
+		if (email == null) {
+			if (other.email != null)
 				return false;
-		} else if (!datenaissance.equals(other.datenaissance))
-			return false;
-		if (genre == null) {
-			if (other.genre != null)
-				return false;
-		} else if (!genre.equals(other.genre))
+		} else if (!email.equals(other.email))
 			return false;
 		if (id == null) {
 			if (other.id != null)
 				return false;
 		} else if (!id.equals(other.id))
 			return false;
-		if (nom == null) {
-			if (other.nom != null)
+		if (login == null) {
+			if (other.login != null)
 				return false;
-		} else if (!nom.equals(other.nom))
+		} else if (!login.equals(other.login))
 			return false;
-		if (prenom == null) {
-			if (other.prenom != null)
+		if (service == null) {
+			if (other.service != null)
 				return false;
-		} else if (!prenom.equals(other.prenom))
-			return false;
-		if (telephone == null) {
-			if (other.telephone != null)
-				return false;
-		} else if (!telephone.equals(other.telephone))
+		} else if (!service.equals(other.service))
 			return false;
 		if (typeUtilisateur == null) {
 			if (other.typeUtilisateur != null)

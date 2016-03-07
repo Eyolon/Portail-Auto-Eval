@@ -4,35 +4,39 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
 @Entity
-@Table(name="type_utilisateur")
-public class TypeUtilisateur implements Serializable {
-	private static final long serialVersionUID = -1118303401403366726L;
+@Table(name="critere")
+public class Critere implements Serializable {
+	private static final long serialVersionUID = 7106347193340059067L;
 	
 	private Long id = null;
-	private String libelle = null;
+	private String nom = null;
+	private Categorie categorie = null;
 	
-	public TypeUtilisateur(){}
+	public Critere(){}
 	
-	public TypeUtilisateur(Long id, String libelle) {
+	public Critere(Long id, String libelle, Categorie categorie) {
 		this.id = id;
-		this.libelle = libelle;
+		this.nom = libelle;
 	}
 	
-	public TypeUtilisateur(String libelle) {
-		this.libelle = libelle;
+	public Critere(String libelle, Categorie categorie) {
+		this.nom = libelle;
 	}
 	
 	@Id 
-	@SequenceGenerator(name="type_utilisateur_id_seq", sequenceName="type_utilisateur_id_seq", allocationSize=1)
-	@GeneratedValue(generator = "type_utilisateur_id_seq", strategy = GenerationType.SEQUENCE)
+	@SequenceGenerator(name="critere_id_seq", sequenceName="critere_id_seq", allocationSize=1)
+	@GeneratedValue(generator = "critere_id_seq", strategy = GenerationType.SEQUENCE)
 	@Column(name="id", unique=true, nullable=false)
 	public Long getId() {
 		return id;
@@ -42,19 +46,29 @@ public class TypeUtilisateur implements Serializable {
 		this.id = id;
 	}
 	
-	@Column(name="libelle")
+	@Column(name="nom")
 	public String getLibelle() {
-		return libelle;
+		return nom;
 	}
 	
 	public void setLibelle(String libelle) {
-		this.libelle = libelle;
+		this.nom = libelle;
 	}
 	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "id_categorie", nullable = false)
+	public Categorie getCategorie() {
+		return categorie;
+	}
+
+	public void setCategorie(Categorie categorie) {
+		this.categorie = categorie;
+	}
+
 	@Transient
 	@Override
 	public String toString() {
-		return "TypeUtilisateur:{ id:"+id+"\', libelle: \'"+libelle+"\'}";
+		return "Critere:{ id:"+id+"\', nom: \'"+nom+"\'}";
 	}
 
 	@Override
@@ -62,7 +76,7 @@ public class TypeUtilisateur implements Serializable {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((libelle == null) ? 0 : libelle.hashCode());
+		result = prime * result + ((nom == null) ? 0 : nom.hashCode());
 		return result;
 	}
 
@@ -74,16 +88,16 @@ public class TypeUtilisateur implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		TypeUtilisateur other = (TypeUtilisateur) obj;
+		Critere other = (Critere) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
 		} else if (!id.equals(other.id))
 			return false;
-		if (libelle == null) {
-			if (other.libelle != null)
+		if (nom == null) {
+			if (other.nom != null)
 				return false;
-		} else if (!libelle.equals(other.libelle))
+		} else if (!nom.equals(other.nom))
 			return false;
 		return true;
 	}

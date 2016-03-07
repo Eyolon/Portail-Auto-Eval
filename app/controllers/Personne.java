@@ -2,7 +2,6 @@ package controllers;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.GregorianCalendar;
 import java.util.Locale;
 
 import org.apache.commons.codec.binary.Base64;
@@ -14,15 +13,12 @@ import org.mindrot.jbcrypt.BCrypt;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import Tools.ConstructJSONObjects;
-import Tools.Tools;
 import hibernate.dao.BDDUtils;
-import hibernate.dao.GenreDAO;
+import hibernate.dao.ConnexionDAO;
 import hibernate.dao.TypeUtilisateurDAO;
 import hibernate.dao.UtilisateurDAO;
-import hibernate.dao.VilleDAO;
 import hibernate.model.Connexion;
 import hibernate.model.Utilisateur;
-import hibernate.model.Ville;
 import play.Logger;
 import play.libs.F.Promise;
 import play.mvc.Controller;
@@ -41,8 +37,8 @@ public class Personne extends Controller {
 			if(jsonN != null && jsonN.get("password") != null && jsonN.get("password").asText() != null) {
 				pwd = jsonN.get("password").asText();
 			}
-			if(jsonN != null && jsonN.get("email") != null && jsonN.get("email").asText() != null) {
-				newMail = jsonN.get("email").asText();
+			if(jsonN != null && jsonN.get("adresseMail") != null && jsonN.get("adresseMail").asText() != null) {
+				newMail = jsonN.get("adresseMail").asText();
 			}
 			Utilisateur u = null;
 			Transaction tx = null;
@@ -96,29 +92,16 @@ public class Personne extends Controller {
 					u = UtilisateurDAO.getUtilisateurByEmail(jsonN.get("adresseMail").asText());
 					if(u == null) {
 						u = new Utilisateur();
-						
 						Connexion connexion = new Connexion(BCrypt.hashpw(jsonN.get("pwd").asText(), BCrypt.gensalt()));
-						BDDUtils.insert(connexion);
+						ConnexionDAO.insert(connexion);
 						u.setConnexion(connexion);
 						
-						u.setAdresse(jsonN.get("adresseRue").asText());
-						u.setAdresseCodePostal(jsonN.get("adresseCodePostal").asText());
-						
-						Ville ville = VilleDAO.getVilleByNom(jsonN.get("adresseVille").asText());
-						if(ville == null) {
-							ville = new Ville(jsonN.get("adresseVille").asText());
-							BDDUtils.insert(ville);
+						u.setEmail(jsonN.get("adresseMail").asText());
+						if(jsonN.get("login") != null && !jsonN.get("login").asText().isEmpty()) {
+							u.setLogin(jsonN.get("login").asText());
 						}
-						u.setVille(ville);
-						
-						u.setAdresseMail(jsonN.get("adresseMail").asText());
-						u.setTelephone(jsonN.get("telephone").asText());
-						u.setGenre(GenreDAO.getGenreByLibelle(jsonN.get("genre").asText()));
-						u.setNom(jsonN.get("lastname").asText());
-						u.setPrenom(jsonN.get("firstname").asText());
-						u.setDateNaissance(GregorianCalendar.from(Tools.parseDateToZonedDateTime(df.parse(jsonN.get("birthday").asText()))));
 						u.setTypeUtilisateur(TypeUtilisateurDAO.findById(2l));
-						BDDUtils.insert(u);
+						UtilisateurDAO.insert(u);
 					} else {
 						throw new Exception("Adresse mail déjà utilisée.");
 					}
@@ -156,25 +139,11 @@ public class Personne extends Controller {
 				try {
 					tx = BDDUtils.beginTransaction(isActive);
 					
-					Utilisateur u = UtilisateurDAO.findByIdWithEager(jsonN.get("id").asLong());
+					Utilisateur u = UtilisateurDAO.findById(Utilisateur.class, jsonN.get("id").asLong());
 					u.getConnexion().setPassword(BCrypt.hashpw(jsonN.get("pwd").asText(), BCrypt.gensalt()));
-					u.setAdresse(jsonN.get("adresseRue").asText());
-					u.setAdresseCodePostal(jsonN.get("adresseCodePostal").asText());
-					
-					Ville ville = VilleDAO.getVilleByNom(jsonN.get("adresseVille").asText());
-					if(ville == null) {
-						ville = new Ville(jsonN.get("adresseVille").asText());
-						BDDUtils.insert(ville);
-					}
-					u.setVille(ville);
-					
-					u.setAdresseMail(jsonN.get("adresseMail").asText());
-					u.setTelephone(jsonN.get("telephone").asText());
-					u.setGenre(GenreDAO.getGenreByLibelle(jsonN.get("genre").asText()));
-					u.setNom(jsonN.get("lastname").asText());
-					u.setPrenom(jsonN.get("firstname").asText());
-					u.setDateNaissance(GregorianCalendar.from(Tools.parseDateToZonedDateTime(df.parse(jsonN.get("birthday").asText()))));
-					BDDUtils.update(u);
+					u.setEmail(jsonN.get("adresseMail").asText());
+					u.setLogin(jsonN.get("login").asText());
+					UtilisateurDAO.update(u);
 					
 					js = new JSONObject();
 					js.put("user", ConstructJSONObjects.getJSONforUser(u))
@@ -213,7 +182,7 @@ public class Personne extends Controller {
 			try {
 				tx = BDDUtils.beginTransaction(isActive);
 				
-				u = UtilisateurDAO.findByIdWithEager(idUser);
+				u = UtilisateurDAO.findById(Utilisateur.class, idUser);
 
 				if(u != null && checkToken(token, u)) {
 					js = ConstructJSONObjects.getJSONforUserFull(u);
@@ -282,7 +251,7 @@ public class Personne extends Controller {
 	}
 	
 	private static String generateToken(Utilisateur user) {
-		String keySource = user.getId() + "/" + user.getNom() + user.getPrenom() + user.getAdresseMail() + user.getConnexion().getPassword() +"psj@1802";
+		String keySource = user.getId() + "/" + user.getLogin() + user.getEmail() + user.getConnexion().getPassword() +"psj@1802";
 		byte [] tokenByte = Base64.encodeBase64(keySource.getBytes());
 		String token = new String(tokenByte);
 		return token;
@@ -323,7 +292,7 @@ public class Personne extends Controller {
 				Logger.error("Token invalide: ", e);
 			}
 			
-			return UtilisateurDAO.findById(userId);
+			return UtilisateurDAO.findById(Utilisateur.class, userId);
 		} else {
 			return null;
 		}
