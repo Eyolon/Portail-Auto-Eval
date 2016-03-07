@@ -68,7 +68,7 @@ ALTER SEQUENCE public.type_utilisateur_id_seq OWNER TO postgres;
 -- object: public.type_utilisateur | type: TABLE --
 -- DROP TABLE IF EXISTS public.type_utilisateur CASCADE;
 CREATE TABLE public.type_utilisateur(
-	id bigint NOT NULL DEFAULT nextval('type_d_utilisateur_id_seq'::regclass),
+	id bigint NOT NULL DEFAULT nextval('type_utilisateur_id_seq'::regclass),
 	libelle character varying(25),
 	CONSTRAINT pk_type_utilisateur_id PRIMARY KEY (id)
 
