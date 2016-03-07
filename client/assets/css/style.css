@@ -61,3 +61,38 @@ ul[rn-carousel] img {
 .custom-indicator span.inactive {
   color:lightgray;
 }
+
+/* Champ Identification  */
+login.col-xs-12 > div:nth-child(1){
+	
+	border-radius: 8px 8px 8px 8px;
+    border: solid 2px;
+    border-color: #e0c088;
+    box-shadow: 4px 4px 12px #aaa;
+    margin-left: 0.5%;
+    margin-right: 0.5%;
+	margin-top: 2%;
+	padding: 5%;
+}
+
+info-right.col-xs-12{
+		border-radius: 8px 8px 8px 8px;
+    border: solid 2px;
+    border-color: #e0c088;
+    box-shadow: 4px 4px 12px #aaa;
+    margin-left: 0.5%;
+    margin-right: 0.5%;
+    margin-top: 2%;
+    padding: 5%;
+}
+
+.form-horizontal{
+		border-radius: 8px 8px 8px 8px;
+    border: solid 2px;
+    border-color: #e0c088;
+    box-shadow: 4px 4px 12px #aaa;
+    margin-left: 0.5%;
+    margin-right: 0.5%;
+    margin-top: -3%;
+    padding: 5%;
+}
