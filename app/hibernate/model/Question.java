@@ -1,6 +1,7 @@
 package hibernate.model;
 
 import java.io.Serializable;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -23,6 +25,7 @@ public class Question implements Serializable {
 	private String valeur = null;
 	private Formulaire formulaire = null;
 	private Critere critere = null;
+	private Set<Note> notes = null;
 	
 	public Question(){}
 	
@@ -78,6 +81,15 @@ public class Question implements Serializable {
 
 	public void setCritere(Critere critere) {
 		this.critere = critere;
+	}
+
+	@OneToMany(mappedBy="question")
+	public Set<Note> getNotes() {
+		return notes;
+	}
+
+	public void setNotes(Set<Note> notes) {
+		this.notes = notes;
 	}
 
 	@Transient

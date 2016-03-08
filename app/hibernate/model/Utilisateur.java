@@ -1,6 +1,7 @@
 package hibernate.model;
 
 import java.io.Serializable;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -26,6 +28,7 @@ public class Utilisateur implements Serializable {
 	private TypeUtilisateur typeUtilisateur = null;
 	private Connexion connexion = null;
 	private Service service = null;
+	private Set<Note> notes = null;
 	
 	public Utilisateur(){}
 	
@@ -104,6 +107,15 @@ public class Utilisateur implements Serializable {
 
 	public void setService(Service service) {
 		this.service = service;
+	}
+
+	@OneToMany(mappedBy="utilisateur")
+	public Set<Note> getNotes() {
+		return notes;
+	}
+
+	public void setNotes(Set<Note> notes) {
+		this.notes = notes;
 	}
 
 	@Transient

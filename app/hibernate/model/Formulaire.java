@@ -1,12 +1,14 @@
 package hibernate.model;
 
 import java.io.Serializable;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -18,6 +20,7 @@ public class Formulaire implements Serializable {
 	
 	private Long id = null;
 	private String nom = null;
+	private Set<Question> questions = null;
 	
 	public Formulaire(){}
 	
@@ -51,6 +54,15 @@ public class Formulaire implements Serializable {
 		this.nom = libelle;
 	}
 	
+	@OneToMany(mappedBy="formulaire")
+	public Set<Question> getQuestions() {
+		return questions;
+	}
+
+	public void setQuestions(Set<Question> questions) {
+		this.questions = questions;
+	}
+
 	@Transient
 	@Override
 	public String toString() {
