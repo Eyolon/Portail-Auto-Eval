@@ -239,7 +239,7 @@ module.exports = function (grunt) {
                 }
             },
             copyCSS: {
-                files: ['client/css/*.min.css', 'client/css/modals.css', 'client/css/iconCustom.css', 'client/css/directives.css'],
+                files: ['client/css/*.min.css', 'client/css/modals.css', 'client/css/iconCustom.css', 'client/css/directives.css', 'client/assets/css/style.css'],
                 tasks: ['newer:copy:filesAquiweb', 'notify:copyCSS'],
                 options: {
                     livereload: true

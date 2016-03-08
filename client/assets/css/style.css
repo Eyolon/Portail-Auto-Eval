@@ -63,7 +63,7 @@ ul[rn-carousel] img {
 }
 
 /* Champ Identification  */
-login.col-xs-12 > div:nth-child(1){
+login > div:nth-child(1){
 	
 	border-radius: 8px 8px 8px 8px;
     border: solid 2px;
@@ -75,7 +75,7 @@ login.col-xs-12 > div:nth-child(1){
 	padding: 5%;
 }
 
-info-right.col-xs-12{
+info-right > div:nth-child(1){
 		border-radius: 8px 8px 8px 8px;
     border: solid 2px;
     border-color: #e0c088;
@@ -94,5 +94,5 @@ info-right.col-xs-12{
     margin-left: 0.5%;
     margin-right: 0.5%;
     margin-top: -3%;
-    padding: 5%;
+    padding: 6%;
 }
