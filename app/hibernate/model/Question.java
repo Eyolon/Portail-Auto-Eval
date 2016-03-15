@@ -1,7 +1,7 @@
 package hibernate.model;
 
 import java.io.Serializable;
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -25,7 +25,7 @@ public class Question implements Serializable {
 	private String valeur = null;
 	private Formulaire formulaire = null;
 	private Critere critere = null;
-	private Set<Note> notes = null;
+	private List<Note> notes = null;
 	
 	public Question(){}
 	
@@ -84,11 +84,11 @@ public class Question implements Serializable {
 	}
 
 	@OneToMany(mappedBy="question")
-	public Set<Note> getNotes() {
+	public List<Note> getNotes() {
 		return notes;
 	}
 
-	public void setNotes(Set<Note> notes) {
+	public void setNotes(List<Note> notes) {
 		this.notes = notes;
 	}
 

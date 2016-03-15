@@ -3,10 +3,12 @@ package hibernate.dao;
 import java.util.List;
 
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Order;
 
+import hibernate.utils.BDDUtils;
 import play.Logger;
 
-public abstract class BasicDAO<T> {
+public abstract class BasicDAO {
 
 	public static <T> T findById(Class<T> table, Long id) {
 		T o = null;
@@ -32,6 +34,40 @@ public abstract class BasicDAO<T> {
 		try {
 			tx = BDDUtils.beginTransaction(isActive);
 			all = BDDUtils.getCurrentSession().createCriteria(table).list();
+			BDDUtils.commit(isActive, tx);
+		}
+		catch(Exception ex) {
+			Logger.error("Hibernate failure : "+ ex.getMessage());
+			BDDUtils.rollback(isActive, tx);
+		}
+		return all;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public static <T> List<T> getAllOrderAscByColumn(Class<T> table, String columnToOrder) {
+		List<T> all = null;
+		Transaction tx = null;
+		boolean isActive = BDDUtils.getTransactionStatus();
+		try {
+			tx = BDDUtils.beginTransaction(isActive);
+			all = BDDUtils.getCurrentSession().createCriteria(table).addOrder(Order.asc(columnToOrder)).list();
+			BDDUtils.commit(isActive, tx);
+		}
+		catch(Exception ex) {
+			Logger.error("Hibernate failure : "+ ex.getMessage());
+			BDDUtils.rollback(isActive, tx);
+		}
+		return all;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public static <T> List<T> getAllOrderDescByColumn(Class<T> table, String columnToOrder) {
+		List<T> all = null;
+		Transaction tx = null;
+		boolean isActive = BDDUtils.getTransactionStatus();
+		try {
+			tx = BDDUtils.beginTransaction(isActive);
+			all = BDDUtils.getCurrentSession().createCriteria(table).addOrder(Order.desc(columnToOrder)).list();
 			BDDUtils.commit(isActive, tx);
 		}
 		catch(Exception ex) {

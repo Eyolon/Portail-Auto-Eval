@@ -24,7 +24,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="utilisateur">
 	<schema name="public"/>
 	<role name="postgres"/>
-	<position x="607" y="211"/>
+	<position x="608" y="221"/>
 	<column name="id" not-null="true" sequence="public.utilisateur_id_seq">
 		<type name="bigint"/>
 	</column>
@@ -37,9 +37,6 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<column name="login">
 		<type name="character varying" length="20"/>
 	</column>
-	<column name="email">
-		<type name="character varying" length="50"/>
-	</column>
 	<column name="id_service">
 		<type name="bigint"/>
 	</column>
@@ -48,9 +45,6 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	</constraint>
 	<constraint name="uq_utilisateur_login" type="uq-constr" table="public.utilisateur">
 		<columns names="login" ref-type="src-columns"/>
-	</constraint>
-	<constraint name="uq_utilisateur_email" type="uq-constr" table="public.utilisateur">
-		<columns names="email" ref-type="src-columns"/>
 	</constraint>
 </table>
 
@@ -65,7 +59,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="type_utilisateur">
 	<schema name="public"/>
 	<role name="postgres"/>
-	<position x="19" y="250"/>
+	<position x="20" y="250"/>
 	<column name="id" not-null="true" default-value="nextval('type_d_utilisateur_id_seq'::regclass)">
 		<type name="bigint"/>
 	</column>
@@ -88,7 +82,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="connexion">
 	<schema name="public"/>
 	<role name="postgres"/>
-	<position x="657" y="38"/>
+	<position x="658" y="38"/>
 	<column name="id" not-null="true" sequence="public.connexion_id_seq">
 		<type name="bigint"/>
 	</column>
@@ -111,7 +105,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="service">
 	<schema name="public"/>
 	<role name="postgres"/>
-	<position x="1250" y="247"/>
+	<position x="1247" y="249"/>
 	<column name="id" not-null="true" sequence="public.service_id_seq">
 		<type name="bigint"/>
 	</column>
@@ -134,7 +128,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="formulaire">
 	<schema name="public"/>
 	<role name="postgres"/>
-	<position x="100" y="695"/>
+	<position x="88" y="695"/>
 	<column name="id" not-null="true" sequence="public.formulaire_id_seq">
 		<type name="bigint"/>
 	</column>
@@ -157,7 +151,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="question">
 	<schema name="public"/>
 	<role name="postgres"/>
-	<position x="655" y="679.4"/>
+	<position x="643" y="679.4"/>
 	<column name="id" not-null="true" sequence="public.question_id_seq">
 		<type name="bigint"/>
 	</column>
@@ -186,7 +180,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="critere">
 	<schema name="public"/>
 	<role name="postgres"/>
-	<position x="1252" y="682.4"/>
+	<position x="1240" y="682.4"/>
 	<column name="id" not-null="true" sequence="public.critere_id_seq">
 		<type name="bigint"/>
 	</column>
@@ -212,7 +206,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="categorie">
 	<schema name="public"/>
 	<role name="postgres"/>
-	<position x="1280" y="471.4"/>
+	<position x="1268" y="471.4"/>
 	<column name="id" not-null="true" sequence="public.categorie_id_seq">
 		<type name="bigint"/>
 	</column>
@@ -235,7 +229,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="note">
 	<schema name="public"/>
 	<role name="postgres"/>
-	<position x="649" y="434.4"/>
+	<position x="637" y="434.4"/>
 	<column name="id" not-null="true" sequence="public.note_id_seq">
 		<type name="bigint"/>
 	</column>

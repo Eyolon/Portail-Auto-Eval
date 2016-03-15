@@ -1,9 +1,9 @@
 import org.hibernate.HibernateException;
 import org.hibernate.Transaction;
 
-import hibernate.dao.BDDUtils;
 import hibernate.dao.TypeUtilisateurDAO;
 import hibernate.model.TypeUtilisateur;
+import hibernate.utils.BDDUtils;
 import play.Application;
 import play.GlobalSettings;
 import play.Logger;

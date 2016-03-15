@@ -1,4 +1,4 @@
-package hibernate.dao;
+package hibernate.utils;
 
 import java.util.Properties;
 

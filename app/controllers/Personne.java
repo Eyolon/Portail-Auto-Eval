@@ -13,12 +13,12 @@ import org.mindrot.jbcrypt.BCrypt;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import Tools.ConstructJSONObjects;
-import hibernate.dao.BDDUtils;
 import hibernate.dao.ConnexionDAO;
 import hibernate.dao.TypeUtilisateurDAO;
 import hibernate.dao.UtilisateurDAO;
 import hibernate.model.Connexion;
 import hibernate.model.Utilisateur;
+import hibernate.utils.BDDUtils;
 import play.Logger;
 import play.libs.F.Promise;
 import play.mvc.Controller;
@@ -96,7 +96,6 @@ public class Personne extends Controller {
 						ConnexionDAO.insert(connexion);
 						u.setConnexion(connexion);
 						
-						u.setEmail(jsonN.get("adresseMail").asText());
 						if(jsonN.get("login") != null && !jsonN.get("login").asText().isEmpty()) {
 							u.setLogin(jsonN.get("login").asText());
 						}
@@ -141,7 +140,6 @@ public class Personne extends Controller {
 					
 					Utilisateur u = UtilisateurDAO.findById(Utilisateur.class, jsonN.get("id").asLong());
 					u.getConnexion().setPassword(BCrypt.hashpw(jsonN.get("pwd").asText(), BCrypt.gensalt()));
-					u.setEmail(jsonN.get("adresseMail").asText());
 					u.setLogin(jsonN.get("login").asText());
 					UtilisateurDAO.update(u);
 					
@@ -185,7 +183,7 @@ public class Personne extends Controller {
 				u = UtilisateurDAO.findById(Utilisateur.class, idUser);
 
 				if(u != null && checkToken(token, u)) {
-					js = ConstructJSONObjects.getJSONforUserFull(u);
+					js = ConstructJSONObjects.getJSONforUser(u);
 				}
 				
 				BDDUtils.commit(isActive, tx);
@@ -205,7 +203,7 @@ public class Personne extends Controller {
 		return promiseOfResult;
 	}
 	
-	public static Promise<Result> seLogger(String email) {
+	public static Promise<Result> seLogger(String login) {
 		Promise<Result> promiseOfResult = Promise.promise(() -> 
 		{
 			String newToken = null;
@@ -220,7 +218,7 @@ public class Personne extends Controller {
 			try {
 				tx = BDDUtils.beginTransaction(isActive);
 				
-				Utilisateur u = UtilisateurDAO.getUtilisateurByEmail(email);
+				Utilisateur u = UtilisateurDAO.getUtilisateurByLogin(login);
 				if(u != null) {
 					if(BCrypt.checkpw(pwd, u.getConnexion().getPassword())) {
 						newToken = generateToken(u);
@@ -251,7 +249,7 @@ public class Personne extends Controller {
 	}
 	
 	private static String generateToken(Utilisateur user) {
-		String keySource = user.getId() + "/" + user.getLogin() + user.getEmail() + user.getConnexion().getPassword() +"psj@1802";
+		String keySource = user.getId() + "/" + user.getLogin() + user.getConnexion().getPassword() + "psj@1802";
 		byte [] tokenByte = Base64.encodeBase64(keySource.getBytes());
 		String token = new String(tokenByte);
 		return token;

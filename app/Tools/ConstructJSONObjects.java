@@ -11,15 +11,10 @@ public class ConstructJSONObjects {
 	
 	public static JSONObject getJSONforUser(Utilisateur u) {
 		return new JSONObject()
-		.put("id", u.getId());
+		.put("id", u.getId())
+		.put("login", u.getLogin());
 	}
 	
-	public static JSONObject getJSONforUserFull(Utilisateur u) {
-		return new JSONObject()
-		.put("id", u.getId())
-		.put("login", u.getLogin())
-		.put("email", u.getEmail());
-	}
 	
 	public static JSONArray getJSONArrayforListUsers(List<Utilisateur> lu) {
 		if(lu != null) {

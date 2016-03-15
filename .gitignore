@@ -98,3 +98,4 @@ public/
 */node_modules/
 public/app/index.html
 *.backup
+portail-auto-eval.sql

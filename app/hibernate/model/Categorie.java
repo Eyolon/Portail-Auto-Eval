@@ -1,7 +1,7 @@
 package hibernate.model;
 
 import java.io.Serializable;
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -20,7 +20,7 @@ public class Categorie implements Serializable {
 	
 	private Long id = null;
 	private String nom = null;
-	private Set<Critere> criteres = null;
+	private List<Critere> criteres = null;
 	
 	public Categorie(){}
 	
@@ -55,11 +55,11 @@ public class Categorie implements Serializable {
 	}
 	
 	@OneToMany(mappedBy="categorie")
-	public Set<Critere> getCriteres() {
+	public List<Critere> getCriteres() {
 		return criteres;
 	}
 
-	public void setCriteres(Set<Critere> criteres) {
+	public void setCriteres(List<Critere> criteres) {
 		this.criteres = criteres;
 	}
 

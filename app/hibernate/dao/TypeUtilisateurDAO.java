@@ -6,16 +6,21 @@ import org.hibernate.Query;
 import org.hibernate.Transaction;
 
 import hibernate.model.TypeUtilisateur;
+import hibernate.utils.BDDUtils;
 import play.Logger;
 
-public class TypeUtilisateurDAO extends BasicDAO<TypeUtilisateur> {
+public class TypeUtilisateurDAO extends BasicDAO {
 	
 	public static TypeUtilisateur findById(Long id) {
 		return findById(TypeUtilisateur.class, id);
 	}
 	
-	public static List<TypeUtilisateur> getAll(Long id) {
+	public static List<TypeUtilisateur> getAll() {
 		return getAll(TypeUtilisateur.class);
+	}
+	
+	public static List<TypeUtilisateur> getAllOrderAscByColumn() {
+		return getAllOrderAscByColumn(TypeUtilisateur.class, "libelle");
 	}
 	
 	public static TypeUtilisateur getTypeUtilisateurByLibelle(String libelle) {
@@ -24,8 +29,7 @@ public class TypeUtilisateurDAO extends BasicDAO<TypeUtilisateur> {
 		boolean isActive = BDDUtils.getTransactionStatus();
 		try {
 			tx = BDDUtils.beginTransaction(isActive);
-			Query q = null;
-			q = BDDUtils.getCurrentSession().createQuery(
+			Query q = BDDUtils.getCurrentSession().createQuery(
 					"SELECT tu FROM TypeUtilisateur tu " +
 					"WHERE tu.libelle = :libelle");
 			q.setParameter("libelle", libelle);

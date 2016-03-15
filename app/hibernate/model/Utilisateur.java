@@ -1,7 +1,7 @@
 package hibernate.model;
 
 import java.io.Serializable;
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -23,26 +23,23 @@ public class Utilisateur implements Serializable {
 	private static final long serialVersionUID = -7351729135012380019L;
 
 	private Long id = null;
-	private String email = null;
 	private String login = null;
 	private TypeUtilisateur typeUtilisateur = null;
 	private Connexion connexion = null;
 	private Service service = null;
-	private Set<Note> notes = null;
+	private List<Note> notes = null;
 	
 	public Utilisateur(){}
 	
-	public Utilisateur(Long id, String email, String login, TypeUtilisateur typeUtilisateur, Connexion connexion, Service service) {
+	public Utilisateur(Long id, String login, TypeUtilisateur typeUtilisateur, Connexion connexion, Service service) {
 		this.id = id;
-		this.email = email;
 		this.login = login;
 		this.typeUtilisateur = typeUtilisateur;
 		this.connexion = connexion;
 		this.service = service;
 	}
 	
-	public Utilisateur(String email, String login, TypeUtilisateur typeUtilisateur, Connexion connexion, Service service) {
-		this.email = email;
+	public Utilisateur(String login, TypeUtilisateur typeUtilisateur, Connexion connexion, Service service) {
 		this.login = login;
 		this.typeUtilisateur = typeUtilisateur;
 		this.connexion = connexion;
@@ -59,15 +56,6 @@ public class Utilisateur implements Serializable {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	@Column(name="email")
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
 	}
 
 	@Column(name="login")
@@ -110,18 +98,18 @@ public class Utilisateur implements Serializable {
 	}
 
 	@OneToMany(mappedBy="utilisateur")
-	public Set<Note> getNotes() {
+	public List<Note> getNotes() {
 		return notes;
 	}
 
-	public void setNotes(Set<Note> notes) {
+	public void setNotes(List<Note> notes) {
 		this.notes = notes;
 	}
 
 	@Transient
 	@Override
 	public String toString() {
-		return "User:{ id:"+id+", adresseMail: \'"+email+"\', typeUtilisateur: \'"+typeUtilisateur.toString()+"\', connexion: \'"+connexion.toString()+"}";
+		return "User:{ id:"+id+"\', typeUtilisateur: \'"+typeUtilisateur.toString()+"\', connexion: \'"+connexion.toString()+"}";
 	}
 
 	@Override
@@ -129,7 +117,6 @@ public class Utilisateur implements Serializable {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((connexion == null) ? 0 : connexion.hashCode());
-		result = prime * result + ((email == null) ? 0 : email.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((login == null) ? 0 : login.hashCode());
 		result = prime * result + ((service == null) ? 0 : service.hashCode());
@@ -150,11 +137,6 @@ public class Utilisateur implements Serializable {
 			if (other.connexion != null)
 				return false;
 		} else if (!connexion.equals(other.connexion))
-			return false;
-		if (email == null) {
-			if (other.email != null)
-				return false;
-		} else if (!email.equals(other.email))
 			return false;
 		if (id == null) {
 			if (other.id != null)

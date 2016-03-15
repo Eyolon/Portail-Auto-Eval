@@ -1,7 +1,7 @@
 package hibernate.model;
 
 import java.io.Serializable;
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -20,7 +20,7 @@ public class Service implements Serializable {
 	
 	private Long id = null;
 	private String libelle = null;
-	private Set<Utilisateur> utilisateurs = null;
+	private List<Utilisateur> utilisateurs = null;
 	
 	public Service(){}
 	
@@ -55,11 +55,11 @@ public class Service implements Serializable {
 	}
 	
 	@OneToMany(mappedBy="service")
-	public Set<Utilisateur> getUtilisateurs() {
+	public List<Utilisateur> getUtilisateurs() {
 		return utilisateurs;
 	}
 
-	public void setUtilisateurs(Set<Utilisateur> utilisateurs) {
+	public void setUtilisateurs(List<Utilisateur> utilisateurs) {
 		this.utilisateurs = utilisateurs;
 	}
 

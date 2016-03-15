@@ -40,11 +40,9 @@ CREATE TABLE public.utilisateur(
 	id_type_utilisateur bigint NOT NULL,
 	id_connexion bigint NOT NULL,
 	login character varying(20),
-	email character varying(50),
 	id_service bigint,
 	CONSTRAINT prk_constraint_utilisateur PRIMARY KEY (id),
-	CONSTRAINT uq_utilisateur_login UNIQUE (login),
-	CONSTRAINT uq_utilisateur_email UNIQUE (email)
+	CONSTRAINT uq_utilisateur_login UNIQUE (login)
 
 );
 -- ddl-end --
@@ -68,7 +66,7 @@ ALTER SEQUENCE public.type_utilisateur_id_seq OWNER TO postgres;
 -- object: public.type_utilisateur | type: TABLE --
 -- DROP TABLE IF EXISTS public.type_utilisateur CASCADE;
 CREATE TABLE public.type_utilisateur(
-	id bigint NOT NULL DEFAULT nextval('type_utilisateur_id_seq'::regclass),
+	id bigint NOT NULL DEFAULT nextval('type_d_utilisateur_id_seq'::regclass),
 	libelle character varying(25),
 	CONSTRAINT pk_type_utilisateur_id PRIMARY KEY (id)
 
@@ -320,3 +318,5 @@ ALTER TABLE public.note ADD CONSTRAINT fk_note_id_utilisateur FOREIGN KEY (id_ut
 REFERENCES public.utilisateur (id) MATCH SIMPLE
 ON DELETE NO ACTION ON UPDATE NO ACTION;
 -- ddl-end --
+
+
