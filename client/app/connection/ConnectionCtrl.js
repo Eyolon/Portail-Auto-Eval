@@ -12,7 +12,7 @@ function ConnectionCtrl($http, $state, ConnexionService) {
 	}
 	
 	this.seConnecter = function seConnecter() {
-		ConnexionService.seConnecter(self.connexion.mail, self.connexion.password, redirectToHome, onError);
+		ConnexionService.seConnecter(self.connexion.login, self.connexion.password, redirectToHome, onError);
 	};
 }
 angular

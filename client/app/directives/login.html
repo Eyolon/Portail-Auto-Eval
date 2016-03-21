@@ -2,11 +2,11 @@
     <form data-ng-show="!login.isConnected">
         <h3>Identification</h3>
 		<div class="alert alert-warning "  data-ng-show="!login.isSuccess">
-        Erreur de connexion, vérifiez votre Email et Mot de passe !
+        Erreur de connexion, vérifiez votre Identifiant et Mot de passe !
     </div>
         <div class="input-group input-group-sm" style="margin-bottom:5px;">
-            <span class="input-group-addon" id="mail">Email</span>
-            <input type="email" class="form-control" placeholder="Adress mail" aria-describedby="sizing-addon3" data-ng-model="login.connect.email">
+            <span class="input-group-addon" id="mail">Identifiant</span>
+            <input type="text" class="form-control" placeholder="login" aria-describedby="sizing-addon3" data-ng-model="login.connect.login">
         </div>
         <div class="input-group input-group-sm" style="margin-bottom:5px;">
             <span class="input-group-addon" id="password">Mot de passe</span>
@@ -16,6 +16,6 @@
         Nouvel utilisateur ? <a ui-sref="inscription">S'inscrire !</a>
     </form>
     <div data-ng-show="login.isConnected" style="margin-top: 10px">
-        <span>Hello </span><b><span data-ng-bind="login.user.lastname"></span> <span data-ng-bind="login.user.firstname"></span></b> ! <a data-ng-click="login.logout()" style="cursor: pointer">Déconnexion !</a>
+        <span>Bienvenue </span><b><span data-ng-bind="login.user.login"></span></b> ! <a data-ng-click="login.logout()" style="cursor: pointer">Déconnexion !</a>
     </div>
 </div>

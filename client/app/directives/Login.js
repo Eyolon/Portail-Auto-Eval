@@ -32,7 +32,7 @@ function loginController($state, $scope, ConnexionService, ipCookie) {
 	}
 	
 	this.seConnecter = function seConnecter() {
-		ConnexionService.seConnecter(self.connect.email, self.connect.pwd, redirectToHome, onError);
+		ConnexionService.seConnecter(self.connect.login, self.connect.pwd, redirectToHome, onError);
 	};
 	
 	this.logout = function logout() {

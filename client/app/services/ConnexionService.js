@@ -10,8 +10,8 @@ function ConnexionService($http, $rootScope, ipCookie) {
 		}
     };
 
-    this.seConnecter = function seConnecter(email, password, onSuccess, onError) {
-        $http.post('/api/logger/' + email, {password: password})
+    this.seConnecter = function seConnecter(login, password, onSuccess, onError) {
+        $http.post('/api/logger/' + login, {password: password})
             .success(function(data, status, headers, config) {
                 isConnected = true;
                 ipCookie('utilisateur', data.utilisateur, {expires : 7});

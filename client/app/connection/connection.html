@@ -25,15 +25,15 @@
             <td>
                 <form role="form">
                     <div class="alert alert-warning col-xs-12 col-sm-12 col-md-4 col-lg-4" style="margin-top: 20px" data-ng-show="!ConnectionCtrl.isSuccess">
-                        Erreur de connexion, vérifiez votre email ou mot de passe !
+                        Erreur de connexion, vérifiez votre identifiant ou mot de passe !
                     </div>
                     <table>
                         <tr class="form-group">
                             <td class="alignLeft" style="margin-right: 20px">
-                                <label class="connexion alignRight" for="mail">Adresse Email :</label>
+                                <label class="connexion alignRight" for="login">Identifiant :</label>
                             </td>
                             <td>
-                                <input class="connexion" type="email" name="mail" id="mail" data-ng-model="ConnectionCtrl.connexion.mail" required>
+                                <input class="connexion" type="text" name="login" id="login" data-ng-model="ConnectionCtrl.connexion.login" required>
                             </td>
                         </tr>
                         <tr class="form-group">

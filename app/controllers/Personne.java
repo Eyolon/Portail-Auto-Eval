@@ -27,18 +27,18 @@ import play.mvc.Result;
 public class Personne extends Controller {
 	public static DateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.FRANCE);
 	
-	public static Promise<Result> checkUser(String email) {
+	public static Promise<Result> checkUser(String login) {
 		Promise<Result> promiseOfResult = Promise.promise(() -> 
 		{
 			String newToken = null;
 			String pwd = null;
-			String newMail = null;
+			String newLogin = null;
 			JsonNode jsonN = request().body().asJson();
 			if(jsonN != null && jsonN.get("password") != null && jsonN.get("password").asText() != null) {
 				pwd = jsonN.get("password").asText();
 			}
-			if(jsonN != null && jsonN.get("adresseMail") != null && jsonN.get("adresseMail").asText() != null) {
-				newMail = jsonN.get("adresseMail").asText();
+			if(jsonN != null && jsonN.get("login") != null && jsonN.get("login").asText() != null) {
+				newLogin = jsonN.get("login").asText();
 			}
 			Utilisateur u = null;
 			Transaction tx = null;
@@ -46,9 +46,9 @@ public class Personne extends Controller {
 			try {
 				tx = BDDUtils.beginTransaction(isActive);
 				
-				u = UtilisateurDAO.getUtilisateurByEmail(newMail);
+				u = UtilisateurDAO.getUtilisateurByLogin(newLogin);
 				if(u == null) {
-					u = UtilisateurDAO.getUtilisateurByEmail(email);
+					u = UtilisateurDAO.getUtilisateurByLogin(login);
 					if(u == null || !BCrypt.checkpw(pwd, u.getConnexion().getPassword())) {
 						u = null;
 					} else {
@@ -89,7 +89,7 @@ public class Personne extends Controller {
 				try {
 					tx = BDDUtils.beginTransaction(isActive);
 					
-					u = UtilisateurDAO.getUtilisateurByEmail(jsonN.get("adresseMail").asText());
+					u = UtilisateurDAO.getUtilisateurByLogin(jsonN.get("login").asText());
 					if(u == null) {
 						u = new Utilisateur();
 						Connexion connexion = new Connexion(BCrypt.hashpw(jsonN.get("pwd").asText(), BCrypt.gensalt()));
@@ -102,7 +102,7 @@ public class Personne extends Controller {
 						u.setTypeUtilisateur(TypeUtilisateurDAO.findById(2l));
 						UtilisateurDAO.insert(u);
 					} else {
-						throw new Exception("Adresse mail déjà utilisée.");
+						throw new Exception("Login déjà utilisée.");
 					}
 					
 					BDDUtils.commit(isActive, tx);
@@ -112,9 +112,9 @@ public class Personne extends Controller {
 					return internalServerError("Une erreur est survenue pendant la transaction avec la base de données.");
 				} catch(Exception ex) {
 					BDDUtils.rollback(isActive, tx);
-					if(ex.getMessage().equalsIgnoreCase("Adresse mail déjà utilisée.")) {
-						Logger.info("Adresse mail \"" + jsonN.get("adresseMail").asText() + " déjà utilisée.");
-						return forbidden("Adresse mail \"" + jsonN.get("adresseMail").asText() + " déjà utilisée.");
+					if(ex.getMessage().equalsIgnoreCase("Login déjà utilisée.")) {
+						Logger.info("Login \"" + jsonN.get("adresseMail").asText() + " déjà utilisée.");
+						return forbidden("Login \"" + jsonN.get("adresseMail").asText() + " déjà utilisée.");
 					} else {
 						Logger.error("Error : "+ ex.getMessage());
 						return internalServerError("Une erreur est survenue pendant la transaction avec la base de données.");
@@ -138,7 +138,7 @@ public class Personne extends Controller {
 				try {
 					tx = BDDUtils.beginTransaction(isActive);
 					
-					Utilisateur u = UtilisateurDAO.findById(Utilisateur.class, jsonN.get("id").asLong());
+					Utilisateur u = UtilisateurDAO.findById(jsonN.get("id").asLong());
 					u.getConnexion().setPassword(BCrypt.hashpw(jsonN.get("pwd").asText(), BCrypt.gensalt()));
 					u.setLogin(jsonN.get("login").asText());
 					UtilisateurDAO.update(u);
@@ -251,29 +251,20 @@ public class Personne extends Controller {
 	private static String generateToken(Utilisateur user) {
 		String keySource = user.getId() + "/" + user.getLogin() + user.getConnexion().getPassword() + "psj@1802";
 		byte [] tokenByte = Base64.encodeBase64(keySource.getBytes());
-		String token = new String(tokenByte);
-		return token;
+		return new String(tokenByte);
 	}
 	
 	public static boolean checkToken(String token, Utilisateur user){
 		String utilisateurToken;
 		utilisateurToken = generateToken(user);
-		if (utilisateurToken.equals(token)){
-			return true;
-		} else {
-			return false;
-		}
+		return utilisateurToken.equals(token);
 	}
 	
 	public static boolean checkToken(String token){
 		Utilisateur user = getUtilisateurFromToken(token);
 		String utilisateurToken;
 		utilisateurToken = generateToken(user);
-		if (utilisateurToken.equals(token)){
-			return true;
-		} else {
-			return false;
-		}
+		return utilisateurToken.equals(token); 
 	}
 	
 	public static Utilisateur getUtilisateurFromToken(String token){
@@ -282,17 +273,15 @@ public class Personne extends Controller {
 		String userToken = new String(tokenBytes);
 		String[] tokenSplited = userToken.split("/");
 		
-		Long userId = null;
 		if (tokenSplited.length > 0){
 			try {
-				userId = Long.valueOf(tokenSplited[0]);
+				Long userId = Long.valueOf(tokenSplited[0]);
+				UtilisateurDAO.findById(userId);
 			} catch(NumberFormatException e) {
 				Logger.error("Token invalide: ", e);
 			}
 			
-			return UtilisateurDAO.findById(Utilisateur.class, userId);
-		} else {
-			return null;
 		}
+		return null;
 	}
 }
