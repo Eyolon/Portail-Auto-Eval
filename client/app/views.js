@@ -79,6 +79,21 @@ angular
                 }
             }
         });
+        
+        $stateProvider.state('evaluation', {
+            parent: 'main',
+            url: '/evaluation',
+            title: 'Evaluation',
+            reloadOnSearch: false,
+            views: {
+                'main@': {
+                    templateUrl: '/evaluation/evaluation.html',
+                    controller: 'EvaluationController',
+                    controllerAs: 'EvaluationController'
+                }
+            }
+        });
+        
         $stateProvider.state('connection', {
             parent: 'main',
             url: '/connection',

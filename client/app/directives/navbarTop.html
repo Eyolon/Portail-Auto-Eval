@@ -21,8 +21,14 @@
 						<li ui-sref-active="active"><a ui-sref="reservation">Current Reservation</a></li>-->
                         <li ui-sref-active="active"><a ui-sref="profil">Mon Profile</a></li>
                         <li style="cursor: pointer"><a ui-sref="home" data-ng-click="navbarTopCtrl.logout()">Déconnexion</a></li>
+                        <li ui-sref-active="active"><a ui-sref="lastEvaluation">Mes précédentes Evaluation</a></li>
                     </ul>
+                    
+                    
                 </li>
+				
+				 <li ui-sref-active="active"><a data-ng-show="navbarTopCtrl.isConnected" ui-sref="evaluation">Mon évaluation</a></li>
+				
                 <li ui-sref-active="active" data-ng-show="!navbarTopCtrl.isConnected"><a ui-sref="connection">Connexion</a></li>
             </ul>
         </div>
