@@ -5,6 +5,7 @@ import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import hibernate.model.Formulaire;
 import hibernate.model.Utilisateur;
 
 public class ConstructJSONObjects {
@@ -25,5 +26,11 @@ public class ConstructJSONObjects {
 			return ja;
 		}
 		return null;
+	}
+	
+	public static JSONObject getJSONforForm(Formulaire f) {
+		return new JSONObject()
+				.put("listQuestions", f.getQuestions())
+				.put("libelle", f.getLibelle());
 	}
 }

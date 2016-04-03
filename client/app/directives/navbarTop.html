@@ -27,7 +27,7 @@
                     
                 </li>
 				
-				 <li ui-sref-active="active"><a data-ng-show="navbarTopCtrl.isConnected" ui-sref="evaluation">Mon évaluation</a></li>
+				<li ui-sref-active="active"><a data-ng-show="navbarTopCtrl.isConnected" ui-sref="evaluation" data-ng-click="EvaluationController.getQuestionnaire()">Mon évaluation</a></li>
 				
                 <li ui-sref-active="active" data-ng-show="!navbarTopCtrl.isConnected"><a ui-sref="connection">Connexion</a></li>
             </ul>

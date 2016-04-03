@@ -6,7 +6,6 @@ import org.hibernate.Query;
 import org.hibernate.Transaction;
 
 import hibernate.model.Formulaire;
-import hibernate.model.Utilisateur;
 import hibernate.utils.BDDUtils;
 import play.Logger;
 
