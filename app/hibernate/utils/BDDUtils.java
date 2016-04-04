@@ -189,7 +189,9 @@ public class BDDUtils {
 				.addAnnotatedClass(hibernate.model.TypeUtilisateur.class)
 				.addAnnotatedClass(hibernate.model.Service.class)
 				.addAnnotatedClass(hibernate.model.Utilisateur.class)
-				.addAnnotatedClass(hibernate.model.Note.class);
+				.addAnnotatedClass(hibernate.model.Note.class)
+				.addAnnotatedClass(hibernate.model.FormulaireServiceID.class)
+				.addAnnotatedClass(hibernate.model.FormulaireService.class);
 			
 			StandardServiceRegistry ssr = new StandardServiceRegistryBuilder().applySettings(config.getProperties()).build();
 			sessionFactory = config.buildSessionFactory(ssr);

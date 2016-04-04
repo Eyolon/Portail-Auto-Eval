@@ -5,11 +5,15 @@
 # Home page
 GET     /                           controllers.Assets.at(path="/public/app", file="index.html")
 
+# Personne
 POST	/api/logger/:email			controllers.Personne.seLogger(email: String)
 POST	/api/user					controllers.Personne.updateUser()
 POST	/api/userFull/:idUser		controllers.Personne.getUserByIdFull(idUser: Long)
 POST	/api/insertUser				controllers.Personne.insertUser()
 POST	/api/checkUser/:email		controllers.Personne.checkUser(email: String)
+
+# Formulaire
+POST	/api/evaluation				controllers.Evaluation.getListFormulaire()
 POST	/api/evaluation/:nomForm	controllers.Evaluation.getFormulaire(nomForm: String)
 
 # Map static resources from the /public folder to the /assets URL path

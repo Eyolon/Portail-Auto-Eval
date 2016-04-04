@@ -1,7 +1,20 @@
-function EvaluationService(){
+function EvaluationService($resource){
 
+    this.listQuestionnaire = $resource('/api/evaluation',
+        {},
+        {
+            'post': {method:'POST', isArray:true}
+        }
+    );
 
-	this.getQuestionnaire = function getQuestionnaire(nameForm, onSuccess, onError){
+    this.questionnaire = $resource('/api/evaluation/:nomForm',
+        {},
+        {
+            'post': {method:'POST', isArray:false}
+        }
+    );
+    
+	/*this.getQuestionnaire = function getQuestionnaire(nameForm, onSuccess, onError){
 		$http.post('/api/evaluation/'+nameForm)
 			.success(function(data, status, headers, config)  {
 	                onSuccess();
@@ -9,7 +22,7 @@ function EvaluationService(){
 			.error(function(data, status, headers, config){
 					onError();
 	        });
-	};
+	};*/
 	
 	this.postResponse = function postResponse(){
 	};
