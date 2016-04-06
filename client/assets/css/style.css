@@ -1,5 +1,6 @@
 body {
   padding-top: 50px;
+  background-color: #D4EBFA;
 }
 .starter-template {
   padding: 40px 15px;
@@ -65,21 +66,13 @@ ul[rn-carousel] img {
 /* Champ Identification  */
 login > div:nth-child(1){
 	
-	border-radius: 8px 8px 8px 8px;
-    border: solid 2px;
-    border-color: #e0c088;
-    box-shadow: 4px 4px 12px #aaa;
-    margin-left: 0.5%;
-    margin-right: 0.5%;
-	margin-top: 2%;
-	padding: 5%;
+    box-shadow: 1px 1px 2px #aaa;
+	padding: 3%;
+	background-color: #FFF;
 }
 
 info-right > div:nth-child(1){
-		border-radius: 8px 8px 8px 8px;
-    border: solid 2px;
-    border-color: #e0c088;
-    box-shadow: 4px 4px 12px #aaa;
+    box-shadow: 1px 1px 2px #aaa;
     margin-left: 0.5%;
     margin-right: 0.5%;
     margin-top: 2%;
@@ -87,12 +80,25 @@ info-right > div:nth-child(1){
 }
 
 .form-horizontal{
-		border-radius: 8px 8px 8px 8px;
-    border: solid 2px;
-    border-color: #e0c088;
-    box-shadow: 4px 4px 12px #aaa;
-    margin-left: 0.5%;
-    margin-right: 0.5%;
-    margin-top: -3%;
-    padding: 6%;
+    
+}
+
+/* reprend les element :
+page accueil poc
+
+
+*/
+div.col-xs-12{
+	box-shadow: 1px 1px 2px #aaa;
+	margin-left: 0.5%;
+	margin-top: 0.5%;
+	padding: 3%;
+	background-color: #FFF;
+}
+
+/*reprend les éléments
+*/
+.col-lg-3{
+	width:32.8%;
+	margin-top: 0.5%;
 }
