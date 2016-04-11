@@ -90,11 +90,11 @@ page accueil poc
 */
 div.col-xs-12{
 	box-shadow: 1px 1px 2px #aaa;
-    margin-left: 0.5%;
-    margin-right: 0.5%;
-    margin-top: 0.5%;
+    margin-left: 2.5%;
+    margin-top: 2.5%;
     padding: 5%;
     background-color : #fff;
+    width: 95%;
 }
 
 /*reprend les éléments
@@ -110,4 +110,13 @@ login.col-xs-12{
 	margin-top: 2.5%;
 	border-radius : 2px;
 	
+}
+
+div.col-lg-8{
+	width: 66.6%;
+    margin-left: 0.5%;
+    margin-right: 0.5%;
+    margin-top: 0.5%;
+    background-color : #fff;
+    box-shadow: 1px 1px 2px #aaa;
 }

@@ -18,10 +18,16 @@
 </head>
 <body>
     <navbar-top></navbar-top>
-   
+    
+    <!-- MOBILE -->
+       
     <login class="col-xs-12 visible-xs-block"></login>
 
-    <div ui-view="main" class="col-xs-12 col-sm-8 col-md-8 col-lg-8 starter-template"></div>
+    <div ui-view="main" class="col-xs-12 visible-xs-block starter-template"></div>
+    
+    <!-- PC BUREAU -->
+    
+    <div ui-view="main" class="hidden-xs col-sm-8 col-md-8 col-lg-8 starter-template"></div>
     
     <login class="col-sm-3 col-md-3 col-lg-3 hidden-xs"></login>
 	
