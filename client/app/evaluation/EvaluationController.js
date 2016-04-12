@@ -22,5 +22,5 @@ function EvaluationController(EvaluationService) {
     self.getListQuestionnaires();
 }
 angular
-	.module('pocApp')
+	.module('portailAutoEval')
 	.controller('EvaluationController', EvaluationController);
