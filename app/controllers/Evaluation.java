@@ -26,8 +26,6 @@ public class Evaluation extends Controller{
 				
 				ja = ConstructJSONObjects.getJSONArrayforListFormulaires(FormulaireDAO.getAll());
 				
-				System.out.println(ja.toString());
-				
 				BDDUtils.commit(isActive, tx);
 			}
 			catch(Exception ex) {
