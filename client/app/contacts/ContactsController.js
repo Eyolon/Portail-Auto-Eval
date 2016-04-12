@@ -3,5 +3,5 @@ function ContactsCtrl($resource) {
 	
 }
 angular
-    .module('pocApp')
+    .module('portailAutoEval')
 	.controller('ContactsCtrl', ContactsCtrl);

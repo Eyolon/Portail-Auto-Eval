@@ -1,5 +1,5 @@
 angular
-    .module('pocApp')
+    .module('portailAutoEval')
     .config(function ($stateProvider, $urlRouterProvider) {
         ///////////
         /* VIEWS */

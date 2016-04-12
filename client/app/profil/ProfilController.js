@@ -71,5 +71,5 @@ function ProfilCtrl($filter, $http, $rootScope, ConnexionService, ipCookie) {
 	};
 }
 angular
-    .module('pocApp')
+    .module('portailAutoEval')
 	.controller('ProfilCtrl', ProfilCtrl);

@@ -1,4 +1,4 @@
-angular.module('pocApp').filter('booksFilter', function ($filter) {
+angular.module('portailAutoEval').filter('booksFilter', function ($filter) {
     function containsInList(list, value) {
         var isFound = false;
         if (list !== undefined) {

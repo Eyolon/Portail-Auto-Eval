@@ -7,5 +7,5 @@ function InitService(ConnexionService) {
 }
 
 angular
-    .module('pocApp')
+    .module('portailAutoEval')
     .service('InitService', InitService);

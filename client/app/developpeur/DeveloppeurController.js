@@ -24,5 +24,5 @@ function DeveloppeurCtrl($filter, $resource) {
 	});
 }
 angular
-    .module('pocApp')
+    .module('portailAutoEval')
 	.controller('DeveloppeurCtrl', DeveloppeurCtrl);

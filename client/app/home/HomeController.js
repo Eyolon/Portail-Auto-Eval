@@ -20,5 +20,5 @@ function HomeCtrl($resource) {
 	});*/
 }
 angular
-    .module('pocApp')
+    .module('portailAutoEval')
 	.controller('HomeCtrl', HomeCtrl);

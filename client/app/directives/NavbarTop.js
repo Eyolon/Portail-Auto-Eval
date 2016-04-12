@@ -23,5 +23,5 @@ function NavbarTopController($scope, ConnexionService) {
 	});
 }
 angular
-    .module('pocApp')
+    .module('portailAutoEval')
     .directive('navbarTop',navbarTop);

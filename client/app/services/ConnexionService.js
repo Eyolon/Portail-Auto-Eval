@@ -50,5 +50,5 @@ function ConnexionService($http, $rootScope, ipCookie) {
 }
 
 angular
-    .module('pocApp')
+    .module('portailAutoEval')
     .service('ConnexionService', ConnexionService);

@@ -53,5 +53,5 @@ function loginController($state, $scope, ConnexionService, ipCookie) {
 	});
 }
 angular
-    .module('pocApp')
+    .module('portailAutoEval')
     .directive('login',login);

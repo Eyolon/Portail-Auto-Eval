@@ -1,9 +1,9 @@
 <div>
     <form data-ng-show="!login.isConnected">
         <h3>Identification</h3>
-		<div class="alert alert-warning "  data-ng-show="!login.isSuccess">
-        Erreur de connexion, vérifiez votre Identifiant et Mot de passe !
-    </div>
+        <div class="alert alert-warning " data-ng-show="!login.isSuccess">
+            Erreur de connexion, vérifiez votre Identifiant et Mot de passe !
+        </div>
         <div class="input-group input-group-sm" style="margin-bottom:5px;">
             <span class="input-group-addon" id="mail">Identifiant</span>
             <input type="text" class="form-control" placeholder="login" aria-describedby="sizing-addon3" data-ng-model="login.connect.login">

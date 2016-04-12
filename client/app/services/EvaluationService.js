@@ -18,5 +18,5 @@ function EvaluationService($resource){
 
 
 angular
-    .module('pocApp')
+    .module('portailAutoEval')
     .service('EvaluationService', EvaluationService);

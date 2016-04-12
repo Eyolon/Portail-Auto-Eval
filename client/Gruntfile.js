@@ -7,24 +7,14 @@ module.exports = function (grunt) {
             bower: {
                 dest: '../public/app/bower.js',
                 mainFiles: {
-                    //'pdfjs-bower': ['dist/pdf.js', 'dist/pdf.worker.js', 'dist/compatibility.js'], // NE PAS INCLURE PDFJS DANS BOWER.js PLEASE (iframe, pas projet principal)
-                    //'angular-i18n': [], //'angular-locale_fr-fr.js','angular-locale_fr-fr.js' ,'angular-locale_en.js','angular-locale_en-us.js','angular-locale_en-gb.js' ],
                     'moment': ['moment.js', 'locale/fr.js', 'locale/en-gb.js', 'locale/pt-br.js', 'locale/de.js'],
-                    //'spectrum': ['spectrum.js'],
-                    //'angular-spectrum-colorpicker': ['dist/angular-spectrum-colorpicker.min.js'],
-                    //'angular-schema-form': ['dist/schema-form.min.js', 'dist/bootstrap-decorator.min.js'],
-                    //'angular-schema-form-colorpicker': ['bootstrap-colorpicker.min.js'],
-                    //'angular-ui-select': ['dist/select.min.js'],
-                    //'angular-schema-form-datepicker': ['bootstrap-datepicker.min.js'],
                     'angular-smart-table': ['dist/smart-table.min.js'],
                     'grunt-contrib-jshint': [''],
                     'grunt-contrib-nodeunit': [''],
-                    'grunt-contrib-watch': ['']//,
-                    //'angular-drag-and-drop-lists': ['../../vendor/angular-drag-and-drop-lists.js']
+                    'grunt-contrib-watch': ['']
                 },
                 dependencies: {
-                    'angular': 'jquery'//,
-                    //'angular-spectrum-colorpicker': 'spectrum'
+                    'angular': 'jquery'
                 },
                 exclude: [
                     'pdfjs-bower', 'angular-i18n'
