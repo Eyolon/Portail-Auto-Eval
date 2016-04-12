@@ -1,4 +1,4 @@
-angular.module('pocApp', [
+angular.module('portailAutoEval', [
 		//'ngAnimate',
         'ngResource',
         'ngSanitize',

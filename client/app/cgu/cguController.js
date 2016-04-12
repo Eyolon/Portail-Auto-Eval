@@ -12,5 +12,5 @@ function CguCtrl($resource) {
 	this.resultBook = bookById.get({bookId: '1'});
 }
 angular
-    .module('pocApp')
+    .module('portailAutoEval')
 	.controller('CguCtrl', CguCtrl);

@@ -10,5 +10,5 @@ function infoController() {
 	var self = this;
 }
 angular
-    .module('pocApp')
+    .module('portailAutoEval')
     .directive('infoRight',infoRight);
