@@ -24,13 +24,13 @@ public class Formulaire implements Serializable {
 	
 	public Formulaire(){}
 	
-	public Formulaire(Long id, String libelle) {
+	public Formulaire(Long id, String nom) {
 		this.id = id;
-		this.nom = libelle;
+		this.nom = nom;
 	}
 	
-	public Formulaire(String libelle) {
-		this.nom = libelle;
+	public Formulaire(String nom) {
+		this.nom = nom;
 	}
 	
 	@Id 
@@ -46,12 +46,12 @@ public class Formulaire implements Serializable {
 	}
 	
 	@Column(name="nom")
-	public String getLibelle() {
+	public String getNom() {
 		return nom;
 	}
 	
-	public void setLibelle(String libelle) {
-		this.nom = libelle;
+	public void setNom(String nom) {
+		this.nom = nom;
 	}
 	
 	@OneToMany(mappedBy="formulaire")

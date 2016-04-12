@@ -204,6 +204,8 @@ public class Personne extends Controller {
 	}
 	
 	public static Promise<Result> seLogger(String login) {
+		
+		System.out.println("POUET1");
 		Promise<Result> promiseOfResult = Promise.promise(() -> 
 		{
 			String newToken = null;

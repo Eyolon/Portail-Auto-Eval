@@ -1,3 +1,12 @@
+function evaluation(){
+
+    return{
+        restrict:'E',
+        templateUrl:'/evaluation/evaluation.html',
+        controller: EvaluationController,
+        controllerAs: 'evaluation'
+    };
+}
 function EvaluationController($state, EvaluationService) {
 	var self = this;
 	//this.evaluation = {};
@@ -14,11 +23,11 @@ function EvaluationController($state, EvaluationService) {
 	}
     
     this.getQuestionnaire = function getQuestionnaire(){
-        self.listQuestionnaire = EvaluationService.listQuestionnaire.post();
+        self.listQuestionnaire = EvaluationService.listQuestionnaire();
 	};
 	
 	this.getQuestionnaire = function getQuestionnaire(){
-        EvaluationService.questionnaire.post({nameForm: 'Questionnaire de TEST1'}, redirectToEvaluation, onError);
+        EvaluationService.questionnaire({nomForm: 'FormA'}, redirectToEvaluation, onError);
 		/*EvaluationService.getQuestionnaire('Questionnaire de TEST1', redirectToEvaluation, onError);*/
 	};
 }

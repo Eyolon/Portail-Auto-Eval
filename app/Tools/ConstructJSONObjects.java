@@ -65,7 +65,7 @@ public class ConstructJSONObjects {
 	public static JSONObject getJSONforFormulaire(Formulaire f) {
 		return new JSONObject()
 				.put("id", f.getId())
-				.put("libelle", f.getLibelle());
+				.put("nom", f.getNom());
 	}
 	
 	public static JSONArray getJSONArrayforListFormulaires(List<Formulaire> lf) {
@@ -82,7 +82,7 @@ public class ConstructJSONObjects {
 	public static JSONObject getJSONforFormulaireFull(Formulaire f) {
 		return new JSONObject()
 				.put("id", f.getId())
-				.put("libelle", f.getLibelle())
+				.put("nom", f.getNom())
 				.put("listQuestions", getJSONArrayforListQuestions(f.getQuestions()));
 	}
 }
