@@ -12,7 +12,7 @@ function EvaluationController(EvaluationService) {
 	}
     
     this.getListQuestionnaires = function getListQuestionnaires(){
-        self.listQuestionnaire = EvaluationService.listQuestionnaire();
+        self.listQuestionnaire = EvaluationService.listQuestionnaire.post();
 	};
 	
 	this.getQuestionnaire = function getQuestionnaire(){

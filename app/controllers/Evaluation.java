@@ -16,7 +16,6 @@ import play.mvc.Result;
 public class Evaluation extends Controller{
 	
 	public static Promise<Result> getListFormulaire(){
-		System.out.println("POUET3");
 		Promise<Result> promiseOfResult = Promise.promise(()->{
 			
 			JSONArray ja = new JSONArray();
