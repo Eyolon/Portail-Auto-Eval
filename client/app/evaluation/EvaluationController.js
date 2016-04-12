@@ -2,7 +2,8 @@ function EvaluationController(EvaluationService) {
 	var self = this;
 	this.isSuccess = true;
     this.listQuestionnaire = [];
-	
+	this.questionnaire;
+    
 	function onSuccess() {
         self.isSuccess = true;
 	}
@@ -16,7 +17,7 @@ function EvaluationController(EvaluationService) {
 	};
 	
 	this.getQuestionnaire = function getQuestionnaire(){
-        EvaluationService.questionnaire({nomForm: 'FormA'}, onSuccess, onError);
+        self.questionnaire = EvaluationService.questionnaire.post({nomForm: 'FormA'}, onSuccess, onError);
 	};
     
     self.getListQuestionnaires();

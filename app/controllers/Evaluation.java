@@ -17,7 +17,7 @@ public class Evaluation extends Controller{
 	
 	public static Promise<Result> getListFormulaire(){
 		Promise<Result> promiseOfResult = Promise.promise(()->{
-			
+
 			JSONArray ja = new JSONArray();
 			Transaction tx = null;
 			boolean isActive = BDDUtils.getTransactionStatus();
@@ -25,6 +25,8 @@ public class Evaluation extends Controller{
 				tx = BDDUtils.beginTransaction(isActive);
 				
 				ja = ConstructJSONObjects.getJSONArrayforListFormulaires(FormulaireDAO.getAll());
+				
+				System.out.println(ja.toString());
 				
 				BDDUtils.commit(isActive, tx);
 			}
