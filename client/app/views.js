@@ -89,7 +89,7 @@ angular
                 'main@': {
                     templateUrl: '/evaluation/evaluation.html',
                     controller: 'EvaluationController',
-                    controllerAs: 'EvaluationController'
+                    controllerAs: 'EvaluationCtrl'
                 }
             }
         });

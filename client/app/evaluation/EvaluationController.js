@@ -1,35 +1,25 @@
-function evaluation(){
-
-    return{
-        restrict:'E',
-        templateUrl:'/evaluation/evaluation.html',
-        controller: EvaluationController,
-        controllerAs: 'evaluation'
-    };
-}
-function EvaluationController($state, EvaluationService) {
+function EvaluationController(EvaluationService) {
 	var self = this;
-	//this.evaluation = {};
 	this.isSuccess = true;
     this.listQuestionnaire = [];
 	
-	function redirectToEvaluation() {
+	function onSuccess() {
         self.isSuccess = true;
-		$state.go('evaluation');
 	}
 	
 	function onError() {
 		self.isSuccess = false;
 	}
     
-    this.getQuestionnaire = function getQuestionnaire(){
+    this.getListQuestionnaires = function getListQuestionnaires(){
         self.listQuestionnaire = EvaluationService.listQuestionnaire();
 	};
 	
 	this.getQuestionnaire = function getQuestionnaire(){
-        EvaluationService.questionnaire({nomForm: 'FormA'}, redirectToEvaluation, onError);
-		/*EvaluationService.getQuestionnaire('Questionnaire de TEST1', redirectToEvaluation, onError);*/
+        EvaluationService.questionnaire({nomForm: 'FormA'}, onSuccess, onError);
 	};
+    
+    self.getListQuestionnaires();
 }
 angular
 	.module('pocApp')
