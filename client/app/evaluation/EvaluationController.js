@@ -16,6 +16,7 @@ function EvaluationController(EvaluationService) {
         self.listQuestionnaire = EvaluationService.listQuestionnaire.post();
 	};
 	
+	/*Plus un cas de test plutot qu'utile*/
 	this.getQuestionnaire = function getQuestionnaire(){
         self.questionnaire = EvaluationService.questionnaire.post({nomForm: 'FormA'}, onSuccess, onError);
 	};
