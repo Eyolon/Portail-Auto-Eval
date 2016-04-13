@@ -1,0 +1,4 @@
+Cas de tests :
+_Un utilisateur (LOGIN=utilisateur,PSWD=password) au service Quantine verra un Formulaire Leadership et Stratégie
+_Un administrateur (LOGIN=administrateur,PSWD=password)  Responsable d’établissement verra un formulaire de process, rh et parteners
+_Un Super administrateur (LOGIN=supradministrateur,PSWD=password) Supra Administrateur verra tout les formulaires
