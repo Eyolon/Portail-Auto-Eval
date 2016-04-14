@@ -1,12 +1,21 @@
 package controllers;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.hibernate.Transaction;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import Tools.ConstructJSONObjects;
 import hibernate.dao.FormulaireDAO;
+import hibernate.dao.FormulaireServiceDAO;
+import hibernate.dao.QuestionDAO;
+import hibernate.dao.UtilisateurDAO;
 import hibernate.model.Formulaire;
+import hibernate.model.FormulaireService;
+import hibernate.model.Question;
+import hibernate.model.Utilisateur;
 import hibernate.utils.BDDUtils;
 import play.Logger;
 import play.libs.F.Promise;
@@ -68,6 +77,45 @@ public class Evaluation extends Controller{
 			
 		});
 		return promiseOfResult;
+	}
+	
+	public static Promise<Result> getFormulaireFullForUser(Long idUser){
+		Promise<Result> promiseOfResult = Promise.promise(()->{
+
+			JSONArray ja = new JSONArray();
+			Transaction tx = null;
+			boolean isActive = BDDUtils.getTransactionStatus();
+			try {
+				tx = BDDUtils.beginTransaction(isActive);
+				
+				List<Formulaire> f = FormulaireDAO.getAll();
+				List<Question> lq = QuestionDAO.getAll();
+				List<FormulaireService> fs = FormulaireServiceDAO.getAll();
+				Utilisateur u = UtilisateurDAO.getUtilisateurById(idUser);  // pour recuperrer l'id_Service
+				
+				List<Formulaire> goal = new ArrayList<Formulaire>();
+							
+				for(int i = 0;i<fs.size();i++){
+					if(fs.get(i).getFormulaireServiceID().getService().getId()==u.getService().getId()){
+						goal.add(fs.get(i).getFormulaireServiceID().getFormulaire());
+					}
+				}
+				
+				if(f != null) {
+					ja = ConstructJSONObjects.getJSONArrayforListFormulairesFull(goal);
+				}
+				
+				BDDUtils.commit(isActive, tx);
+			}
+			catch(Exception ex) {
+				Logger.error("Hibernate failure : "+ ex.getMessage());
+				BDDUtils.rollback(isActive, tx);
+				return internalServerError("Une erreur est survenue pendant la transaction avec la base de données.");
+			}
+			return ok(ja.toString());
+			
+		});
+		return promiseOfResult;	
 	}
 
 }

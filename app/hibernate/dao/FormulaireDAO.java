@@ -26,7 +26,7 @@ public class FormulaireDAO extends BasicDAO {
 		try {
 			tx = BDDUtils.beginTransaction(isActive);
 			Query q = BDDUtils.getCurrentSession().createQuery(
-					"SELECT f FROM Formulaire as f " +
+					"SELECT f FROM formulaire as f " +
 					"WHERE f.nom = :nom");
 			q.setParameter("nom", nom);
 			f = (Formulaire) q.uniqueResult();

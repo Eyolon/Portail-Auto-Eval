@@ -60,4 +60,25 @@ public class UtilisateurDAO extends BasicDAO {
 		}
 		return u;
 	}
+	
+	public static Utilisateur getUtilisateurById(Long id) {
+		Utilisateur u = null;
+		Transaction tx = null;
+		boolean isActive = BDDUtils.getTransactionStatus();
+		try {
+			tx = BDDUtils.beginTransaction(isActive);
+			Query q = BDDUtils.getCurrentSession().createQuery(
+					"SELECT u FROM Utilisateur as u " +
+					"LEFT OUTER JOIN FETCH u.connexion " +
+					"WHERE u.id = :email");
+			q.setParameter("id", id);
+			u = (Utilisateur) q.uniqueResult();
+			BDDUtils.commit(isActive, tx);
+		}
+		catch(Exception ex) {
+			Logger.error("Hibernate failure : "+ ex.getMessage());
+			BDDUtils.rollback(isActive, tx);
+		}
+		return u;
+	}
 }

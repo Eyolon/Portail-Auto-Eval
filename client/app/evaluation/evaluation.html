@@ -4,6 +4,9 @@
 		<ul class="eval-container">
     		<li class="eval-repeat" ng-repeat="questionnaire in EvaluationCtrl.listQuestionnaire">
       			<h3>Formulaire {{$index + 1}} : {{questionnaire.nom}}</h3>
+      			<div class="quest-repeat" ng-repeat="question in questionnaire.listQuestion">
+      				Question {{$index + 1}} : {{question.valeur}}
+    			</div>
     		</li>
     		<!-- UseLess in most case -->
     		<li class="eval-repeat" ng-if="results.length == 0">
@@ -14,5 +17,4 @@
   	<div class="alert alert-warning " data-ng-show="!EvaluationCtrl.isSuccess" style="margin-top: 10px">
 		<b>PAS DE QUESTIONNAIRE TROUVE MERCI DE CONTACTER VOTRE ADMINISTRATEUR</b>
 	</div>
-		<!-- <b><span data-ng-bind="login.user.id_service"></span></b>-->
 </div>
