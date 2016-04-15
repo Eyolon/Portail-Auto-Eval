@@ -125,3 +125,7 @@ div.col-lg-8{
 li {list-style-type: none;}
 
 h3{text-align:left;}
+
+div.quest-repeat.ng-binding.ng-scope{
+	text-align:left;}
+}
