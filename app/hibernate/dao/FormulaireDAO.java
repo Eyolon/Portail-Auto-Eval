@@ -26,7 +26,7 @@ public class FormulaireDAO extends BasicDAO {
 		try {
 			tx = BDDUtils.beginTransaction(isActive);
 			Query q = BDDUtils.getCurrentSession().createQuery(
-					"SELECT f FROM formulaire as f " +
+					"SELECT f FROM Formulaire as f " +
 					"WHERE f.nom = :nom");
 			q.setParameter("nom", nom);
 			f = (Formulaire) q.uniqueResult();
@@ -47,10 +47,10 @@ public class FormulaireDAO extends BasicDAO {
 			tx = BDDUtils.beginTransaction(isActive);
 			Query q = BDDUtils.getCurrentSession().createQuery(
 			"SELECT f "+
-			"FROM formulaire AS f, "+
-			"formulaire_service AS fs "+
-			"WHERE f.id = fs.id_formulaire "+
-			"AND fs.id_service = :id ");
+			"FROM Formulaire AS f, "+
+			"FormulaireService AS fs "+
+			"WHERE f.id = fs.formulaireServiceID.formulaire.id "+
+			"AND fs.formulaireServiceID.service.id = :id ");
 			q.setParameter("id", idService);
 			lf = q.list();
 			BDDUtils.commit(isActive, tx);

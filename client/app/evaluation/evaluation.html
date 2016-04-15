@@ -4,7 +4,7 @@
 		<ul class="eval-container">
     		<li class="eval-repeat" ng-repeat="questionnaire in EvaluationCtrl.listQuestionnaire">
       			<h3>Formulaire {{$index + 1}} : {{questionnaire.nom}}</h3>
-      			<div class="quest-repeat" ng-repeat="question in questionnaire.listQuestion">
+      			<div class="quest-repeat" ng-repeat="question in questionnaire.listQuestions">
       				Question {{$index + 1}} : {{question.valeur}}
     			</div>
     		</li>
