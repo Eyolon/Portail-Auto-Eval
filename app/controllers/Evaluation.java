@@ -25,6 +25,7 @@ import play.mvc.Result;
 public class Evaluation extends Controller{
 	
 	public static Promise<Result> getListFormulaire(){
+		
 		Promise<Result> promiseOfResult = Promise.promise(()->{
 
 			JSONArray ja = new JSONArray();
@@ -79,29 +80,31 @@ public class Evaluation extends Controller{
 		return promiseOfResult;
 	}
 	
-	public static Promise<Result> getFormulaireFullForUser(Long idUser){
-		Promise<Result> promiseOfResult = Promise.promise(()->{
+	public static Promise<Result> getFormulaireFullForUserService(Long idService){
 
+		Promise<Result> promiseOfResult = Promise.promise(()->{
 			JSONArray ja = new JSONArray();
 			Transaction tx = null;
 			boolean isActive = BDDUtils.getTransactionStatus();
 			try {
 				tx = BDDUtils.beginTransaction(isActive);
 				
-				List<Formulaire> f = FormulaireDAO.getAll();
+				List<Formulaire> lf = FormulaireDAO.getListFormulaireByIdService(idService);
 				List<Question> lq = QuestionDAO.getAll();
-				List<FormulaireService> fs = FormulaireServiceDAO.getAll();
-				Utilisateur u = UtilisateurDAO.getUtilisateurById(idUser);  // pour recuperrer l'id_Service
-				
 				List<Formulaire> goal = new ArrayList<Formulaire>();
 							
-				for(int i = 0;i<fs.size();i++){
-					if(fs.get(i).getFormulaireServiceID().getService().getId()==u.getService().getId()){
-						goal.add(fs.get(i).getFormulaireServiceID().getFormulaire());
+				for(int i = 0;i<lf.size();i++){
+					List<Question> tampon = new ArrayList<>();
+					goal.add(lf.get(i));
+					for(int j = 0;j<lq.size();j++){
+						if(lf.get(i).getId().equals(lq.get(j).getFormulaire().getId())){
+							tampon.add(lq.get(j));
+						}
 					}
+					goal.get(i).setQuestions(tampon);
 				}
 				
-				if(f != null) {
+				if(goal != null) {
 					ja = ConstructJSONObjects.getJSONArrayforListFormulairesFull(goal);
 				}
 				

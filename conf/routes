@@ -14,8 +14,8 @@ POST	/api/checkUser/:email		controllers.Personne.checkUser(email: String)
 
 # Formulaire
 POST	/api/evaluation				controllers.Evaluation.getListFormulaire()
-POST	/api/evaluation/:nomForm	controllers.Evaluation.getFormulaire(nomForm: String)
-POST	/api/formulaire/:idUser	controllers.Evaluation.getFormulaireFullForUser(idUser: Long)
+#POST	/api/evaluation/:nomForm	controllers.Evaluation.getFormulaire(nomForm: String)
+POST	/api/evaluation/:idService	controllers.Evaluation.getFormulaireFullForUserService(idService: Long)
 
 # Map static resources from the /public folder to the /assets URL path
 #GET     /assets/*file              controllers.Assets.versioned(path="/public", file: Asset)

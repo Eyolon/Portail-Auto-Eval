@@ -38,4 +38,29 @@ public class FormulaireDAO extends BasicDAO {
 		}
 		return f;
 	}
+	
+	public static List<Formulaire> getListFormulaireByIdService(Long idService) {
+		List <Formulaire> lf = null;
+		Transaction tx = null;
+		boolean isActive = BDDUtils.getTransactionStatus();
+		try {
+			tx = BDDUtils.beginTransaction(isActive);
+			Query q = BDDUtils.getCurrentSession().createQuery(
+			"SELECT f "+
+			"FROM formulaire AS f, "+
+			"formulaire_service AS fs "+
+			"WHERE f.id = fs.id_formulaire "+
+			"AND fs.id_service = :id ");
+			q.setParameter("id", idService);
+			lf = q.list();
+			BDDUtils.commit(isActive, tx);
+		}
+		catch(Exception ex) {
+			Logger.error("Hibernate failure : "+ ex.getMessage());
+			BDDUtils.rollback(isActive, tx);
+		}
+		return lf;
+	}
+	
+	
 }

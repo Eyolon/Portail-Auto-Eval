@@ -7,8 +7,16 @@ function EvaluationService($resource){
         }
     );
 
+    
+    this.listFormulaireFull = $resource('/api/evaluation/:idService',
+            {idService:'@idService'},
+            {
+                'post': {method:'POST', isArray:true}
+            }
+        );
+    
     this.questionnaire = $resource('/api/evaluation/:nomForm',
-        {},
+        {noForm:'@nomForm'},
         {
             'post': {method:'POST', isArray:false}
         }
