@@ -1,7 +1,7 @@
 package hibernate.model;
 
 import java.io.Serializable;
-import java.time.ZonedDateTime;
+import java.time.Instant;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -25,7 +25,7 @@ public class Note implements Serializable {
 	private String remarque = null;
 	private Question question = null;
 	private Utilisateur utilisateur = null;
-	private ZonedDateTime dateSaisie = null;
+	private Instant dateSaisie = null;
 	
 	public Note(){}
 	
@@ -95,11 +95,11 @@ public class Note implements Serializable {
 	}
 
 	@Column(name="date_saisie")
-	public ZonedDateTime getDateSaisie() {
+	public Instant getDateSaisie() {
 		return dateSaisie;
 	}
 
-	public void setDateSaisie(ZonedDateTime dateSaisie) {
+	public void setDateSaisie(Instant dateSaisie) {
 		this.dateSaisie = dateSaisie;
 	}
 
