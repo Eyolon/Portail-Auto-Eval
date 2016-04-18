@@ -5,9 +5,17 @@
     		<li class="eval-repeat" ng-repeat="questionnaire in EvaluationCtrl.listQuestionnaire">
       			<h3>Formulaire {{$index + 1}} : {{questionnaire.nom}}</h3>
       			<div class="quest-repeat" ng-repeat="question in questionnaire.listQuestions">
+
       				Question {{$index + 1}} : {{question.valeur}}
+      				</br>
+      				</br>
+      				<input type="number" ng-model="EvaluationCtrl.Answers[question.id]" min="0" max="100"/>
     			</div>
+    			
     		</li>
+    		<div class="submitAnswer">
+    			<button type="submit" class="btn btn-default" ng-click="EvaluationCtrl.repondre()">Envoyer mes réponses</button>
+    		</div>
     		<!-- UseLess in most case -->
     		<li class="eval-repeat" ng-if="results.length == 0">
       			<strong>No results found...</strong>
