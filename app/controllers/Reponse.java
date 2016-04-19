@@ -95,7 +95,6 @@ public class Reponse extends Controller{
 				BDDUtils.rollback(isActive, tx);
 				return internalServerError("Une erreur est survenue pendant la transaction avec la base de données.");
 			}
-			System.out.println(idUser);
 			
 			return ok();
 			
