@@ -17,6 +17,10 @@ POST	/api/evaluation				controllers.Evaluation.getListFormulaire()
 #POST	/api/evaluation/:nomForm	controllers.Evaluation.getFormulaire(nomForm: String)
 POST	/api/evaluation/:idService	controllers.Evaluation.getFormulaireFullForUserService(idService: Long)
 
+# Reponse
+POST	/api/reponse/:idUser		controllers.Reponse.getReponsesAlreadyCommited(idUser: Long)
+POST	/api/reponse				controllers.Reponse.insertReponses()
+
 # Map static resources from the /public folder to the /assets URL path
 #GET     /assets/*file              controllers.Assets.versioned(path="/public", file: Asset)
 GET     /image/*file                controllers.Assets.at(path="/public/assets/images", file)

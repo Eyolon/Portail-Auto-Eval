@@ -9,13 +9,9 @@ import org.json.JSONObject;
 
 import Tools.ConstructJSONObjects;
 import hibernate.dao.FormulaireDAO;
-import hibernate.dao.FormulaireServiceDAO;
 import hibernate.dao.QuestionDAO;
-import hibernate.dao.UtilisateurDAO;
 import hibernate.model.Formulaire;
-import hibernate.model.FormulaireService;
 import hibernate.model.Question;
-import hibernate.model.Utilisateur;
 import hibernate.utils.BDDUtils;
 import play.Logger;
 import play.libs.F.Promise;
