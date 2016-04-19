@@ -9,8 +9,10 @@ import org.json.JSONObject;
 
 import Tools.ConstructJSONObjects;
 import hibernate.dao.FormulaireDAO;
+import hibernate.dao.NoteDAO;
 import hibernate.dao.QuestionDAO;
 import hibernate.model.Formulaire;
+import hibernate.model.Note;
 import hibernate.model.Question;
 import hibernate.utils.BDDUtils;
 import play.Logger;
@@ -76,7 +78,7 @@ public class Evaluation extends Controller{
 		return promiseOfResult;
 	}
 	
-	public static Promise<Result> getFormulaireFullForUserService(Long idService){
+	public static Promise<Result> getFormulaireFullForUser(Long idUser){
 
 		Promise<Result> promiseOfResult = Promise.promise(()->{
 			JSONArray ja = new JSONArray();
@@ -85,23 +87,10 @@ public class Evaluation extends Controller{
 			try {
 				tx = BDDUtils.beginTransaction(isActive);
 				
-				List<Formulaire> lf = FormulaireDAO.getListFormulaireByIdService(idService);
-				List<Question> lq = QuestionDAO.getAll();
-				List<Formulaire> goal = new ArrayList<Formulaire>();
-							
-				for(int i = 0;i<lf.size();i++){
-					List<Question> tampon = new ArrayList<>();
-					goal.add(lf.get(i));
-					for(int j = 0;j<lq.size();j++){
-						if(lf.get(i).getId().equals(lq.get(j).getFormulaire().getId())){
-							tampon.add(lq.get(j));
-						}
-					}
-					goal.get(i).setQuestions(tampon);
-				}
+				List<Formulaire> lf = FormulaireDAO.getListFormulaireById(idUser);
 				
-				if(goal != null) {
-					ja = ConstructJSONObjects.getJSONArrayforListFormulairesFull(goal);
+				if(lf != null) {
+					ja = ConstructJSONObjects.getJSONArrayforListFormulairesFull(lf);
 				}
 				
 				BDDUtils.commit(isActive, tx);

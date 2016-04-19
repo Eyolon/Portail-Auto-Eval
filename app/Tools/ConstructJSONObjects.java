@@ -8,6 +8,7 @@ import org.json.JSONObject;
 import hibernate.model.Categorie;
 import hibernate.model.Critere;
 import hibernate.model.Formulaire;
+import hibernate.model.Note;
 import hibernate.model.Question;
 import hibernate.model.Service;
 import hibernate.model.Utilisateur;
@@ -21,7 +22,26 @@ public class ConstructJSONObjects {
 		.put("service", getJSONforService(u.getService()));
 	}
 	
+	public static JSONArray getJSONArrayforNote(List<Note> ln){
+		if(ln != null) {
+			JSONArray ja = new JSONArray();
+			for (Note note : ln) {
+				ja.put(getJSONforNote(note));
+			}
+			return ja;
+		}
+		return null;
+	}
 	
+	private static JSONObject getJSONforNote(Note note) {
+		return new JSONObject()
+				.put("id", note.getId())
+				.put("valeur", note.getValeur())
+				.put("remarque", note.getRemarque())
+				.put("utilisateur" , note.getUtilisateur())
+				.put("question", note.getQuestion());
+	}
+
 	public static JSONArray getJSONArrayforListUsers(List<Utilisateur> lu) {
 		if(lu != null) {
 			JSONArray ja = new JSONArray();
@@ -52,6 +72,7 @@ public class ConstructJSONObjects {
 				.put("valeur", q.getValeur())
 				.put("critere", getJSONforCritere(q.getCritere()))
 				.put("formulaire", getJSONforFormulaire(q.getFormulaire()));
+				//.put("notes", getJSONArrayforNote(q.getNotes()));
 	}
 	
 	public static JSONArray getJSONArrayforListQuestions(List<Question> lq) {

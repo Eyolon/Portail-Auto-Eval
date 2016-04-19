@@ -20,7 +20,7 @@ function EvaluationController(EvaluationService, ipCookie) {
     };
     
     this.getListQuestionnaires = function getListQuestionnaires(){
-    	self.listQuestionnaire = EvaluationService.listFormulaireFull.post({idService: self.user.service['id']}, onSuccess, onError);
+    	self.listQuestionnaire = EvaluationService.listFormulaireFull.post({idUser: self.user['id']}, onSuccess, onError);
     };
 	
     this.getListNoteAllReadyCommited = function getListNoteAllReadyCommited(){

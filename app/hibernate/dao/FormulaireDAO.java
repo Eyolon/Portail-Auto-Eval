@@ -39,7 +39,7 @@ public class FormulaireDAO extends BasicDAO {
 		return f;
 	}
 	
-	public static List<Formulaire> getListFormulaireByIdService(Long idService) {
+	public static List<Formulaire> getListFormulaireById(Long idUser) {
 		List <Formulaire> lf = null;
 		Transaction tx = null;
 		boolean isActive = BDDUtils.getTransactionStatus();
@@ -48,10 +48,13 @@ public class FormulaireDAO extends BasicDAO {
 			Query q = BDDUtils.getCurrentSession().createQuery(
 			"SELECT f "+
 			"FROM Formulaire AS f, "+
-			"FormulaireService AS fs "+
+			"FormulaireService AS fs, "+
+			"Utilisateur AS u "+
 			"WHERE f.id = fs.formulaireServiceID.formulaire.id "+
-			"AND fs.formulaireServiceID.service.id = :id ");
-			q.setParameter("id", idService);
+			"AND fs.formulaireServiceID.service.id = u.service.id "+
+			"AND u.id = :id");
+			
+			q.setParameter("id", idUser);
 			lf = q.list();
 			BDDUtils.commit(isActive, tx);
 		}

@@ -8,8 +8,8 @@ function EvaluationService($resource,$http){
     );
 
     
-    this.listFormulaireFull = $resource('/api/evaluation/:idService',
-            {idService:'@idService'},
+    this.listFormulaireFull = $resource('/api/evaluation/:idUser',
+            {idUser:'@idUser'},
             {
                 'post': {method:'POST', isArray:true}
             }
