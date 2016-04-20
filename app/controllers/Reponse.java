@@ -1,7 +1,6 @@
 package controllers;
 
 import java.time.Instant;
-import java.util.Date;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Transaction;
@@ -12,6 +11,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import Tools.ConstructJSONObjects;
 import hibernate.dao.FormulaireDAO;
 import hibernate.dao.NoteDAO;
+import hibernate.dao.QuestionDAO;
 import hibernate.dao.UtilisateurDAO;
 import hibernate.model.Note;
 import hibernate.model.Question;
@@ -31,9 +31,6 @@ public class Reponse extends Controller{
 			JsonNode jsonN = request().body().asJson();
 			
 			if(jsonN != null){
-				Note n = new Note();
-				Question q = new Question();
-			
 				Transaction tx = null;
 				boolean isActive = BDDUtils.getTransactionStatus();
 				try {
@@ -42,12 +39,19 @@ public class Reponse extends Controller{
 						 * du coup : TO DO
 						 * 
 						 * */		
+					//TODO retirer le new Note() et voir s'il existe dans la BDD avant
+					Note n = new Note();
+					
 					Utilisateur u = null;
+					Question q = null;
 					//RECUPERE JUSTE l'ID de LA QUESTION ET DE l'UTILISATEUR = plus léger et ça utilise LES OBJETS !!!
 					//Y'a vraiment une majuscule en DEBUT d'attribut ? A refactorer en "utilisateur" à cours terme 
 					//Utiliser le token pour récupérer l'utilisateur ...
 					if(jsonN.has("Utilisateur") && jsonN.get("Utilisateur").has("id")) {
 						u = UtilisateurDAO.findById(jsonN.get("Utilisateur").get("id").asLong());
+					}
+					if(jsonN.has("questionFull") && jsonN.get("questionFull").has("id")) {
+						q = QuestionDAO.findById(jsonN.get("questionFull").get("id").asLong());
 					}
 					//Tester s'il y a déjà une note pour cette question par cet utilisateur
 						if(jsonN.get("questionFull").get("notes").get("valeur") != null) {
@@ -57,13 +61,10 @@ public class Reponse extends Controller{
 							n.setRemarque(jsonN.get("questionFull").get("notes").get("remarque").toString());
 						}
 						n.setUtilisateur(u);
-						if(jsonN.get("questionFull").get("id") != null) {
-							q.setId(jsonN.get("questionFull").get("id").asLong());
-							n.setQuestion(q);
-						}
+						n.setQuestion(q);
 						
 						if(n.getUtilisateur() != null && n.getQuestion() != null){
-							n.setDateSaisie(Instant.ofEpochMilli(new Date().getTime()));
+							n.setDateSaisie(Instant.now());
 							NoteDAO.insert(n);
 							BDDUtils.commit(isActive, tx);
 							return ok();
