@@ -73,7 +73,7 @@ public class Evaluation extends Controller{
 		return promiseOfResult;
 	}
 	
-	public static Promise<Result> getFormulaireFullForUser(Long idUser){
+	public static Promise<Result> getFormulaireFullForUser(Long idType){
 
 		Promise<Result> promiseOfResult = Promise.promise(()->{
 			JSONArray ja = new JSONArray();
@@ -82,7 +82,7 @@ public class Evaluation extends Controller{
 			try {
 				tx = BDDUtils.beginTransaction(isActive);
 				
-				List<Formulaire> lf = FormulaireDAO.getListFormulaireByUserId(idUser);
+				List<Formulaire> lf = FormulaireDAO.getListFormulaireByUserId(idType);
 				
 				if(lf != null) {
 					ja = ConstructJSONObjects.getJSONArrayforListFormulairesFull(lf);

@@ -8,8 +8,8 @@ function EvaluationService($resource,$http){
     );
 
     
-    this.listFormulaireFull = $resource('/api/evaluation/:idUser',
-            {idUser:'@idUser'},
+    this.listFormulaireFull = $resource('/api/evaluation/:idType',
+            {idType:'@idType'},
             {
                 'post': {method:'POST', isArray:true}
             }
@@ -41,16 +41,15 @@ function EvaluationService($resource,$http){
     			
     			var questionFull = obj2[key2];// notre question
     			
-    			if(questionFull.notes !== undefined){
+    			if(questionFull.notes.valeur !== undefined){
     				//Donc la on envois toute les questions répondue uniquement
-    				console.log(questionFull);
-    				$http.post('/api/reponse',{
-    					
-    					questionFull: questionFull,
-    					Utilisateur:user
-    					
+    		
+    				var notePatched = [];
+    				var noteComplement = {valeur :questionFull.notes.valeur, remarque : questionFull.notes.remarque};
+    				notePatched.push(noteComplement);
+    				questionFull.notes = notePatched;
     				
-    				});
+    				$http.post('/api/reponse',{questionFull: questionFull,utilisateur:user});
     				
     			}
     			

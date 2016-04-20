@@ -37,9 +37,12 @@ public class ConstructJSONObjects {
 		return new JSONObject()
 				.put("id", note.getId())
 				.put("valeur", note.getValeur())
-				.put("remarque", note.getRemarque())
-				.put("utilisateur" , note.getUtilisateur())
-				.put("question", note.getQuestion());
+				.put("remarque", note.getRemarque());
+				//.put("utilisateur" , note.getUtilisateur())
+				//.put("question", note.getQuestion());
+		/*
+		 * Il semble que si je décomente, sa plante. mais de toute facon c'est tout se dont j'ai besoin
+		 */
 	}
 
 	public static JSONArray getJSONArrayforListUsers(List<Utilisateur> lu) {
@@ -71,8 +74,8 @@ public class ConstructJSONObjects {
 				.put("id", q.getId())
 				.put("valeur", q.getValeur())
 				.put("critere", getJSONforCritere(q.getCritere()))
-				.put("formulaire", getJSONforFormulaire(q.getFormulaire()));
-				//.put("notes", getJSONArrayforNote(q.getNotes()));
+				.put("formulaire", getJSONforFormulaire(q.getFormulaire()))
+				.put("notes", getJSONArrayforNote(q.getNotes()));
 	}
 	
 	public static JSONArray getJSONArrayforListQuestions(List<Question> lq) {

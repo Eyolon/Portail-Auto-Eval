@@ -9,21 +9,14 @@
       				Question {{$index + 1}} : {{question.valeur}}
       				</br>
       				</br>
+      				      			    				
+					<div ng-if="question.notes[0].id == null">
+    					<input type="number" name="valeur" ng-model="question.notes.valeur" min="0" max="100"/>
+					</div>
+					<div ng-if="question.notes[0].id != null">
+					     <input type="number" name="valeur" ng-disabled="question.notes[0].id"  ng-model="question.notes[0].valeur"/>
+					</div>
       				
-      				<div ng-repeat="reponse in EvaluationCtrl.listNoteAllReadyCommited">      				
-      					<!--<div ng-if="reponse.id_ == video.large">
-						    <input type="number" name="valeur" ng-model="question.notes.valeur" min="0" max="100" value="question.notes.valeur"/>
-						</div>
-						<div ng-if="video != video.large">
-						     code to render the regular video block 
-						</div>-->
-      					
-      				
-      				
-      				
-      				</div>
-      				<input type="number" name="valeur" ng-model="question.notes.valeur" min="0" max="100" value="question.notes.valeur"/>
-						
       				<!-- marche! <input type="text" name="remarque" ng-model="question.notes.remarque"/> -->
     			</div>
     			
