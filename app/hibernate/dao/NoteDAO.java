@@ -19,26 +19,23 @@ public class NoteDAO extends BasicDAO {
 		return getAll(Note.class);
 	}
 	
+	@SuppressWarnings("unchecked")
 	public static List<Note> getListNoteByUserId(Long idUser) {
-		List <Note> lf = null;
+		List<Note> ln = null;
 		Transaction tx = null;
 		boolean isActive = BDDUtils.getTransactionStatus();
 		try {
 			tx = BDDUtils.beginTransaction(isActive);
 			Query q = BDDUtils.getCurrentSession().createQuery(
-			"SELECT n "+
-			"FROM Note AS n, "+
-			"Utilisateur AS u "+
-			"WHERE u.id = :id");
-			
-			q.setParameter("id", idUser);
-			lf = q.list();
+				"SELECT n FROM Note AS n "+
+				"WHERE n.utilisateur.id = :idUser");
+			q.setParameter("idUser", idUser);
+			ln = (List<Note>) q.list();
 			BDDUtils.commit(isActive, tx);
-		}
-		catch(Exception ex) {
-			Logger.error("Hibernate failure : "+ ex.getMessage());
+		} catch(Exception ex) {
+			Logger.error("Erreur NoteDAO getListNoteByUserId: ", ex);
 			BDDUtils.rollback(isActive, tx);
 		}
-		return lf;
+		return ln;
 	}
 }

@@ -1,6 +1,5 @@
 package controllers;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Transaction;
@@ -9,11 +8,7 @@ import org.json.JSONObject;
 
 import Tools.ConstructJSONObjects;
 import hibernate.dao.FormulaireDAO;
-import hibernate.dao.NoteDAO;
-import hibernate.dao.QuestionDAO;
 import hibernate.model.Formulaire;
-import hibernate.model.Note;
-import hibernate.model.Question;
 import hibernate.utils.BDDUtils;
 import play.Logger;
 import play.libs.F.Promise;
@@ -87,7 +82,7 @@ public class Evaluation extends Controller{
 			try {
 				tx = BDDUtils.beginTransaction(isActive);
 				
-				List<Formulaire> lf = FormulaireDAO.getListFormulaireById(idUser);
+				List<Formulaire> lf = FormulaireDAO.getListFormulaireByUserId(idUser);
 				
 				if(lf != null) {
 					ja = ConstructJSONObjects.getJSONArrayforListFormulairesFull(lf);

@@ -31,35 +31,28 @@ public class FormulaireDAO extends BasicDAO {
 			q.setParameter("nom", nom);
 			f = (Formulaire) q.uniqueResult();
 			BDDUtils.commit(isActive, tx);
-		}
-		catch(Exception ex) {
-			Logger.error("Hibernate failure : "+ ex.getMessage());
+		} catch(Exception ex) {
+			Logger.error("Erreur FormulaireDAO getFormulaireByNom : ", ex);
 			BDDUtils.rollback(isActive, tx);
 		}
 		return f;
 	}
 	
-	public static List<Formulaire> getListFormulaireById(Long idUser) {
-		List <Formulaire> lf = null;
+	@SuppressWarnings("unchecked")
+	public static List<Formulaire> getListFormulaireByUserId(long idUser) {
+		List<Formulaire> lf = null;
 		Transaction tx = null;
 		boolean isActive = BDDUtils.getTransactionStatus();
 		try {
 			tx = BDDUtils.beginTransaction(isActive);
 			Query q = BDDUtils.getCurrentSession().createQuery(
-			"SELECT f "+
-			"FROM Formulaire AS f, "+
-			"FormulaireService AS fs, "+
-			"Utilisateur AS u "+
-			"WHERE f.id = fs.formulaireServiceID.formulaire.id "+
-			"AND fs.formulaireServiceID.service.id = u.service.id "+
-			"AND u.id = :id");
-			
-			q.setParameter("id", idUser);
-			lf = q.list();
+				"SELECT fs.formulaireServiceID.formulaire FROM FormulaireService AS fs "+
+				"WHERE fs.formulaireServiceID.utilisateur.id = :idUser");
+			q.setParameter("idUser", idUser);
+			lf = (List<Formulaire>)q.list();
 			BDDUtils.commit(isActive, tx);
-		}
-		catch(Exception ex) {
-			Logger.error("Hibernate failure : "+ ex.getMessage());
+		} catch(Exception ex) {
+			Logger.error("Erreur FormulaireDAO getListFormulaireByUserId : ", ex);
 			BDDUtils.rollback(isActive, tx);
 		}
 		return lf;

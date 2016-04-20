@@ -12,6 +12,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import Tools.ConstructJSONObjects;
 import hibernate.dao.FormulaireDAO;
 import hibernate.dao.NoteDAO;
+import hibernate.dao.UtilisateurDAO;
 import hibernate.model.Note;
 import hibernate.model.Question;
 import hibernate.model.Utilisateur;
@@ -30,7 +31,6 @@ public class Reponse extends Controller{
 			JsonNode jsonN = request().body().asJson();
 			
 			if(jsonN != null){
-				Utilisateur u = new Utilisateur();
 				Note n = new Note();
 				Question q = new Question();
 			
@@ -42,17 +42,21 @@ public class Reponse extends Controller{
 						 * du coup : TO DO
 						 * 
 						 * */		
-						
+					Utilisateur u = null;
+					//RECUPERE JUSTE l'ID de LA QUESTION ET DE l'UTILISATEUR = plus léger et ça utilise LES OBJETS !!!
+					//Y'a vraiment une majuscule en DEBUT d'attribut ? A refactorer en "utilisateur" à cours terme 
+					//Utiliser le token pour récupérer l'utilisateur ...
+					if(jsonN.has("Utilisateur") && jsonN.get("Utilisateur").has("id")) {
+						u = UtilisateurDAO.findById(jsonN.get("Utilisateur").get("id").asLong());
+					}
+					//Tester s'il y a déjà une note pour cette question par cet utilisateur
 						if(jsonN.get("questionFull").get("notes").get("valeur") != null) {
 							n.setValeur(jsonN.get("questionFull").get("notes").get("valeur").asInt());
 						}
 						if(jsonN.get("questionFull").get("notes").get("remarque") != null) {
 							n.setRemarque(jsonN.get("questionFull").get("notes").get("remarque").toString());
 						}
-						if(jsonN.get("Utilisateur").get("id") != null) {
-							u.setId(jsonN.get("Utilisateur").get("id").asLong());
-							n.setUtilisateur(u);
-						}
+						n.setUtilisateur(u);
 						if(jsonN.get("questionFull").get("id") != null) {
 							q.setId(jsonN.get("questionFull").get("id").asLong());
 							n.setQuestion(q);

@@ -18,9 +18,8 @@ public abstract class BasicDAO {
 			tx = BDDUtils.beginTransaction(isActive);
 			o = BDDUtils.getCurrentSession().get(table, id);
 			BDDUtils.commit(isActive, tx);
-		}
-		catch(Exception ex) {
-			Logger.error("Hibernate failure : "+ ex.getMessage());
+		} catch(Exception ex) {
+			Logger.error("Erreur BasicDAO findById : ", ex);
 			BDDUtils.rollback(isActive, tx);
 		}
 		return o;
@@ -35,9 +34,8 @@ public abstract class BasicDAO {
 			tx = BDDUtils.beginTransaction(isActive);
 			all = BDDUtils.getCurrentSession().createCriteria(table).list();
 			BDDUtils.commit(isActive, tx);
-		}
-		catch(Exception ex) {
-			Logger.error("Hibernate failure : "+ ex.getMessage());
+		} catch(Exception ex) {
+			Logger.error("Erreur BasicDAO getAll : ", ex);
 			BDDUtils.rollback(isActive, tx);
 		}
 		return all;
@@ -52,9 +50,8 @@ public abstract class BasicDAO {
 			tx = BDDUtils.beginTransaction(isActive);
 			all = BDDUtils.getCurrentSession().createCriteria(table).addOrder(Order.asc(columnToOrder)).list();
 			BDDUtils.commit(isActive, tx);
-		}
-		catch(Exception ex) {
-			Logger.error("Hibernate failure : "+ ex.getMessage());
+		} catch(Exception ex) {
+			Logger.error("Erreur BasicDAO getAllOrderAscByColumn : ", ex);
 			BDDUtils.rollback(isActive, tx);
 		}
 		return all;
@@ -69,9 +66,8 @@ public abstract class BasicDAO {
 			tx = BDDUtils.beginTransaction(isActive);
 			all = BDDUtils.getCurrentSession().createCriteria(table).addOrder(Order.desc(columnToOrder)).list();
 			BDDUtils.commit(isActive, tx);
-		}
-		catch(Exception ex) {
-			Logger.error("Hibernate failure : "+ ex.getMessage());
+		} catch(Exception ex) {
+			Logger.error("Erreur BasicDAO getAllOrderDescByColumn : ", ex);
 			BDDUtils.rollback(isActive, tx);
 		}
 		return all;
@@ -86,10 +82,8 @@ public abstract class BasicDAO {
 			BDDUtils.getCurrentSession().saveOrUpdate(object);
 			BDDUtils.commit(isActive, tx);
 			b = true;
-		}
-		catch(Exception ex)
-		{
-			Logger.error("Hibernate failure : "+ ex.getMessage());
+		} catch(Exception ex) {
+			Logger.error("Erreur BasicDAO insertOrUpdate : ", ex);
 			BDDUtils.rollback(isActive, tx);
 		}
 		return b;
@@ -104,10 +98,8 @@ public abstract class BasicDAO {
 			BDDUtils.getCurrentSession().update(object);
 			BDDUtils.commit(isActive, tx);
 			b = true;
-		}
-		catch(Exception ex)
-		{
-			Logger.error("Hibernate failure : "+ ex.getMessage());
+		} catch(Exception ex) {
+			Logger.error("Erreur BasicDAO update : ", ex);
 			BDDUtils.rollback(isActive, tx);
 		}
 		return b;
@@ -125,7 +117,7 @@ public abstract class BasicDAO {
 		}
 		catch(Exception ex)
 		{
-			Logger.error("Hibernate failure : "+ ex.getMessage());
+			Logger.error("Erreur BasicDAO insert : ", ex);
 			BDDUtils.rollback(isActive, tx);
 		}
 		return b;
@@ -140,10 +132,8 @@ public abstract class BasicDAO {
 			BDDUtils.getCurrentSession().delete(object);
 			BDDUtils.commit(isActive, tx);
 			b = true;
-		}
-		catch(Exception ex)
-		{
-			Logger.error("Hibernate failure : "+ ex.getMessage());
+		} catch(Exception ex) {
+			Logger.error("Erreur BasicDAO delete : ", ex);
 			BDDUtils.rollback(isActive, tx);
 		}
 		return b;

@@ -27,9 +27,8 @@ public class FormulaireServiceDAO extends BasicDAO {
 			q.setParameter("typeUtilisateurId", typeUtilisateurId);
 			fs = (FormulaireService) q.uniqueResult();
 			BDDUtils.commit(isActive, tx);
-		}
-		catch(Exception ex) {
-			Logger.error("Hibernate failure : "+ ex.getMessage());
+		} catch(Exception ex) {
+			Logger.error("Erreur FormulaireServiceDAO findById : ", ex);
 			BDDUtils.rollback(isActive, tx);
 		}
 		return fs;

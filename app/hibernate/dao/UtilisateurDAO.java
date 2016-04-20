@@ -32,9 +32,8 @@ public class UtilisateurDAO extends BasicDAO {
 			q.setParameter("login", login);
 			u = (Utilisateur) q.uniqueResult();
 			BDDUtils.commit(isActive, tx);
-		}
-		catch(Exception ex) {
-			Logger.error("Hibernate failure : "+ ex.getMessage());
+		} catch(Exception ex) {
+			Logger.error("Erreur UtilisateurDAO getUtilisateurByLogin : ", ex);
 			BDDUtils.rollback(isActive, tx);
 		}
 		return u;
@@ -53,9 +52,8 @@ public class UtilisateurDAO extends BasicDAO {
 			q.setParameter("email", email);
 			u = (Utilisateur) q.uniqueResult();
 			BDDUtils.commit(isActive, tx);
-		}
-		catch(Exception ex) {
-			Logger.error("Hibernate failure : "+ ex.getMessage());
+		} catch(Exception ex) {
+			Logger.error("Erreur UtilisateurDAO getUtilisateurByEmail : ", ex);
 			BDDUtils.rollback(isActive, tx);
 		}
 		return u;
@@ -74,9 +72,8 @@ public class UtilisateurDAO extends BasicDAO {
 			q.setParameter("id", id);
 			u = (Utilisateur) q.uniqueResult();
 			BDDUtils.commit(isActive, tx);
-		}
-		catch(Exception ex) {
-			Logger.error("Hibernate failure : "+ ex.getMessage());
+		} catch(Exception ex) {
+			Logger.error("Erreur UtilisateurDAO getUtilisateurById : ", ex);
 			BDDUtils.rollback(isActive, tx);
 		}
 		return u;

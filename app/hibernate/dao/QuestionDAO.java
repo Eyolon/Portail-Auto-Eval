@@ -20,7 +20,8 @@ public class QuestionDAO extends BasicDAO {
 		return getAll(Question.class);
 	}
 	
-	public static List<Question> getListQuestionByFormulaireId(Long idForm) {
+	@SuppressWarnings("unchecked")
+	public static List<Question> getListQuestionByFormulaireId(long idForm) {
 		List<Question> lq = new ArrayList<>();
 		Transaction tx = null;
 		boolean isActive = BDDUtils.getTransactionStatus();
@@ -28,13 +29,13 @@ public class QuestionDAO extends BasicDAO {
 			tx = BDDUtils.beginTransaction(isActive);
 			Query q = BDDUtils.getCurrentSession().createQuery(
 					"SELECT q FROM question as q " +
-					"WHERE q.id_formulaire = :id");
-			q.setParameter("id", idForm);
+					"WHERE q.formulaire.id = :idFormulaire");
+			q.setParameter("idFormulaire", idForm);
 			lq = (List<Question>)q.list();
 			BDDUtils.commit(isActive, tx);
 		}
 		catch(Exception ex) {
-			Logger.error("Hibernate failure : "+ ex.getMessage());
+			Logger.error("Erreur QuestionDAO getListQuestionByFormulaireId : ", ex);
 			BDDUtils.rollback(isActive, tx);
 		}
 		return lq;
