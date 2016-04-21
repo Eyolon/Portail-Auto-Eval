@@ -37,9 +37,9 @@ public class ConstructJSONObjects {
 		return new JSONObject()
 				.put("id", note.getId())
 				.put("valeur", note.getValeur())
-				.put("remarque", note.getRemarque());
-				//.put("utilisateur" , note.getUtilisateur())
-				//.put("question", note.getQuestion());
+				.put("remarque", note.getRemarque())
+				.put("utilisateur" ,getJSONforUser(note.getUtilisateur()));
+				//.put("question", getJSONforQuestion(note.getQuestion())); Créer une boucle infinie : la question appel la note et la note appel la question...
 		/*
 		 * Il semble que si je décomente, sa plante. mais de toute facon c'est tout se dont j'ai besoin
 		 */
@@ -66,7 +66,7 @@ public class ConstructJSONObjects {
 		return new JSONObject()
 				.put("id", c.getId())
 				.put("libelle", c.getLibelle())
-				.put("", getJSONforCategorie(c.getCategorie()));
+				.put("categorie", getJSONforCategorie(c.getCategorie()));
 	}
 	
 	public static JSONObject getJSONforQuestion(Question q) {

@@ -73,7 +73,7 @@ public class Evaluation extends Controller{
 		return promiseOfResult;
 	}
 	
-	public static Promise<Result> getFormulaireFullForUser(Long idType){
+	public static Promise<Result> getFormulaireFullForUser(Long idUser){
 
 		Promise<Result> promiseOfResult = Promise.promise(()->{
 			JSONArray ja = new JSONArray();
@@ -82,7 +82,17 @@ public class Evaluation extends Controller{
 			try {
 				tx = BDDUtils.beginTransaction(isActive);
 				
-				List<Formulaire> lf = FormulaireDAO.getListFormulaireByUserId(idType);
+				List<Formulaire> lf = FormulaireDAO.getListFormulaireByUserId(idUser);
+				
+				for(int i = 0;i<lf.size();i++){
+					for(int j=0;j<lf.get(i).getQuestions().size();j++){
+						for(int k=0;k<lf.get(i).getQuestions().get(j).getNotes().size();k++){
+							if(lf.get(i).getQuestions().get(j).getNotes().get(k).getUtilisateur().getId()!=idUser)lf.get(i).getQuestions().get(j).getNotes().remove(k);
+							//En gros si on retrouve autre choses que des notes des autres user on les jarte par ce qu'on s'en fout. A voir si on peu virer ca a l'avenir 
+							//en mettant quelque chose d'approprié dans la DAO
+						}
+					}
+				}
 				
 				if(lf != null) {
 					ja = ConstructJSONObjects.getJSONArrayforListFormulairesFull(lf);

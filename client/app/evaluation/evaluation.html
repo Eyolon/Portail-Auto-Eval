@@ -9,17 +9,20 @@
       				Question {{$index + 1}} : {{question.valeur}}
       				</br>
       				</br>
-      				      			    				
-					<div ng-if="question.notes[0].id == null">
-    					<input type="number" name="valeur" ng-model="question.notes.valeur" min="0" max="100"/>
-					</div>
-					<div ng-if="question.notes[0].id != null">
-					     <input type="number" name="valeur" ng-disabled="question.notes[0].id"  ng-model="question.notes[0].valeur"/>
-					</div>
-      				
-      				<!-- marche! <input type="text" name="remarque" ng-model="question.notes.remarque"/> -->
-    			</div>
-    			
+      				<div ng-if="question.notes != null">
+     					<div ng-repeat="note in question.notes">  
+	      					
+							<div ng-if="note.utilisateur.login == EvaluationCtrl.user['login']">
+						        <input type="number" name="valeur" ng-disabled="note.valeur"  ng-model="note.valeur"/>
+						    </div>
+							
+	      				</div> 
+	      				<!-- marche! <input type="text" name="remarque" ng-model="question.notes.remarque"/> -->
+	    			</div>
+	    			<div ng-if="question.notes.length == 0">
+	    				<input type="number" name="valeur" ng-model="question.notes.valeur" min="0" max="100"/>
+	    			</div>
+	    		</div>
     		</li>
     		<div class="submitAnswer">
     			<button type="submit" class="btn btn-default" ng-click="EvaluationCtrl.repondre()">Envoyer mes reponses</button>

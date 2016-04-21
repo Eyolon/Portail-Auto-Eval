@@ -39,15 +39,13 @@ public class FormulaireDAO extends BasicDAO {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public static List<Formulaire> getListFormulaireByUserId(long idType) {
+	public static List<Formulaire> getListFormulaireByUserId(long idUser) {
 		List<Formulaire> lf = null;
 		Transaction tx = null;
 		boolean isActive = BDDUtils.getTransactionStatus();
 		try {
 			tx = BDDUtils.beginTransaction(isActive);
 			Query q = BDDUtils.getCurrentSession().createQuery(
-				"SELECT fs.formulaireServiceID.formulaire FROM FormulaireService AS fs "+
-				"WHERE fs.formulaireServiceID.service.id = :idType");
 				/*"SELECT fs.formulaireServiceID.formulaire FROM FormulaireService AS fs "+
 				* "WHERE fs.formulaireServiceID.utilisateur.id = :idUser");
 				*  ne marche pas, genere une org.hibernate.QueryException: 
@@ -56,16 +54,17 @@ public class FormulaireDAO extends BasicDAO {
 				* A mon sens normal, dans ton modèle formulaireServiceID n'a pas de properties utilisateur mais son id de type.
 				* donc pour résoudre le soucis, je vais re consulter la base en fonction de l'id de service.
 				* j'avais changer... par ce que je j'arrivais pas a chopper les formulaires et les reponses en même temps.
+				* 
+				* NOTABENE : 21/04/2016
+				* a défault d'une solution qui marche pour faire en fonction de l'UTILISATEUR je met ca pour que sa marche
 				*/
 					
-					/* "SELECT f "+		
-					 "FROM Formulaire AS f, "+		
-					 "FormulaireService AS fs, "+		
-					 "Utilisateur AS u "+		
-					 "WHERE f.id = fs.formulaireServiceID.formulaire.id "+	
-					 "AND fs.formulaireServiceID.service.id = u.service.id "+		
-					 "AND u.id = :id");*/
-			q.setParameter("idType", idType);
+				 "SELECT fs.formulaireServiceID.formulaire "+		
+				 "FROM FormulaireService AS fs, "+			
+				 "Utilisateur AS u "+		
+				 "WHERE u.id = :idUser "+		
+				 "AND fs.formulaireServiceID.service.id = u.service.id ");
+			q.setParameter("idUser", idUser);
 			lf = (List<Formulaire>)q.list();
 			BDDUtils.commit(isActive, tx);
 		} catch(Exception ex) {

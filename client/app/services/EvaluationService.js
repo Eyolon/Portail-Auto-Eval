@@ -8,8 +8,8 @@ function EvaluationService($resource,$http){
     );
 
     
-    this.listFormulaireFull = $resource('/api/evaluation/:idType',
-            {idType:'@idType'},
+    this.listFormulaireFull = $resource('/api/evaluation/:idUser',
+            {idUser:'@idUser'},
             {
                 'post': {method:'POST', isArray:true}
             }
@@ -22,12 +22,6 @@ function EvaluationService($resource,$http){
         }
     );
     
-    this.listNoteAllReadyCommited = $resource('/api/reponse/:idUser',
-            {idUser:'@idUser'},
-            {
-                'post': {method:'POST', isArray:true}
-            }
-        );
 	
     this.setAnswer = function setAnswer(answers,user){
     	for(var key in answers){//List de formulaires
