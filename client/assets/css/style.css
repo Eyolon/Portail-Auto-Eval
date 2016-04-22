@@ -121,3 +121,20 @@ div.col-lg-8{
     box-shadow: 1px 1px 2px #aaa;
     padding: 5%;
 }
+
+li {list-style-type: none;}
+
+h3{text-align:left;}
+
+div.quest-repeat.ng-binding.ng-scope{
+	text-align:left;
+	text-decoration : underline;
+	border:2px ridge;
+	padding:1%;
+	box-shadow: 1px 1px 2px #aaa;
+	margin-top:0.5%;
+}
+
+.submitAnswer{
+	margin-top:5%;
+}

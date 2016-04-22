@@ -31,11 +31,48 @@ public class FormulaireDAO extends BasicDAO {
 			q.setParameter("nom", nom);
 			f = (Formulaire) q.uniqueResult();
 			BDDUtils.commit(isActive, tx);
-		}
-		catch(Exception ex) {
-			Logger.error("Hibernate failure : "+ ex.getMessage());
+		} catch(Exception ex) {
+			Logger.error("Erreur FormulaireDAO getFormulaireByNom : ", ex);
 			BDDUtils.rollback(isActive, tx);
 		}
 		return f;
 	}
+	
+	@SuppressWarnings("unchecked")
+	public static List<Formulaire> getListFormulaireByUserId(long idUser) {
+		List<Formulaire> lf = null;
+		Transaction tx = null;
+		boolean isActive = BDDUtils.getTransactionStatus();
+		try {
+			tx = BDDUtils.beginTransaction(isActive);
+			Query q = BDDUtils.getCurrentSession().createQuery(
+				/*"SELECT fs.formulaireServiceID.formulaire FROM FormulaireService AS fs "+
+				* "WHERE fs.formulaireServiceID.utilisateur.id = :idUser");
+				*  ne marche pas, genere une org.hibernate.QueryException: 
+				* could not resolve property: formulaireServiceID of: hibernate.model.FormulaireService 
+				* [SELECT fs.formulaireServiceID.formulaire FROM hibernate.model.formulaireService AS fs WHERE fs.formulaireServiceID.utilisateur.id = :idUser]
+				* A mon sens normal, dans ton modèle formulaireServiceID n'a pas de properties utilisateur mais son id de type.
+				* donc pour résoudre le soucis, je vais re consulter la base en fonction de l'id de service.
+				* j'avais changer... par ce que je j'arrivais pas a chopper les formulaires et les reponses en même temps.
+				* 
+				* NOTABENE : 21/04/2016
+				* a défault d'une solution qui marche pour faire en fonction de l'UTILISATEUR je met ca pour que sa marche
+				*/
+					
+				 "SELECT fs.formulaireServiceID.formulaire "+		
+				 "FROM FormulaireService AS fs, "+			
+				 "Utilisateur AS u "+		
+				 "WHERE u.id = :idUser "+		
+				 "AND fs.formulaireServiceID.service.id = u.service.id ");
+			q.setParameter("idUser", idUser);
+			lf = (List<Formulaire>)q.list();
+			BDDUtils.commit(isActive, tx);
+		} catch(Exception ex) {
+			Logger.error("Erreur FormulaireDAO getListFormulaireByUserId : ", ex);
+			BDDUtils.rollback(isActive, tx);
+		}
+		return lf;
+	}
+	
+	
 }

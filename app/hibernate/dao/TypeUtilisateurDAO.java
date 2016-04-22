@@ -35,9 +35,8 @@ public class TypeUtilisateurDAO extends BasicDAO {
 			q.setParameter("libelle", libelle);
 			tu = (TypeUtilisateur) q.uniqueResult();
 			BDDUtils.commit(isActive, tx);
-		}
-		catch(Exception ex) {
-			Logger.error("Hibernate failure : "+ ex.getMessage());
+		} catch(Exception ex) {
+			Logger.error("Erreur TypeUtilisateur getTypeUtilisateurByLibelle : ", ex);
 			BDDUtils.rollback(isActive, tx);
 		}
 		return tu;
