@@ -1,4 +1,10 @@
 Cas de tests :
-_Un utilisateur (LOGIN=utilisateur,PSWD=password) au service Quantine verra un Formulaire Leadership et Strat�gie
-_Un administrateur (LOGIN=administrateur,PSWD=password)  Responsable d��tablissement verra un formulaire de process, rh et parteners
+_Un utilisateur (LOGIN=utilisateur,PSWD=password) au service Quantine verra un Formulaire Leadership et Stratégie
+_Un administrateur (LOGIN=administrateur,PSWD=password)  Responsable d’établissement verra un formulaire de process, rh et parteners
 _Un Super administrateur (LOGIN=supradministrateur,PSWD=password) Supra Administrateur verra tout les formulaires
+
+MAJ du 22/04/2016 : (portail-auto-eval-22-04-2016.sql)
+_Un utilisateur (LOGIN=bobi,PSWD=password) Au meme service que utilisateur a déja répondu a certaines questions.
+-> est attendu de voir ces réponses
+_L'utilisateur (LOGIN=utilisateur,PSWD=password) a lui aussi répondu a des réponses
+-> est attendu de voir des réponses différentes de bobi.
