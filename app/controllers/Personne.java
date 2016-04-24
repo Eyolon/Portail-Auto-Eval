@@ -8,6 +8,7 @@ import org.apache.commons.codec.binary.Base64;
 import org.hibernate.HibernateException;
 import org.hibernate.Transaction;
 import org.json.JSONObject;
+import org.json.JSONArray;
 import org.mindrot.jbcrypt.BCrypt;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -16,6 +17,7 @@ import Tools.ConstructJSONObjects;
 import hibernate.dao.ConnexionDAO;
 import hibernate.dao.TypeUtilisateurDAO;
 import hibernate.dao.UtilisateurDAO;
+import hibernate.dao.ServiceDAO;
 import hibernate.model.Connexion;
 import hibernate.model.Utilisateur;
 import hibernate.utils.BDDUtils;
@@ -83,7 +85,8 @@ public class Personne extends Controller {
 		{
 			JsonNode jsonN = request().body().asJson();
 			Utilisateur u = null;
-			if(jsonN != null && jsonN.get("id") == null) {
+			
+			if(jsonN != null && jsonN.get("login") != null) {
 				Transaction tx = null;
 				boolean isActive = BDDUtils.getTransactionStatus();
 				try {
@@ -244,6 +247,56 @@ public class Personne extends Controller {
 			} else {
 				return ok(js.toString());
 			}
+			
+		});
+		return promiseOfResult;
+	}
+	
+	public static Promise<Result> getServices(){
+		Promise<Result> promiseOfResult = Promise.promise(() -> 
+		{
+			JSONArray ja = new JSONArray();
+			Transaction tx = null;
+			boolean isActive = BDDUtils.getTransactionStatus();
+			try {
+				tx = BDDUtils.beginTransaction(isActive);
+				
+				ja = ConstructJSONObjects.getJSONArrayforListServices(ServiceDAO.getAll());
+				
+				BDDUtils.commit(isActive, tx);
+			}
+			catch(Exception ex) {
+				Logger.error("Hibernate failure : "+ ex.getMessage());
+				BDDUtils.rollback(isActive, tx);
+				return internalServerError("Une erreur est survenue pendant la transaction avec la base de données.");
+			}
+			return ok(ja.toString());
+			
+		});
+		return promiseOfResult;
+	}
+	
+	
+	public static Promise<Result> getTypesUser(){
+		Promise<Result> promiseOfResult = Promise.promise(() -> 
+		{
+			
+			JSONArray ja = new JSONArray();
+			Transaction tx = null;
+			boolean isActive = BDDUtils.getTransactionStatus();
+			try {
+				tx = BDDUtils.beginTransaction(isActive);
+				
+				ja = ConstructJSONObjects.getJSONArrayforListTypesUtilisateur(TypeUtilisateurDAO.getAll());
+				
+				BDDUtils.commit(isActive, tx);
+			}
+			catch(Exception ex) {
+				Logger.error("Hibernate failure : "+ ex.getMessage());
+				BDDUtils.rollback(isActive, tx);
+				return internalServerError("Une erreur est survenue pendant la transaction avec la base de données.");
+			}
+			return ok(ja.toString());
 			
 		});
 		return promiseOfResult;
