@@ -20,11 +20,11 @@ function InscriptionCtrl($http, $state, ConnexionService, InscriptionService) {
 		self.isSuccess = false;
 	}
     
-    this.services = function getServices(){
+    this.getServices = function getServices(){
     	self.services = InscriptionService.services.post({}, onSuccess, onError);
     };
     
-    this.typesUser = function getTypesUser(){
+    this.getTypesUser = function getTypesUser(){
     	self.typesUser = InscriptionService.typesUser.post({}, onSuccess, onError);
 
     };
@@ -32,11 +32,13 @@ function InscriptionCtrl($http, $state, ConnexionService, InscriptionService) {
     function insertUser() {
         $http.post('/api/insertUser', {
                 login: self.user.identifiant,
-                pwd: self.user.pwd
+                pwd: self.user.pwd,
+                service: self.user.service.id,
+                typeUser: self.user.typeUser.id
             })
             .success(function (data, status, headers, config) {
-                ConnexionService.seConnecter(self.user.adresseMail, self.user.pwd);
-                $state.go('home');
+                //ConnexionService.seConnecter(self.user.adresseMail, self.user.pwd);
+                //$state.go('home');
             })
             .error(function (data, status, headers, config) {
                 console.log(data);

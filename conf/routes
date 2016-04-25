@@ -11,7 +11,7 @@ POST	/api/user					controllers.Personne.updateUser()
 POST	/api/userFull/:idUser		controllers.Personne.getUserByIdFull(idUser: Long)
 POST	/api/insertUser				controllers.Personne.insertUser()
 POST	/api/checkUser/:email		controllers.Personne.checkUser(email: String)
-POST	/api/service				controllers.Personne.getServices()
+POST	/api/services				controllers.Personne.getServices()
 POST	/api/typesUser				controllers.Personne.getTypesUser()
 
 # Formulaire

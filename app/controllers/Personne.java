@@ -20,6 +20,8 @@ import hibernate.dao.UtilisateurDAO;
 import hibernate.dao.ServiceDAO;
 import hibernate.model.Connexion;
 import hibernate.model.Utilisateur;
+import hibernate.model.Service;
+import hibernate.model.TypeUtilisateur;
 import hibernate.utils.BDDUtils;
 import play.Logger;
 import play.libs.F.Promise;
@@ -102,6 +104,21 @@ public class Personne extends Controller {
 						if(jsonN.get("login") != null && !jsonN.get("login").asText().isEmpty()) {
 							u.setLogin(jsonN.get("login").asText());
 						}
+						
+						if(jsonN.get("service") != null && !jsonN.get("service").asText().isEmpty()) {
+							
+							Service userService = new Service();
+							userService.setId(jsonN.get("service").asLong());
+							u.setService(userService);
+						}
+						
+						if(jsonN.get("typeUser") != null && !jsonN.get("typeUser").asText().isEmpty()) {
+							
+							TypeUtilisateur typeUser = new TypeUtilisateur();
+							typeUser.setId(jsonN.get("typeUser").asLong());
+							u.setTypeUtilisateur(typeUser);
+						}
+						
 						u.setTypeUtilisateur(TypeUtilisateurDAO.findById(2l));
 						UtilisateurDAO.insert(u);
 					} else {
