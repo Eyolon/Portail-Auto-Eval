@@ -6,9 +6,10 @@ function navbarTop(){
         controllerAs: 'navbarTopCtrl'
     };
 }
-function NavbarTopController($scope, ConnexionService) {
+function NavbarTopController($scope, ConnexionService, ipCookie) {
 	var self = this;
 	this.isConnected = ConnexionService.checkIsConnected();
+	this.user = {};
 	
 	this.logout = function logout() {
 		ConnexionService.logout();
@@ -16,11 +17,16 @@ function NavbarTopController($scope, ConnexionService) {
 	
 	$scope.$on("userLogin", function onUserLogIn(event, user) {
 		self.isConnected = true;
+		self.user=ipCookie('utilisateur');
+		console.log(self.user);
 	});
 	
 	$scope.$on("userLogout", function onUserLogOut(event) {
 		self.isConnected = false;
+		self.user = {};
 	});
+	
+	
 }
 angular
     .module('portailAutoEval')
