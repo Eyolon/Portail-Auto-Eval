@@ -292,8 +292,7 @@ public class Personne extends Controller {
 		});
 		return promiseOfResult;
 	}
-	
-	
+
 	public static Promise<Result> getTypesUser(){
 		Promise<Result> promiseOfResult = Promise.promise(() -> 
 		{

@@ -18,7 +18,6 @@ function NavbarTopController($scope, ConnexionService, ipCookie) {
 	$scope.$on("userLogin", function onUserLogIn(event, user) {
 		self.isConnected = true;
 		self.user=ipCookie('utilisateur');
-		console.log(self.user);
 	});
 	
 	$scope.$on("userLogout", function onUserLogOut(event) {

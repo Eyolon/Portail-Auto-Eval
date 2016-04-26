@@ -20,7 +20,8 @@ public class ConstructJSONObjects {
 		return new JSONObject()
 		.put("id", u.getId())
 		.put("login", u.getLogin())
-		.put("service", getJSONforService(u.getService()));
+		.put("service", getJSONforService(u.getService()))
+		.put("typeUtilisateur", getJSONforTypeUtilisateur(u.getTypeUtilisateur()));
 	}
 	
 	public static JSONArray getJSONArrayforNote(List<Note> ln){
