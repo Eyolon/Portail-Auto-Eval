@@ -1,24 +1,41 @@
-function ProfilCtrl($filter, $http, $rootScope, ConnexionService, ipCookie) {
+function ProfilCtrl($filter, $http, $rootScope, ConnexionService, InscriptionService, ipCookie) {
 	var self = this;
-	this.email = "";
 	this.currentPwd = "";
 	this.user = {};
 	this.userPwd = "";
 	this.isProfilModified = false;
+	this.services = [];
+    this.typesUser = [];
+    this.oldLogin = "";
 	
 	function getUser() {
 		var id = ipCookie('utilisateur').id;
 		$http.post('/api/userFull/' + id, {token: ipCookie("token")})
             .success(function(data, status, headers, config) {
                 self.user = data;
-				self.email = data.adresseMail;
-				self.user.birthday = new Date($filter('date')(data.birthday, 'yyyy-MM-dd'));
+                oldLogin = self.user.login;
             })
             .error(function(data, status, headers, config) {
                 console.log(data);
             });
 	}
-	getUser();
+	
+	function onSuccess() {
+        //pas tellement utile
+	}
+	
+	function onError() {
+		// voir si on peu mettre un message d'erreur
+	}
+	
+	this.getServices = function getServices(){
+    	self.services = InscriptionService.services.post({}, onSuccess, onError);
+	};
+    
+    this.getTypesUser = function getTypesUser(){
+    	self.typesUser = InscriptionService.typesUser.post({}, onSuccess, onError);
+
+    };
 	
 	function updateUser() {
 		var pass = self.currentPwd;
@@ -27,17 +44,10 @@ function ProfilCtrl($filter, $http, $rootScope, ConnexionService, ipCookie) {
 		}
 		$http.post('/api/user', 
 			{
-				id: self.user.id,
-				lastname: self.user.lastname,
-				firstname: self.user.firstname,
-				pwd: pass,
-				adresseRue: self.user.adresseRue,
-				adresseVille: self.user.adresseVille,
-				adresseCodePostal: self.user.adresseCodePostal,
-				adresseMail: self.user.adresseMail,
-				telephone: self.user.telephone,
-				genre: self.user.genre,
-				birthday: self.user.birthday
+				login: self.user.identifiant,
+	            pwd: pass,
+	            service: self.user.service.id,
+	            typeUser: self.user.typeUtilisateur.id
 			})
             .success(function(data, status, headers, config) {
                 ipCookie('utilisateur', data.user, {expires : 7});
@@ -50,8 +60,8 @@ function ProfilCtrl($filter, $http, $rootScope, ConnexionService, ipCookie) {
             });
 	}
 	
-	function checkAccount(oldMail, email, password, onSuccess, onError) {
-		$http.post('/api/checkUser/' + oldMail, {password: password, email: email})
+	function checkAccount(login, password, onSuccess, onError) {
+		$http.post('/api/checkUser/' + oldLogin, {password: password, login: login})
             .success(function(data, status, headers, config) {
                 if(onSuccess) {
 					onSuccess(data, status, headers, config);
@@ -65,10 +75,16 @@ function ProfilCtrl($filter, $http, $rootScope, ConnexionService, ipCookie) {
 	}
 	
 	this.save = function save(){
+		console.log(self.user);
+		console.log(self.oldLogin);
 		if((self.user.pwd !== undefined && self.user.pwd !== "" && self.userPwd !== undefined && self.userPwd !== "" && self.user.pwd === self.userPwd && self.currentPwd !== undefined && self.currentPwd !== "") || (self.currentPwd !== undefined && self.currentPwd !== "")) {
-			checkAccount(self.email, self.user.adresseMail, self.currentPwd, updateUser);
+			checkAccount(self.user.login, self.currentPwd, updateUser);
 		}
 	};
+	
+	getUser();
+	self.getTypesUser();
+    self.getServices();
 }
 angular
     .module('portailAutoEval')
