@@ -1,4 +1,4 @@
-function ProfilCtrl($filter, $http, $rootScope, ConnexionService, InscriptionService, ipCookie) {
+function ProfilCtrl($filter, $http, $rootScope, ConnexionService, ipCookie) {
 	var self = this;
 	this.currentPwd = "";
 	this.user = {};
@@ -20,23 +20,6 @@ function ProfilCtrl($filter, $http, $rootScope, ConnexionService, InscriptionSer
             });
 	}
 	
-	function onSuccess() {
-        //pas tellement utile
-	}
-	
-	function onError() {
-		// voir si on peu mettre un message d'erreur
-	}
-	
-	this.getServices = function getServices(){
-    	self.services = InscriptionService.services.post({}, onSuccess, onError);
-	};
-    
-    this.getTypesUser = function getTypesUser(){
-    	self.typesUser = InscriptionService.typesUser.post({}, onSuccess, onError);
-
-    };
-	
 	function updateUser() {
 		var pass = self.currentPwd;
 		if(self.user.pwd !== undefined && self.user.pwd !== "") {
@@ -44,10 +27,11 @@ function ProfilCtrl($filter, $http, $rootScope, ConnexionService, InscriptionSer
 		}
 		$http.post('/api/user', 
 			{
-				login: self.user.identifiant,
+				id: self.user.id,
+				login: self.user.login,
 	            pwd: pass,
-	            service: self.user.service.id,
-	            typeUser: self.user.typeUtilisateur.id
+	            service: self.user.service,
+	            typeUser: self.user.typeUtilisateur
 			})
             .success(function(data, status, headers, config) {
                 ipCookie('utilisateur', data.user, {expires : 7});
@@ -75,16 +59,12 @@ function ProfilCtrl($filter, $http, $rootScope, ConnexionService, InscriptionSer
 	}
 	
 	this.save = function save(){
-		console.log(self.user);
-		console.log(self.oldLogin);
 		if((self.user.pwd !== undefined && self.user.pwd !== "" && self.userPwd !== undefined && self.userPwd !== "" && self.user.pwd === self.userPwd && self.currentPwd !== undefined && self.currentPwd !== "") || (self.currentPwd !== undefined && self.currentPwd !== "")) {
 			checkAccount(self.user.login, self.currentPwd, updateUser);
 		}
 	};
 	
 	getUser();
-	self.getTypesUser();
-    self.getServices();
 }
 angular
     .module('portailAutoEval')

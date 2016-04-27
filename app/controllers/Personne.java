@@ -40,9 +40,11 @@ public class Personne extends Controller {
 			JsonNode jsonN = request().body().asJson();
 			if(jsonN != null && jsonN.get("password") != null && jsonN.get("password").asText() != null) {
 				pwd = jsonN.get("password").asText();
+				
 			}
 			if(jsonN != null && jsonN.get("login") != null && jsonN.get("login").asText() != null) {
 				newLogin = jsonN.get("login").asText();
+				
 			}
 			Utilisateur u = null;
 			Transaction tx = null;
@@ -51,16 +53,42 @@ public class Personne extends Controller {
 				tx = BDDUtils.beginTransaction(isActive);
 				
 				u = UtilisateurDAO.getUtilisateurByLogin(newLogin);
+				
+				
+				
 				if(u == null) {
 					u = UtilisateurDAO.getUtilisateurByLogin(login);
 					if(u == null || !BCrypt.checkpw(pwd, u.getConnexion().getPassword())) {
 						u = null;
 					} else {
+				
 						newToken = generateToken(u);
+						
+						/*quick fix BUG : Il choppe l'id mais pas le libelle ?*/
+						Service userService = new Service();
+						userService = ServiceDAO.findById(u.getService().getId());
+						u.setService(userService);
+						
+						TypeUtilisateur typeUser = new TypeUtilisateur();
+						typeUser = TypeUtilisateurDAO.findById(u.getTypeUtilisateur().getId());
+						u.setTypeUtilisateur(typeUser);
+					
 					}
 				} else if(BCrypt.checkpw(pwd, u.getConnexion().getPassword())) {
+					//
 					newToken = generateToken(u);
+					
+					/*quick fix BUG : Il choppe l'id mais pas le libelle ?*/
+					Service userService = new Service();
+					userService = ServiceDAO.findById(u.getService().getId());
+					u.setService(userService);
+					
+					TypeUtilisateur typeUser = new TypeUtilisateur();
+					typeUser = TypeUtilisateurDAO.findById(u.getTypeUtilisateur().getId());
+					u.setTypeUtilisateur(typeUser);
+					
 				} else {
+					
 					u = null;
 				}
 				
