@@ -58,6 +58,27 @@ function ProfilCtrl($filter, $http, $rootScope, ConnexionService, InscriptionSer
             });
 	}
 	
+	function updateUserAdmin() {
+		var pass = self.currentPwd;
+		if(self.userToEdit.pwd !== undefined && self.userToEdit.pwd !== "") {
+			pass = self.userToEdit.pwd;
+		}
+		$http.post('/api/user', 
+			{
+				id: self.userToEdit.id,
+				login: self.userToEdit.login,
+	            pwd: pass,
+	            service: self.userToEdit.service,
+	            typeUser: self.userToEdit.typeUtilisateur
+			})
+            .success(function(data, status, headers, config) {
+				self.isProfilModified = true;
+            })
+            .error(function(data, status, headers, config) {
+                console.log(data);
+            });
+	}
+	
 	function checkAccount(login, password, onSuccess, onError) {
 		$http.post('/api/checkUser/' + oldLogin, {password: password, login: login})
             .success(function(data, status, headers, config) {
@@ -76,13 +97,13 @@ function ProfilCtrl($filter, $http, $rootScope, ConnexionService, InscriptionSer
 		if((self.user.pwd !== undefined && self.user.pwd !== "" && self.userPwd !== undefined && self.userPwd !== "" && self.user.pwd === self.userPwd && self.currentPwd !== undefined && self.currentPwd !== "") || (self.currentPwd !== undefined && self.currentPwd !== "")) {
 			checkAccount(self.user.login, self.currentPwd, updateUser);
 		}
-	};
+	}
 	
-	this.save = function saveAdmin(){
-		if((self.user.pwd !== undefined && self.user.pwd !== "" && self.userPwd !== undefined && self.userPwd !== "" && self.user.pwd === self.userPwd && self.currentPwd !== undefined && self.currentPwd !== "") || (self.currentPwd !== undefined && self.currentPwd !== "")) {
-			checkAccount(self.user.login, self.currentPwd, updateUser);
+	this.saveAdmin = function saveAdmin(){
+		if((self.userToEdit.pwd === self.userPwd)) {
+			updateUserAdmin();
 		}
-	};
+	}
 
 	function onSuccess() {
         
