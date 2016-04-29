@@ -1,4 +1,4 @@
-function ProfilCtrl($filter, $http, $rootScope, ConnexionService, ipCookie) {
+function ProfilCtrl($filter, $http, $rootScope, ConnexionService, InscriptionService, ipCookie) {
 	var self = this;
 	this.currentPwd = "";
 	this.user = {};
@@ -7,6 +7,8 @@ function ProfilCtrl($filter, $http, $rootScope, ConnexionService, ipCookie) {
 	this.services = [];
     this.typesUser = [];
     this.oldLogin = "";
+    this.listUser = [];
+    this.userToEdit = {};
 	
 	function getUser() {
 		var id = ipCookie('utilisateur').id;
@@ -14,10 +16,22 @@ function ProfilCtrl($filter, $http, $rootScope, ConnexionService, ipCookie) {
             .success(function(data, status, headers, config) {
                 self.user = data;
                 oldLogin = self.user.login;
+                if(self.user.typeUtilisateur.libelle === "administrateur"){
+                	getAllUser();
+                }
+                
             })
             .error(function(data, status, headers, config) {
                 console.log(data);
             });
+	}
+	
+	function getAllUser() {	
+    	self.services = InscriptionService.services.post({}, onSuccess, onError);
+    	self.typesUser = InscriptionService.typesUser.post({}, onSuccess, onError);	
+        self.listUser = InscriptionService.listUtilisateur.post({}, onSuccess, onError);
+        console.log(self.listUser);
+            
 	}
 	
 	function updateUser() {
@@ -64,7 +78,22 @@ function ProfilCtrl($filter, $http, $rootScope, ConnexionService, ipCookie) {
 		}
 	};
 	
+	this.save = function saveAdmin(){
+		if((self.user.pwd !== undefined && self.user.pwd !== "" && self.userPwd !== undefined && self.userPwd !== "" && self.user.pwd === self.userPwd && self.currentPwd !== undefined && self.currentPwd !== "") || (self.currentPwd !== undefined && self.currentPwd !== "")) {
+			checkAccount(self.user.login, self.currentPwd, updateUser);
+		}
+	};
+
+	function onSuccess() {
+        
+	}
+	
+	function onError() {
+		
+	}
+	
 	getUser();
+	
 }
 angular
     .module('portailAutoEval')

@@ -31,7 +31,15 @@
 	            <li ui-sref-active="active" data-ng-show="navbarTopCtrl.isConnected" ng-switch-when="utilisateur"><a ui-sref="evaluation">Mes Evaluations</a></li>
 	        
 	            <li ui-sref-active="active" data-ng-show="navbarTopCtrl.isConnected" ng-switch-when="administrateur"><a ui-sref="evaluation">Mes Evaluations</a>
-	            <li ui-sref-active="active" data-ng-show="navbarTopCtrl.isConnected" ng-switch-when="administrateur"><a ui-sref="inscription">Ajouter un Utilisateur</a></li>   
+	            <li ui-sref-active="active" data-ng-show="navbarTopCtrl.isConnected" ng-switch-when="administrateur"></li>   
+	        
+	        	<li class="dropdown" data-ng-show="navbarTopCtrl.isConnected" ng-switch-when="administrateur">
+                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Gerrer les utilisateurs<span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li ui-sref-active="active"><a ui-sref="inscription">Ajouter un Utilisateur</a></li>
+                        <li ui-sref-active="active"><a ui-sref="profilAdmin">Modifier un utilisateur</a></li>
+                    </ul>
+                </li>
 	        
 	            <li ui-sref-active="active" data-ng-show="navbarTopCtrl.isConnected" ng-switch-when="super_administrateur"><a ui-sref="evaluation">Mes Evaluations</a></li>
 	            <li ui-sref-active="active" data-ng-show="navbarTopCtrl.isConnected" ng-switch-when="super_administrateur"><a ui-sref="inscription">Ajouter un Utilisateur</a></li>   

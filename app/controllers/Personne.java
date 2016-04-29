@@ -382,4 +382,32 @@ public class Personne extends Controller {
 		}
 		return null;
 	}
+
+	public static Promise<Result> getUserFull(){
+		Promise<Result> promiseOfResult = Promise.promise(() -> 
+		{
+			JSONArray ja = new JSONArray();
+			Transaction tx = null;
+			boolean isActive = BDDUtils.getTransactionStatus();
+			try {
+				tx = BDDUtils.beginTransaction(isActive);
+				
+				//La ligne suivante merde.
+				//L'hibernate failure est pour un Null mais UtilisateurDAO.getAll() marche
+				//
+				ja = ConstructJSONObjects.getJSONArrayforListUsers(UtilisateurDAO.getAll());
+				
+				BDDUtils.commit(isActive, tx);
+			}
+			catch(Exception ex) {
+				Logger.error("Hibernate failure : "+ ex.getMessage());
+				BDDUtils.rollback(isActive, tx);
+				return internalServerError("Une erreur est survenue pendant la transaction avec la base de données.");
+			}
+			return ok(ja.toString());
+			
+		});
+		return promiseOfResult;
+	}
+
 }

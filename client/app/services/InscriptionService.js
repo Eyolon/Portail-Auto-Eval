@@ -13,6 +13,12 @@ function InscriptionService($resource,$http){
 	            'post': {method:'POST', isArray:true}
 	        }
 	   );
+	
+	this.listUtilisateur = $resource('/api/userFull',
+			{},
+			{
+				 'post': {method:'POST', isArray:true}
+			});
 
 
 }
