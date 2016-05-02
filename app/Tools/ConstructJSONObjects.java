@@ -11,6 +11,7 @@ import hibernate.model.Formulaire;
 import hibernate.model.Note;
 import hibernate.model.Question;
 import hibernate.model.Service;
+import hibernate.model.TypeUtilisateur;
 import hibernate.model.Utilisateur;
 
 public class ConstructJSONObjects {
@@ -19,7 +20,8 @@ public class ConstructJSONObjects {
 		return new JSONObject()
 		.put("id", u.getId())
 		.put("login", u.getLogin())
-		.put("service", getJSONforService(u.getService()));
+		.put("service", getJSONforService(u.getService()))
+		.put("typeUtilisateur", getJSONforTypeUtilisateur(u.getTypeUtilisateur()));
 	}
 	
 	public static JSONArray getJSONArrayforNote(List<Note> ln){
@@ -128,5 +130,33 @@ public class ConstructJSONObjects {
 		return new JSONObject()
 				.put("id",s.getId())
 				.put("libelle",s.getLibelle());
+	}
+	
+	public static JSONArray getJSONArrayforListServices(List<Service> ls){
+		if(ls != null) {
+			JSONArray ja = new JSONArray();
+			for (Service service : ls) {
+				ja.put(getJSONforService(service));
+			}
+			return ja;
+		}
+		return null;
+	}
+	
+	public static JSONObject getJSONforTypeUtilisateur(TypeUtilisateur tu){
+		return new JSONObject()
+				.put("id",tu.getId())
+				.put("libelle",tu.getLibelle());
+	}
+	
+	public static JSONArray getJSONArrayforListTypesUtilisateur(List<TypeUtilisateur> ltu){
+		if(ltu != null) {
+			JSONArray ja = new JSONArray();
+			for (TypeUtilisateur typeUtilisateur : ltu) {
+				ja.put(getJSONforTypeUtilisateur(typeUtilisateur));
+			}
+			return ja;
+		}
+		return null;
 	}
 }

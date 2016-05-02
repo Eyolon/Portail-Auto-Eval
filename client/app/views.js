@@ -149,6 +149,20 @@ angular
             }
         });
 		
+		$stateProvider.state('profilAdmin', {
+            parent: 'connection',
+            url: '/profilAdmin',
+            title: 'Account of User',
+            reloadOnSearch: true,
+            views: {
+                'main@': {
+                    templateUrl: '/profil/profilAdmin.html',
+                    controller: 'ProfilCtrl',
+                    controllerAs: 'ProfilCtrl'
+                }
+            }
+        });
+		
 		/*$stateProvider.state('emprunts', {
             parent: 'connection',
             url: '/emprunts',

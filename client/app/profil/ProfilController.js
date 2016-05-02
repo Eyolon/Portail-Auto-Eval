@@ -1,24 +1,38 @@
-function ProfilCtrl($filter, $http, $rootScope, ConnexionService, ipCookie) {
+function ProfilCtrl($filter, $http, $rootScope, ConnexionService, InscriptionService, ipCookie) {
 	var self = this;
-	this.email = "";
 	this.currentPwd = "";
 	this.user = {};
 	this.userPwd = "";
 	this.isProfilModified = false;
+	this.services = [];
+    this.typesUser = [];
+    this.oldLogin = "";
+    this.listUser = [];
+    this.userToEdit = {};
 	
 	function getUser() {
 		var id = ipCookie('utilisateur').id;
 		$http.post('/api/userFull/' + id, {token: ipCookie("token")})
             .success(function(data, status, headers, config) {
                 self.user = data;
-				self.email = data.adresseMail;
-				self.user.birthday = new Date($filter('date')(data.birthday, 'yyyy-MM-dd'));
+                oldLogin = self.user.login;
+                if(self.user.typeUtilisateur.libelle === "administrateur"){
+                	getAllUser();
+                }
+                
             })
             .error(function(data, status, headers, config) {
                 console.log(data);
             });
 	}
-	getUser();
+	
+	function getAllUser() {	
+    	self.services = InscriptionService.services.post({}, onSuccess, onError);
+    	self.typesUser = InscriptionService.typesUser.post({}, onSuccess, onError);	
+        self.listUser = InscriptionService.listUtilisateur.post({}, onSuccess, onError);
+        console.log(self.listUser);
+            
+	}
 	
 	function updateUser() {
 		var pass = self.currentPwd;
@@ -28,16 +42,10 @@ function ProfilCtrl($filter, $http, $rootScope, ConnexionService, ipCookie) {
 		$http.post('/api/user', 
 			{
 				id: self.user.id,
-				lastname: self.user.lastname,
-				firstname: self.user.firstname,
-				pwd: pass,
-				adresseRue: self.user.adresseRue,
-				adresseVille: self.user.adresseVille,
-				adresseCodePostal: self.user.adresseCodePostal,
-				adresseMail: self.user.adresseMail,
-				telephone: self.user.telephone,
-				genre: self.user.genre,
-				birthday: self.user.birthday
+				login: self.user.login,
+	            pwd: pass,
+	            service: self.user.service,
+	            typeUser: self.user.typeUtilisateur
 			})
             .success(function(data, status, headers, config) {
                 ipCookie('utilisateur', data.user, {expires : 7});
@@ -50,8 +58,29 @@ function ProfilCtrl($filter, $http, $rootScope, ConnexionService, ipCookie) {
             });
 	}
 	
-	function checkAccount(oldMail, email, password, onSuccess, onError) {
-		$http.post('/api/checkUser/' + oldMail, {password: password, email: email})
+	function updateUserAdmin() {
+		var pass = self.currentPwd;
+		if(self.userToEdit.pwd !== undefined && self.userToEdit.pwd !== "") {
+			pass = self.userToEdit.pwd;
+		}
+		$http.post('/api/user', 
+			{
+				id: self.userToEdit.id,
+				login: self.userToEdit.login,
+	            pwd: pass,
+	            service: self.userToEdit.service,
+	            typeUser: self.userToEdit.typeUtilisateur
+			})
+            .success(function(data, status, headers, config) {
+				self.isProfilModified = true;
+            })
+            .error(function(data, status, headers, config) {
+                console.log(data);
+            });
+	}
+	
+	function checkAccount(login, password, onSuccess, onError) {
+		$http.post('/api/checkUser/' + oldLogin, {password: password, login: login})
             .success(function(data, status, headers, config) {
                 if(onSuccess) {
 					onSuccess(data, status, headers, config);
@@ -66,9 +95,26 @@ function ProfilCtrl($filter, $http, $rootScope, ConnexionService, ipCookie) {
 	
 	this.save = function save(){
 		if((self.user.pwd !== undefined && self.user.pwd !== "" && self.userPwd !== undefined && self.userPwd !== "" && self.user.pwd === self.userPwd && self.currentPwd !== undefined && self.currentPwd !== "") || (self.currentPwd !== undefined && self.currentPwd !== "")) {
-			checkAccount(self.email, self.user.adresseMail, self.currentPwd, updateUser);
+			checkAccount(self.user.login, self.currentPwd, updateUser);
 		}
-	};
+	}
+	
+	this.saveAdmin = function saveAdmin(){
+		if((self.userToEdit.pwd === self.userPwd)) {
+			updateUserAdmin();
+		}
+	}
+
+	function onSuccess() {
+        
+	}
+	
+	function onError() {
+		
+	}
+	
+	getUser();
+	
 }
 angular
     .module('portailAutoEval')

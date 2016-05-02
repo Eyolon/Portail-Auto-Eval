@@ -10,7 +10,10 @@ POST	/api/logger/:email			controllers.Personne.seLogger(email: String)
 POST	/api/user					controllers.Personne.updateUser()
 POST	/api/userFull/:idUser		controllers.Personne.getUserByIdFull(idUser: Long)
 POST	/api/insertUser				controllers.Personne.insertUser()
-POST	/api/checkUser/:email		controllers.Personne.checkUser(email: String)
+POST	/api/checkUser/:login		controllers.Personne.checkUser(login: String)
+POST	/api/services				controllers.Personne.getServices()
+POST	/api/typesUser				controllers.Personne.getTypesUser()
+POST	/api/userFull				controllers.Personne.getUserFull()
 
 # Formulaire
 POST	/api/evaluation				controllers.Evaluation.getListFormulaire()
