@@ -43,7 +43,7 @@ public class Evaluation extends Controller{
 	}
 	
 	public static Promise<Result> getFormulaire(String nomForm){
-		Promise<Result> promiseOfResult = Promise.promise(()->{
+		return Promise.promise(()->{
 
 			JSONObject js = null;
 			Transaction tx = null;
@@ -70,12 +70,11 @@ public class Evaluation extends Controller{
 			}
 			
 		});
-		return promiseOfResult;
 	}
 	
 	public static Promise<Result> getFormulaireFullForUser(Long idUser){
 
-		Promise<Result> promiseOfResult = Promise.promise(()->{
+		return Promise.promise(()->{
 			JSONArray ja = new JSONArray();
 			Transaction tx = null;
 			boolean isActive = BDDUtils.getTransactionStatus();
@@ -108,7 +107,6 @@ public class Evaluation extends Controller{
 			return ok(ja.toString());
 			
 		});
-		return promiseOfResult;	
 	}
 
 }

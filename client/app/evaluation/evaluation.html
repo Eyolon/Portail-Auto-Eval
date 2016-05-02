@@ -1,39 +1,39 @@
 <div>
-	<div data-ng-show="EvaluationCtrl.isSuccess">
-		<h2>Mon Evaluation</h2>
-		<ul class="eval-container">
-    		<li class="eval-repeat" ng-repeat="questionnaire in EvaluationCtrl.listQuestionnaire">
-      			<h3>Formulaire {{$index + 1}} : {{questionnaire.nom}}</h3>
-      			<div class="quest-repeat" ng-repeat="question in questionnaire.listQuestions">
+    <div data-ng-show="EvaluationCtrl.isSuccess">
+        <h2>Mon Evaluation</h2>
+        <ul class="eval-container">
+            <li class="eval-repeat" data-ng-repeat="questionnaire in EvaluationCtrl.listQuestionnaire">
+                <h3>Formulaire {{$index + 1}} : {{questionnaire.nom}}</h3>
+                <div class="quest-repeat" data-ng-repeat="question in questionnaire.listQuestions">
 
-      				Question {{$index + 1}} : {{question.valeur}}
-      				</br>
-      				</br>
-      				<div ng-if="question.notes != null">
-     					<div ng-repeat="note in question.notes">  
-	      					
-							<div ng-if="note.utilisateur.login == EvaluationCtrl.user['login']">
-						        <input type="number" name="valeur" ng-disabled="note.valeur"  ng-model="note.valeur"/>
-						    </div>
-							
-	      				</div> 
-	      				<!-- marche! <input type="text" name="remarque" ng-model="question.notes.remarque"/> -->
-	    			</div>
-	    			<div ng-if="question.notes.length == 0">
-	    				<input type="number" name="valeur" ng-model="question.notes.valeur" min="0" max="100"/>
-	    			</div>
-	    		</div>
-    		</li>
-    		<div class="submitAnswer">
-    			<button type="submit" class="btn btn-default" ng-click="EvaluationCtrl.repondre()">Envoyer mes reponses</button>
-    		</div>
-    		<!-- UseLess in most case -->
-    		<li class="eval-repeat" ng-if="results.length == 0">
-      			<strong>No results found...</strong>
-    		</li>
-  		</ul>
-  	</div>	
-  	<div class="alert alert-warning " data-ng-show="!EvaluationCtrl.isSuccess" style="margin-top: 10px">
-		<b>PAS DE QUESTIONNAIRE TROUVE MERCI DE CONTACTER VOTRE ADMINISTRATEUR</b>
-	</div>
+                    Question {{$index + 1}} : {{question.valeur}}
+                    <br/>
+                    <br/>
+                    <div data-ng-if="question.notes != null">
+                        <div data-ng-repeat="note in question.notes">
+
+                            <div data-ng-if="note.utilisateur.login === EvaluationCtrl.user.login">
+                                <input type="number" name="valeur" data-ng-disabled="note.valeur" data-ng-model="note.valeur" />
+                            </div>
+
+                        </div>
+                        <!-- marche! <input type="text" name="remarque" data-ng-model="question.notes.remarque"/> -->
+                    </div>
+                    <div data-ng-if="question.notes.length === 0">
+                        <input type="number" name="valeur" data-ng-model="question.notes.valeur" min="0" max="100" />
+                    </div>
+                </div>
+            </li>
+            <div class="submitAnswer">
+                <button type="submit" class="btn btn-default" data-ng-click="EvaluationCtrl.repondre()">Envoyer mes reponses</button>
+            </div>
+            <!-- UseLess in most case -->
+            <li class="eval-repeat" data-ng-if="results.length == 0">
+                <strong>No results found...</strong>
+            </li>
+        </ul>
+    </div>
+    <div class="alert alert-warning " data-ng-show="!EvaluationCtrl.isSuccess" style="margin-top: 10px">
+        <b>PAS DE QUESTIONNAIRE TROUVE MERCI DE CONTACTER VOTRE ADMINISTRATEUR</b>
+    </div>
 </div>

@@ -2,7 +2,7 @@ function EvaluationController(EvaluationService, ipCookie) {
 	var self = this;
 	this.isSuccess = true;
     this.listQuestionnaire = [];
-	this.questionnaire;
+	this.questionnaire = {};
 	this.user = ipCookie('utilisateur');
 	
 	function onSuccess() {
@@ -21,7 +21,7 @@ function EvaluationController(EvaluationService, ipCookie) {
     };
     
     this.getListQuestionnaires = function getListQuestionnaires(){
-    	self.listQuestionnaire = EvaluationService.listFormulaireFull.post({idUser: self.user['id']}, onSuccess, onError);    	
+    	self.listQuestionnaire = EvaluationService.listFormulaireFull.post({idUser: self.user.id}, onSuccess, onError);    	
     };
 	
 	/*Plus un cas de test plutot qu'utile*/

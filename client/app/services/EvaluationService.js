@@ -23,19 +23,24 @@ function EvaluationService($resource,$http){
     );
     
 	
-    this.setAnswer = function setAnswer(answers,user){
+    this.setAnswer = function setAnswer(answers, user){
     	for(var key in answers){//List de formulaires
     		
-    		if(!answers.hasOwnProperty(key))continue;
+    		if(!answers.hasOwnProperty(key)) {
+                continue;
+            }
+            
     		var obj = answers[key];// On extrait le formulaire
-    		
-    		var obj2 = obj['listQuestions'];//list de question
+    		var obj2 = obj.listQuestions;//list de question
+            
     		for(var key2 in obj2){
-    			if(!obj2.hasOwnProperty(key2))continue;
+    			if(!obj2.hasOwnProperty(key2)) {
+                    continue;
+                }
     			
     			var questionFull = obj2[key2];// notre question
     			
-    			if(questionFull.notes.valeur !== undefined){
+    			if(questionFull.notes.valeur !== undefined) {
     				//Donc la on envois toute les questions répondue uniquement
     		
     				var notePatched = [];
@@ -46,15 +51,8 @@ function EvaluationService($resource,$http){
     				$http.post('/api/reponse',{questionFull: questionFull,utilisateur:user});
     				
     			}
-    			
-    			
-    			
-    			
-    			
     		}
     	}
-    	
-    	
     };
 
 }

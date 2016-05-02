@@ -3,6 +3,7 @@ package Tools;
 import java.util.List;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import hibernate.model.Categorie;
@@ -16,7 +17,7 @@ import hibernate.model.Utilisateur;
 
 public class ConstructJSONObjects {
 	
-	public static JSONObject getJSONforUser(Utilisateur u) {
+	public static JSONObject getJSONforUser(Utilisateur u) throws JSONException {
 		return new JSONObject()
 		.put("id", u.getId())
 		.put("login", u.getLogin())
@@ -24,7 +25,7 @@ public class ConstructJSONObjects {
 		.put("typeUtilisateur", getJSONforTypeUtilisateur(u.getTypeUtilisateur()));
 	}
 	
-	public static JSONArray getJSONArrayforNote(List<Note> ln){
+	public static JSONArray getJSONArrayforNote(List<Note> ln) throws JSONException{
 		if(ln != null) {
 			JSONArray ja = new JSONArray();
 			for (Note note : ln) {
@@ -35,7 +36,7 @@ public class ConstructJSONObjects {
 		return null;
 	}
 	
-	private static JSONObject getJSONforNote(Note note) {
+	private static JSONObject getJSONforNote(Note note) throws JSONException {
 		return new JSONObject()
 				.put("id", note.getId())
 				.put("valeur", note.getValeur())
@@ -47,7 +48,7 @@ public class ConstructJSONObjects {
 		 */
 	}
 
-	public static JSONArray getJSONArrayforListUsers(List<Utilisateur> lu) {
+	public static JSONArray getJSONArrayforListUsers(List<Utilisateur> lu) throws JSONException {
 		if(lu != null) {
 			JSONArray ja = new JSONArray();
 			for (Utilisateur user : lu) {
@@ -58,20 +59,20 @@ public class ConstructJSONObjects {
 		return null;
 	}
 	
-	public static JSONObject getJSONforCategorie(Categorie c) {
+	public static JSONObject getJSONforCategorie(Categorie c) throws JSONException {
 		return new JSONObject()
 				.put("id", c.getId())
 				.put("libelle", c.getLibelle());
 	}
 	
-	public static JSONObject getJSONforCritere(Critere c) {
+	public static JSONObject getJSONforCritere(Critere c) throws JSONException {
 		return new JSONObject()
 				.put("id", c.getId())
 				.put("libelle", c.getLibelle())
 				.put("categorie", getJSONforCategorie(c.getCategorie()));
 	}
 	
-	public static JSONObject getJSONforQuestion(Question q) {
+	public static JSONObject getJSONforQuestion(Question q) throws JSONException {
 		return new JSONObject()
 				.put("id", q.getId())
 				.put("valeur", q.getValeur())
@@ -80,7 +81,7 @@ public class ConstructJSONObjects {
 				.put("notes", getJSONArrayforNote(q.getNotes()));
 	}
 	
-	public static JSONArray getJSONArrayforListQuestions(List<Question> lq) {
+	public static JSONArray getJSONArrayforListQuestions(List<Question> lq) throws JSONException {
 		if(lq != null) {
 			JSONArray ja = new JSONArray();
 			for (Question question : lq) {
@@ -91,13 +92,13 @@ public class ConstructJSONObjects {
 		return null;
 	}
 	
-	public static JSONObject getJSONforFormulaire(Formulaire f) {
+	public static JSONObject getJSONforFormulaire(Formulaire f) throws JSONException {
 		return new JSONObject()
 				.put("id", f.getId())
 				.put("nom", f.getNom());
 	}
 	
-	public static JSONArray getJSONArrayforListFormulaires(List<Formulaire> lf) {
+	public static JSONArray getJSONArrayforListFormulaires(List<Formulaire> lf) throws JSONException {
 		if(lf != null) {
 			JSONArray ja = new JSONArray();
 			for (Formulaire formulaire : lf) {
@@ -108,7 +109,7 @@ public class ConstructJSONObjects {
 		return null;
 	}
 	
-	public static JSONArray getJSONArrayforListFormulairesFull(List<Formulaire> lf) {
+	public static JSONArray getJSONArrayforListFormulairesFull(List<Formulaire> lf) throws JSONException {
 		if(lf != null) {
 			JSONArray ja = new JSONArray();
 			for (Formulaire formulaire : lf) {
@@ -119,20 +120,20 @@ public class ConstructJSONObjects {
 		return null;
 	}
 	
-	public static JSONObject getJSONforFormulaireFull(Formulaire f) {
+	public static JSONObject getJSONforFormulaireFull(Formulaire f) throws JSONException {
 		return new JSONObject()
 				.put("id", f.getId())
 				.put("nom", f.getNom())
 				.put("listQuestions", getJSONArrayforListQuestions(f.getQuestions()));
 	}
 	
-	public static JSONObject getJSONforService(Service s){
+	public static JSONObject getJSONforService(Service s) throws JSONException{
 		return new JSONObject()
 				.put("id",s.getId())
 				.put("libelle",s.getLibelle());
 	}
 	
-	public static JSONArray getJSONArrayforListServices(List<Service> ls){
+	public static JSONArray getJSONArrayforListServices(List<Service> ls) throws JSONException{
 		if(ls != null) {
 			JSONArray ja = new JSONArray();
 			for (Service service : ls) {
@@ -143,13 +144,13 @@ public class ConstructJSONObjects {
 		return null;
 	}
 	
-	public static JSONObject getJSONforTypeUtilisateur(TypeUtilisateur tu){
+	public static JSONObject getJSONforTypeUtilisateur(TypeUtilisateur tu) throws JSONException{
 		return new JSONObject()
 				.put("id",tu.getId())
 				.put("libelle",tu.getLibelle());
 	}
 	
-	public static JSONArray getJSONArrayforListTypesUtilisateur(List<TypeUtilisateur> ltu){
+	public static JSONArray getJSONArrayforListTypesUtilisateur(List<TypeUtilisateur> ltu) throws JSONException{
 		if(ltu != null) {
 			JSONArray ja = new JSONArray();
 			for (TypeUtilisateur typeUtilisateur : ltu) {

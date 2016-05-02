@@ -23,34 +23,6 @@ angular
             }
         });
 		
-		/*$stateProvider.state('books', {
-            parent: 'main',
-            url: '/books',
-            title: 'Books',
-            reloadOnSearch: false,
-            views: {
-                'main@': {
-                    templateUrl: '/books/books.html',
-                    controller: 'BooksCtrl',
-                    controllerAs: 'BooksCtrl'
-                }
-            }
-        });
-		
-		$stateProvider.state('book', {
-            parent: 'books',
-            url: '/{bookId:int}',
-            title: 'Book',
-            reloadOnSearch: false,
-            views: {
-                'main@': {
-                    templateUrl: '/book/book.html',
-                    controller: 'BookCtrl',
-                    controllerAs: 'BookCtrl'
-                }
-            }
-        });*/
-		
 		$stateProvider.state('contacts', {
             parent: 'main',
             url: '/contacts',
@@ -108,33 +80,6 @@ angular
             }
         });
 		
-		/*$stateProvider.state('historique', {
-            parent: 'connection',
-            url: '/historique',
-            title: 'History Borrowing',
-            reloadOnSearch: false,
-            views: {
-                'main@': {
-                    templateUrl: '/historique/historique.html',
-                    controller: 'HistoriqueCtrl',
-                    controllerAs: 'HistoriqueCtrl'
-                }
-            }
-        });
-		$stateProvider.state('reservation', {
-            parent: 'connection',
-            url: '/reservation',
-            title: 'Reservation',
-            reloadOnSearch: false,
-            views: {
-                'main@': {
-                    templateUrl: '/reservation/reservation.html',
-                    controller: 'ReservationsCtrl',
-                    controllerAs: 'ReservationsCtrl'
-                }
-            }
-        });*/
-		
 		$stateProvider.state('profil', {
             parent: 'connection',
             url: '/profil',
@@ -163,20 +108,7 @@ angular
             }
         });
 		
-		/*$stateProvider.state('emprunts', {
-            parent: 'connection',
-            url: '/emprunts',
-            title: 'Current Loan',
-            reloadOnSearch: false,
-            views: {
-                'main@': {
-                    templateUrl: '/emprunts/emprunts.html',
-                    controller: 'EmpruntsCtrl',
-                    controllerAs: 'EmpruntsCtrl'
-                }
-            }
-        });
-		$stateProvider.state('cgu', {
+		/*$stateProvider.state('cgu', {
             parent: 'main',
             url: '/cgu',
             title: 'Terms and Conditions',

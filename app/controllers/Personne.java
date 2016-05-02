@@ -7,21 +7,19 @@ import java.util.Locale;
 import org.apache.commons.codec.binary.Base64;
 import org.hibernate.HibernateException;
 import org.hibernate.Transaction;
-import org.json.JSONObject;
 import org.json.JSONArray;
+import org.json.JSONObject;
 import org.mindrot.jbcrypt.BCrypt;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
 import Tools.ConstructJSONObjects;
 import hibernate.dao.ConnexionDAO;
+import hibernate.dao.ServiceDAO;
 import hibernate.dao.TypeUtilisateurDAO;
 import hibernate.dao.UtilisateurDAO;
-import hibernate.dao.ServiceDAO;
 import hibernate.model.Connexion;
 import hibernate.model.Utilisateur;
-import hibernate.model.Service;
-import hibernate.model.TypeUtilisateur;
 import hibernate.utils.BDDUtils;
 import play.Logger;
 import play.libs.F.Promise;
@@ -32,7 +30,7 @@ public class Personne extends Controller {
 	public static DateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.FRANCE);
 	
 	public static Promise<Result> checkUser(String login) {
-		Promise<Result> promiseOfResult = Promise.promise(() -> 
+		return Promise.promise(() -> 
 		{
 			String newToken = null;
 			String pwd = null;
@@ -54,8 +52,6 @@ public class Personne extends Controller {
 				
 				u = UtilisateurDAO.getUtilisateurByLogin(newLogin);
 				
-				
-				
 				if(u == null) {
 					u = UtilisateurDAO.getUtilisateurByLogin(login);
 					if(u == null || !BCrypt.checkpw(pwd, u.getConnexion().getPassword())) {
@@ -65,30 +61,19 @@ public class Personne extends Controller {
 						newToken = generateToken(u);
 						
 						/*quick fix BUG : Il choppe l'id mais pas le libelle ?*/
-						Service userService = new Service();
-						userService = ServiceDAO.findById(u.getService().getId());
-						u.setService(userService);
-						
-						TypeUtilisateur typeUser = new TypeUtilisateur();
-						typeUser = TypeUtilisateurDAO.findById(u.getTypeUtilisateur().getId());
-						u.setTypeUtilisateur(typeUser);
+						u.setService(ServiceDAO.findById(u.getService().getId()));
+						u.setTypeUtilisateur(TypeUtilisateurDAO.findById(u.getTypeUtilisateur().getId()));
 					
 					}
 				} else if(BCrypt.checkpw(pwd, u.getConnexion().getPassword())) {
-					//
+					
 					newToken = generateToken(u);
 					
 					/*quick fix BUG : Il choppe l'id mais pas le libelle ?*/
-					Service userService = new Service();
-					userService = ServiceDAO.findById(u.getService().getId());
-					u.setService(userService);
-					
-					TypeUtilisateur typeUser = new TypeUtilisateur();
-					typeUser = TypeUtilisateurDAO.findById(u.getTypeUtilisateur().getId());
-					u.setTypeUtilisateur(typeUser);
+					u.setService(ServiceDAO.findById(u.getService().getId()));
+					u.setTypeUtilisateur(TypeUtilisateurDAO.findById(u.getTypeUtilisateur().getId()));
 					
 				} else {
-					
 					u = null;
 				}
 				
@@ -107,11 +92,10 @@ public class Personne extends Controller {
 					.put("token", newToken).toString());
 			}
 		});
-		return promiseOfResult;
 	}
 	
 	public static Promise<Result> insertUser() {
-		Promise<Result> promiseOfResult = Promise.promise(() -> 
+		return Promise.promise(() -> 
 		{
 			JsonNode jsonN = request().body().asJson();
 			Utilisateur u = null;
@@ -134,20 +118,15 @@ public class Personne extends Controller {
 						}
 						
 						if(jsonN.get("service") != null && !jsonN.get("service").asText().isEmpty()) {
-							
-							Service userService = new Service();
-							userService.setId(jsonN.get("service").asLong());
-							u.setService(userService);
+							u.setService(ServiceDAO.findById(jsonN.get("service").asLong()));
 						}
 						
 						if(jsonN.get("typeUser") != null && !jsonN.get("typeUser").asText().isEmpty()) {
-							
-							TypeUtilisateur typeUser = new TypeUtilisateur();
-							typeUser.setId(jsonN.get("typeUser").asLong());
-							u.setTypeUtilisateur(typeUser);
+							u.setTypeUtilisateur(TypeUtilisateurDAO.findById(jsonN.get("typeUser").asLong()));
+						} else {
+							u.setTypeUtilisateur(TypeUtilisateurDAO.findById(2l));
 						}
 						
-						u.setTypeUtilisateur(TypeUtilisateurDAO.findById(2l));
 						UtilisateurDAO.insert(u);
 					} else {
 						throw new Exception("Login déjà utilisée.");
@@ -172,11 +151,10 @@ public class Personne extends Controller {
 			}
 			return notFound();
 		});
-		return promiseOfResult;
 	}
 	
 	public static Promise<Result> updateUser() {
-		Promise<Result> promiseOfResult = Promise.promise(() -> 
+		return Promise.promise(() -> 
 		{
 			JsonNode jsonN = request().body().asJson();
 			JSONObject js = null;
@@ -209,11 +187,10 @@ public class Personne extends Controller {
 				return ok(js.toString());
 			}
 		});
-		return promiseOfResult;
 	}
 	
 	public static Promise<Result> getUserByIdFull(Long idUser) {
-		Promise<Result> promiseOfResult = Promise.promise(() -> 
+		return Promise.promise(() -> 
 		{
 			String token = null;
 			JsonNode jsonN = request().body().asJson();
@@ -221,15 +198,13 @@ public class Personne extends Controller {
 				token = jsonN.get("token").asText();
 			}
 			JSONObject js = null;
-			Utilisateur u = null;
 			
 			Transaction tx = null;
 			boolean isActive = BDDUtils.getTransactionStatus();
 			try {
 				tx = BDDUtils.beginTransaction(isActive);
 				
-				u = UtilisateurDAO.findById(Utilisateur.class, idUser);
-
+				Utilisateur u = UtilisateurDAO.findById(idUser);
 				if(u != null && checkToken(token, u)) {
 					js = ConstructJSONObjects.getJSONforUser(u);
 				}
@@ -248,17 +223,15 @@ public class Personne extends Controller {
 				return ok(js.toString());
 			}
 		});
-		return promiseOfResult;
 	}
 	
 	public static Promise<Result> seLogger(String login) {
 		
-		Promise<Result> promiseOfResult = Promise.promise(() -> 
+		return Promise.promise(() -> 
 		{
-			String newToken = null;
 			String pwd = null;
 			JsonNode jsonN = request().body().asJson();
-			if(jsonN != null && jsonN.get("password") != null && jsonN.get("password").asText() != null) {
+			if(jsonN != null && jsonN.has("password") && jsonN.get("password").asText() != null) {
 				pwd = jsonN.get("password").asText();
 			}
 			JSONObject js = null;
@@ -268,37 +241,24 @@ public class Personne extends Controller {
 				tx = BDDUtils.beginTransaction(isActive);
 				
 				Utilisateur u = UtilisateurDAO.getUtilisateurByLogin(login);
-				if(u != null) {
-					if(BCrypt.checkpw(pwd, u.getConnexion().getPassword())) {
-						newToken = generateToken(u);
-					} else {
-						u = null;
-					}
-					
+				if(u != null && BCrypt.checkpw(pwd, u.getConnexion().getPassword())) {
 					js = new JSONObject()
 							.put("utilisateur", ConstructJSONObjects.getJSONforUser(u))
-							.put("token", newToken);
+							.put("token", generateToken(u));
 				}
 				
 				BDDUtils.commit(isActive, tx);
-			}
-			catch(Exception ex) {
+			} catch(Exception ex) {
 				Logger.error("Hibernate failure : "+ ex.getMessage());
 				BDDUtils.rollback(isActive, tx);
 				return internalServerError("Une erreur est survenue pendant la transaction avec la base de données.");
 			}
-			if(js == null) {
-				return notFound("Utilisateur introuvable.");
-			} else {
-				return ok(js.toString());
-			}
-			
+			return js == null ? notFound("Utilisateur introuvable.") : ok(js.toString());
 		});
-		return promiseOfResult;
 	}
 	
 	public static Promise<Result> getServices(){
-		Promise<Result> promiseOfResult = Promise.promise(() -> 
+		return Promise.promise(() -> 
 		{
 			JSONArray ja = new JSONArray();
 			Transaction tx = null;
@@ -318,11 +278,10 @@ public class Personne extends Controller {
 			return ok(ja.toString());
 			
 		});
-		return promiseOfResult;
 	}
 
 	public static Promise<Result> getTypesUser(){
-		Promise<Result> promiseOfResult = Promise.promise(() -> 
+		return Promise.promise(() -> 
 		{
 			
 			JSONArray ja = new JSONArray();
@@ -343,7 +302,6 @@ public class Personne extends Controller {
 			return ok(ja.toString());
 			
 		});
-		return promiseOfResult;
 	}
 	
 	private static String generateToken(Utilisateur user) {
@@ -353,16 +311,11 @@ public class Personne extends Controller {
 	}
 	
 	public static boolean checkToken(String token, Utilisateur user){
-		String utilisateurToken;
-		utilisateurToken = generateToken(user);
-		return utilisateurToken.equals(token);
+		return generateToken(user).equals(token);
 	}
 	
 	public static boolean checkToken(String token){
-		Utilisateur user = getUtilisateurFromToken(token);
-		String utilisateurToken;
-		utilisateurToken = generateToken(user);
-		return utilisateurToken.equals(token); 
+		return generateToken(getUtilisateurFromToken(token)).equals(token); 
 	}
 	
 	public static Utilisateur getUtilisateurFromToken(String token){
@@ -384,7 +337,7 @@ public class Personne extends Controller {
 	}
 
 	public static Promise<Result> getUserFull(){
-		Promise<Result> promiseOfResult = Promise.promise(() -> 
+		return Promise.promise(() -> 
 		{
 			JSONArray ja = new JSONArray();
 			Transaction tx = null;
@@ -392,9 +345,6 @@ public class Personne extends Controller {
 			try {
 				tx = BDDUtils.beginTransaction(isActive);
 				
-				//La ligne suivante merde.
-				//L'hibernate failure est pour un Null mais UtilisateurDAO.getAll() marche
-				//
 				ja = ConstructJSONObjects.getJSONArrayforListUsers(UtilisateurDAO.getAll());
 				
 				BDDUtils.commit(isActive, tx);
@@ -407,7 +357,5 @@ public class Personne extends Controller {
 			return ok(ja.toString());
 			
 		});
-		return promiseOfResult;
 	}
-
 }

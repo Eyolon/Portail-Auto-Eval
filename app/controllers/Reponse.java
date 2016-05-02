@@ -4,12 +4,9 @@ import java.time.Instant;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Transaction;
-import org.json.JSONArray;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
-import Tools.ConstructJSONObjects;
-import hibernate.dao.FormulaireDAO;
 import hibernate.dao.NoteDAO;
 import hibernate.dao.QuestionDAO;
 import hibernate.dao.UtilisateurDAO;
@@ -26,7 +23,7 @@ public class Reponse extends Controller{
 
 	
 	public static Promise<Result> insertReponses() {
-		Promise<Result> promiseOfResult = Promise.promise(() -> 
+		return Promise.promise(() -> 
 		{
 			JsonNode jsonN = request().body().asJson();
 			
@@ -76,11 +73,9 @@ public class Reponse extends Controller{
 						BDDUtils.rollback(isActive, tx);
 						return internalServerError("Une erreur est survenue pendant la transaction avec la base de données.");
 					}
-				
 				}
 			return notFound();
 		});
-		return promiseOfResult;
 	}
 	
 }

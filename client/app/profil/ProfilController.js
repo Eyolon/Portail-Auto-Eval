@@ -15,7 +15,7 @@ function ProfilCtrl($filter, $http, $rootScope, ConnexionService, InscriptionSer
 		$http.post('/api/userFull/' + id, {token: ipCookie("token")})
             .success(function(data, status, headers, config) {
                 self.user = data;
-                oldLogin = self.user.login;
+                self.oldLogin = self.user.login;
                 if(self.user.typeUtilisateur.libelle === "administrateur"){
                 	getAllUser();
                 }
@@ -80,7 +80,7 @@ function ProfilCtrl($filter, $http, $rootScope, ConnexionService, InscriptionSer
 	}
 	
 	function checkAccount(login, password, onSuccess, onError) {
-		$http.post('/api/checkUser/' + oldLogin, {password: password, login: login})
+		$http.post('/api/checkUser/' + self.oldLogin, {password: password, login: login})
             .success(function(data, status, headers, config) {
                 if(onSuccess) {
 					onSuccess(data, status, headers, config);
@@ -93,17 +93,17 @@ function ProfilCtrl($filter, $http, $rootScope, ConnexionService, InscriptionSer
             });
 	}
 	
-	this.save = function save(){
+	this.save = function save() {
 		if((self.user.pwd !== undefined && self.user.pwd !== "" && self.userPwd !== undefined && self.userPwd !== "" && self.user.pwd === self.userPwd && self.currentPwd !== undefined && self.currentPwd !== "") || (self.currentPwd !== undefined && self.currentPwd !== "")) {
 			checkAccount(self.user.login, self.currentPwd, updateUser);
 		}
-	}
+	};
 	
 	this.saveAdmin = function saveAdmin(){
 		if((self.userToEdit.pwd === self.userPwd)) {
 			updateUserAdmin();
 		}
-	}
+	};
 
 	function onSuccess() {
         
@@ -114,7 +114,6 @@ function ProfilCtrl($filter, $http, $rootScope, ConnexionService, InscriptionSer
 	}
 	
 	getUser();
-	
 }
 angular
     .module('portailAutoEval')
