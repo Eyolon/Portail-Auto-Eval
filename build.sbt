@@ -16,7 +16,7 @@ libraryDependencies ++= Seq(
   cache,
   javaWs,
   filters,
-  "org.json" % "json" % "5.0.5",
+  "org.json" % "json" % "20160212",
   "io.janusproject.guava" % "guava" % "19.0.0",
   "log4j" % "log4j" % "1.2.17",
   "org.postgresql" % "postgresql" % "9.4.1208",
