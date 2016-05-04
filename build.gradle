@@ -85,6 +85,9 @@ task bowerInstall(dependsOn: npmInstall, type: NodeTask) {
     outputs.dir "client/bower_components"
 }
 
+grunt_build.dependsOn installGrunt
+grunt_compile.dependsOn installGrunt
+
 tasks.withType(Task) {
     if (it.name == 'createPlayBinaryZipDist'){
     	
