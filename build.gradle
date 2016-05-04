@@ -1,4 +1,5 @@
 plugins {
+	id 'java'
     id 'play'
 	id 'eclipse'
 	id "com.moowork.node" version "0.12"

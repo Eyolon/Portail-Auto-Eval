@@ -1,0 +1,3 @@
+//include ':client'
+
+//project(':client').projectDir = new File(settingsDir, 'client')

@@ -8,7 +8,6 @@ cache:
     - $HOME/.gradle/caches/
     - $HOME/.gradle/wrapper/
 script:
-  - "gradle assemble"
-  - "gradle createPlayBinaryZipDist"
+  - "gradlew createPlayBinaryZipDist"
 notifications:
   email: false
