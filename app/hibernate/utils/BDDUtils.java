@@ -188,6 +188,7 @@ public class BDDUtils {
 				.addAnnotatedClass(hibernate.model.Question.class)
 				.addAnnotatedClass(hibernate.model.TypeUtilisateur.class)
 				.addAnnotatedClass(hibernate.model.Service.class)
+				.addAnnotatedClass(hibernate.model.Etablissement.class)
 				.addAnnotatedClass(hibernate.model.Utilisateur.class)
 				.addAnnotatedClass(hibernate.model.Note.class)
 				.addAnnotatedClass(hibernate.model.FormulaireServiceID.class)

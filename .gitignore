@@ -94,6 +94,7 @@ target/
 
 #Play
 public/
+build/
 */bower_components/
 */node_modules/
 public/app/index.html

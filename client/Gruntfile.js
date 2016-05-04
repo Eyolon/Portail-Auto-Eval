@@ -407,6 +407,7 @@ module.exports = function (grunt) {
 
     // Full Tasks
     grunt.registerTask('devready', ['concat:dev', 'bower_concat:bower', 'copy:bowerComponentsFiles', 'copy:css'/*, 'copy:js'*/, 'copy:assets', 'copy:html', 'less:prod', 'wrap:prod', 'notify:devready']);
+	grunt.registerTask('compile', ['concat:prod', 'bower_concat:bower', 'copy:bowerComponentsFiles', 'copy:css'/*, 'copy:js'*/, 'copy:assets', 'copy:html', 'less:prod', 'wrap:prod']);
 	grunt.registerTask('build', ['concat:prod', 'bower_concat:bower', 'copy:bowerComponentsFiles', 'copy:css'/*, 'copy:js'*/, 'copy:assets', 'copy:html', 'less:prod', 'wrap:prod', 'clean:cleanClient']);
     /*grunt.registerTask('dist', ['clean:cleanPublic', 'concurrent:dist1', 'wrap:prod', 'wrap:bower', 'ngAnnotate:prod', 'uglify:all', 'shell:playdist', 'notify:dist', 'shell:openDistPathInExplorer']);
     grunt.registerTask('distWithoutUglify', ['clean:cleanPublic', 'concurrent:dist1', 'wrap:prod', 'wrap:bower', 'ngAnnotate:prod', 'shell:playdist', 'notify:dist', 'shell:openDistPathInExplorer']);*/

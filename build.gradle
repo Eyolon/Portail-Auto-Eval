@@ -1,0 +1,100 @@
+plugins {
+    id 'play'
+	id 'eclipse'
+	id "com.moowork.node" version "0.12"
+	id "com.moowork.grunt" version "0.12"
+}
+
+model {
+    components {
+        play {
+            platform play: '2.4.6', scala: '2.11'
+        }
+    }
+}
+
+repositories {
+    jcenter()
+    maven {
+        name "typesafe-maven-release"
+        url "https://repo.typesafe.com/typesafe/maven-releases"
+    }
+    ivy {
+        name "typesafe-ivy-release"
+        url "https://repo.typesafe.com/typesafe/ivy-releases"
+        layout "ivy"
+    }
+}
+
+dependencies {
+    play (
+		[group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.7.4'],
+		[group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.7.4'],
+		[group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jdk8', version: '2.7.4'],
+		[group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr353', version: '2.7.4'],
+		[group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-json-org', version: '2.7.4'],
+		[group: 'org.postgresql', name: 'postgresql', version: '9.4.1208'],
+		[group: 'org.hibernate', name: 'hibernate-core', version: '5.1.0.Final'],
+		[group: 'org.hibernate', name: 'hibernate-java8', version: '5.1.0.Final'],
+		[group: 'org.hibernate', name: 'hibernate-entitymanager', version: '5.1.0.Final'],
+		[group: 'org.hibernate', name: 'hibernate-hikaricp', version: '5.1.0.Final'],
+		[group: 'org.mindrot', name: 'jbcrypt', version: '0.3m']
+	)
+}
+
+node {
+	// Version of node to use.
+	version = '4.4.2'
+
+	// Version of npm to use.
+	npmVersion = '3.3.12'
+
+	// Base URL for fetching node distributions (change if you have a mirror).
+	distBaseUrl = 'https://nodejs.org/dist'
+
+	// If true, it will download node using above parameters.
+	// If false, it will try to use globally installed node.
+	download = true
+
+	// Set the work directory for unpacking node
+	workDir = file("${project.buildDir}/client")
+
+	// Set the work directory where node_modules should be located
+	nodeModulesDir = file("${project.projectDir}/client")
+}
+
+grunt {
+    // Set the directory where Gruntfile.js should be found
+    workDir = file("${project.projectDir}/client")
+
+    // Whether colors should output on the terminal
+    colors = true
+
+    // Whether output from Grunt should be buffered - useful when running tasks in parallel
+    bufferOutput = false
+}
+
+task bowerInstall(dependsOn: npmInstall, type: NodeTask) {
+    script = file("client/node_modules/bower/bin/bower")
+    args = ['--config.storage.cache=client/caches/bower/cache',
+            '--config.storage.packages=client/caches/bower/packages',
+            '--config.storage.registry=client/caches/bower/registry',
+            'install']
+    inputs.file "client/bower.json"
+    outputs.dir "client/bower_components"
+}
+
+tasks.withType(Task) {
+    if (it.name == 'createPlayBinaryZipDist'){
+    	
+		dependsOn(':bowerInstall')
+		dependsOn(':installGrunt')
+    	dependsOn(':grunt_build')
+    }
+	if (it.name == 'playBinary'){
+		
+		dependsOn('bowerInstall')
+		dependsOn('installGrunt')
+		dependsOn(':grunt_compile')
+    }
+}

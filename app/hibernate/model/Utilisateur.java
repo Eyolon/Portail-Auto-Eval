@@ -27,23 +27,26 @@ public class Utilisateur implements Serializable {
 	private TypeUtilisateur typeUtilisateur = null;
 	private Connexion connexion = null;
 	private Service service = null;
+	private Etablissement etablissement = null;
 	private List<Note> notes = null;
 	
 	public Utilisateur(){}
 	
-	public Utilisateur(Long id, String login, TypeUtilisateur typeUtilisateur, Connexion connexion, Service service) {
+	public Utilisateur(Long id, String login, TypeUtilisateur typeUtilisateur, Connexion connexion, Service service, Etablissement etablissement) {
 		this.id = id;
 		this.login = login;
 		this.typeUtilisateur = typeUtilisateur;
 		this.connexion = connexion;
 		this.service = service;
+		this.etablissement = etablissement;
 	}
 	
-	public Utilisateur(String login, TypeUtilisateur typeUtilisateur, Connexion connexion, Service service) {
+	public Utilisateur(String login, TypeUtilisateur typeUtilisateur, Connexion connexion, Service service, Etablissement etablissement) {
 		this.login = login;
 		this.typeUtilisateur = typeUtilisateur;
 		this.connexion = connexion;
 		this.service = service;
+		this.etablissement = etablissement;
 	}
 	
 	@Id
@@ -95,6 +98,16 @@ public class Utilisateur implements Serializable {
 
 	public void setService(Service service) {
 		this.service = service;
+	}
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "id_etablissement", nullable = true)
+	public Etablissement getEtablissement() {
+		return etablissement;
+	}
+
+	public void setEtablissement(Etablissement etablissement) {
+		this.etablissement = etablissement;
 	}
 
 	@OneToMany(mappedBy="utilisateur")
