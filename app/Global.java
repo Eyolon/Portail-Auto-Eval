@@ -46,11 +46,9 @@ public class Global extends GlobalSettings {
 	public void onStop(Application app) {
 		Logger.info("Application shutdown ...");
 		try {
-			if(BDDUtils.getCurrentSession().isConnected()) {
-				BDDUtils.disconnect();
-			}
+			BDDUtils.disconnect();
 		} catch (HibernateException he) {
-			Logger.error("Impossible de se connecter à la base de donnée.");
+			Logger.error("La liaison avec la base de donnée est déjà interrompue.");
 		}
 	}
 }

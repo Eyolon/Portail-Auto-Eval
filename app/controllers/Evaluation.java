@@ -51,10 +51,7 @@ public class Evaluation extends Controller{
 			try {
 				tx = BDDUtils.beginTransaction(isActive);
 				
-				Formulaire f = FormulaireDAO.getFormulaireByNom(nomForm);
-				if(f != null) {
-					js = ConstructJSONObjects.getJSONforFormulaireFull(f);
-				}
+				js = ConstructJSONObjects.getJSONforFormulaireFull(FormulaireDAO.getFormulaireByNom(nomForm));
 				
 				BDDUtils.commit(isActive, tx);
 			}

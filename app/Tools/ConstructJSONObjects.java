@@ -8,6 +8,7 @@ import org.json.JSONObject;
 
 import hibernate.model.Categorie;
 import hibernate.model.Critere;
+import hibernate.model.Etablissement;
 import hibernate.model.Formulaire;
 import hibernate.model.Note;
 import hibernate.model.Question;
@@ -18,10 +19,11 @@ import hibernate.model.Utilisateur;
 public class ConstructJSONObjects {
 	
 	public static JSONObject getJSONforUser(Utilisateur u) throws JSONException {
-		return new JSONObject()
+		return u == null ? null : new JSONObject()
 		.put("id", u.getId())
 		.put("login", u.getLogin())
 		.put("service", getJSONforService(u.getService()))
+		.put("etablissement", getJSONforEtablissement(u.getEtablissement()))
 		.put("typeUtilisateur", getJSONforTypeUtilisateur(u.getTypeUtilisateur()));
 	}
 	
@@ -37,7 +39,7 @@ public class ConstructJSONObjects {
 	}
 	
 	private static JSONObject getJSONforNote(Note note) throws JSONException {
-		return new JSONObject()
+		return note == null ? null : new JSONObject()
 				.put("id", note.getId())
 				.put("valeur", note.getValeur())
 				.put("remarque", note.getRemarque())
@@ -60,20 +62,20 @@ public class ConstructJSONObjects {
 	}
 	
 	public static JSONObject getJSONforCategorie(Categorie c) throws JSONException {
-		return new JSONObject()
+		return c == null ? null : new JSONObject()
 				.put("id", c.getId())
 				.put("libelle", c.getLibelle());
 	}
 	
 	public static JSONObject getJSONforCritere(Critere c) throws JSONException {
-		return new JSONObject()
+		return c == null ? null : new JSONObject()
 				.put("id", c.getId())
 				.put("libelle", c.getLibelle())
 				.put("categorie", getJSONforCategorie(c.getCategorie()));
 	}
 	
 	public static JSONObject getJSONforQuestion(Question q) throws JSONException {
-		return new JSONObject()
+		return q == null ? null : new JSONObject()
 				.put("id", q.getId())
 				.put("valeur", q.getValeur())
 				.put("critere", getJSONforCritere(q.getCritere()))
@@ -93,7 +95,7 @@ public class ConstructJSONObjects {
 	}
 	
 	public static JSONObject getJSONforFormulaire(Formulaire f) throws JSONException {
-		return new JSONObject()
+		return f == null ? null : new JSONObject()
 				.put("id", f.getId())
 				.put("nom", f.getNom());
 	}
@@ -121,14 +123,14 @@ public class ConstructJSONObjects {
 	}
 	
 	public static JSONObject getJSONforFormulaireFull(Formulaire f) throws JSONException {
-		return new JSONObject()
+		return f == null ? null : new JSONObject()
 				.put("id", f.getId())
 				.put("nom", f.getNom())
 				.put("listQuestions", getJSONArrayforListQuestions(f.getQuestions()));
 	}
 	
 	public static JSONObject getJSONforService(Service s) throws JSONException{
-		return new JSONObject()
+		return s == null ? null : new JSONObject()
 				.put("id",s.getId())
 				.put("libelle",s.getLibelle());
 	}
@@ -144,8 +146,25 @@ public class ConstructJSONObjects {
 		return null;
 	}
 	
+	public static JSONObject getJSONforEtablissement(Etablissement e) throws JSONException{
+		return e == null ? null : new JSONObject()
+				.put("id",e.getId())
+				.put("libelle",e.getLibelle());
+	}
+	
+	public static JSONArray getJSONArrayforListEtablissements(List<Etablissement> le) throws JSONException{
+		if(le != null) {
+			JSONArray ja = new JSONArray();
+			for (Etablissement etablissement : le) {
+				ja.put(getJSONforEtablissement(etablissement));
+			}
+			return ja;
+		}
+		return null;
+	}
+	
 	public static JSONObject getJSONforTypeUtilisateur(TypeUtilisateur tu) throws JSONException{
-		return new JSONObject()
+		return tu == null ? null : new JSONObject()
 				.put("id",tu.getId())
 				.put("libelle",tu.getLibelle());
 	}

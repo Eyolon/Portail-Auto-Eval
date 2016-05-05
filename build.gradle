@@ -6,6 +6,7 @@ dist 			|	createPlayBinaryZipDist, createPlayBinaryTarDist 					| 	Assembles the
 stage 			|	stagePlayBinaryDist 												| 	Stages the Play distribution.
 				|																		|
 runPlayBinary 	|	playBinary to build Play application. 								| 	Runs the Play application for local development. See how this works with continuous build.
+	(Pour debug, ajouter '-Pdebug' avec la commande runPlayBinary soit 'gradlew runPlayBinary -Pdebug')
 testPlayBinary 	|	playBinary to build Play application and compilePlayBinaryTests. 	| 	Runs JUnit/TestNG tests for the Play application.
 *************************************************************************************************************************************************************************************/
 
@@ -41,6 +42,7 @@ dependencies {
     play (
 		[group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.7.4'],
 		[group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.7.4'],
+		[group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.7.4'],
 		[group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jdk8', version: '2.7.4'],
 		[group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr353', version: '2.7.4'],
 		[group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-json-org', version: '2.7.4'],
@@ -108,9 +110,8 @@ tasks.withType(PlayRun) {
     println '[build.gradle] Using httpPort: ' + httpPlayPort
     
     if (project.hasProperty('debug')){
-        forkOptions.jvmArgs = ['-Xdebug', '-Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=9999', '-Dfile.encoding=utf-8']
-    }
-    else{
+        forkOptions.jvmArgs = ['-Xdebug', '-Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=9999', '-Dconfig.file='+configFile, '-Dfile.encoding=utf-8']
+    } else{
         forkOptions.jvmArgs = ['-Dconfig.file='+configFile, '-Dfile.encoding=utf-8']
     }
     

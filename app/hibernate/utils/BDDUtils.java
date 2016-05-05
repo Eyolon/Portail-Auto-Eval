@@ -236,13 +236,11 @@ public class BDDUtils {
 	public static void disconnect() {
 		if(sessionFactory != null) {
 			sessionFactory.close();
-			getCurrentSession().disconnect();
 		}
 	}
 	
 	public static void commit(boolean isActive, Transaction tx) throws HibernateException {
 		if(!isActive) {
-			//getCurrentSession().flush();
 			tx.commit();
 		}
 	}

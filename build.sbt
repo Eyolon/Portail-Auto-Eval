@@ -18,6 +18,7 @@ libraryDependencies ++= Seq(
   filters,
   "com.fasterxml.jackson.core" % "jackson-core" % "2.7.4",
   "com.fasterxml.jackson.core" % "jackson-databind" % "2.7.4",
+  "com.fasterxml.jackson.core" % "jackson-annotations" % "2.7.4",
   "com.fasterxml.jackson.datatype" % "jackson-datatype-jdk8" % "2.7.4",
   "com.fasterxml.jackson.datatype" % "jackson-datatype-jsr353" % "2.7.4",
   "com.fasterxml.jackson.datatype" % "jackson-datatype-json-org" % "2.7.4",

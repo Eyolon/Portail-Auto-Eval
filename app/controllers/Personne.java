@@ -15,6 +15,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 
 import Tools.ConstructJSONObjects;
 import hibernate.dao.ConnexionDAO;
+import hibernate.dao.EtablissementDAO;
 import hibernate.dao.ServiceDAO;
 import hibernate.dao.TypeUtilisateurDAO;
 import hibernate.dao.UtilisateurDAO;
@@ -113,15 +114,19 @@ public class Personne extends Controller {
 						ConnexionDAO.insert(connexion);
 						u.setConnexion(connexion);
 						
-						if(jsonN.get("login") != null && !jsonN.get("login").asText().isEmpty()) {
+						if(jsonN.has("login") && !jsonN.get("login").asText().isEmpty()) {
 							u.setLogin(jsonN.get("login").asText());
 						}
 						
-						if(jsonN.get("service") != null && !jsonN.get("service").asText().isEmpty()) {
+						if(jsonN.has("service") && !jsonN.get("service").asText().isEmpty()) {
 							u.setService(ServiceDAO.findById(jsonN.get("service").asLong()));
 						}
 						
-						if(jsonN.get("typeUser") != null && !jsonN.get("typeUser").asText().isEmpty()) {
+						if(jsonN.has("etablissement") && !jsonN.get("etablissement").asText().isEmpty()) {
+							u.setEtablissement(EtablissementDAO.findById(jsonN.get("etablissement").asLong()));
+						}
+						
+						if(jsonN.has("typeUser") && !jsonN.get("typeUser").asText().isEmpty()) {
 							u.setTypeUtilisateur(TypeUtilisateurDAO.findById(jsonN.get("typeUser").asLong()));
 						} else {
 							u.setTypeUtilisateur(TypeUtilisateurDAO.findById(2l));
