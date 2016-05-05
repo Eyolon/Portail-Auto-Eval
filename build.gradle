@@ -1,3 +1,14 @@
+/*************************************************************************************************************************************************************************************
+COMMANDE		|	DEPENDS ON FOLLOWING COMMANDS										|	DESCRIPTION										
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+playBinary 		|	All compile tasks for source sets added to the Play application. 	| 	Performs a build of just the Play application.
+dist 			|	createPlayBinaryZipDist, createPlayBinaryTarDist 					| 	Assembles the Play distribution.
+stage 			|	stagePlayBinaryDist 												| 	Stages the Play distribution.
+				|																		|
+runPlayBinary 	|	playBinary to build Play application. 								| 	Runs the Play application for local development. See how this works with continuous build.
+testPlayBinary 	|	playBinary to build Play application and compilePlayBinaryTests. 	| 	Runs JUnit/TestNG tests for the Play application.
+*************************************************************************************************************************************************************************************/
+
 plugins {
     id 'play'
 	id 'eclipse'
@@ -89,7 +100,33 @@ installGrunt.dependsOn bowerInstall
 grunt_build.dependsOn installGrunt
 grunt_compile.dependsOn installGrunt
 
+ext.configFile = project.hasProperty('configFile') ? project.getProperty('configFile') : './conf/application.conf'
+ext.httpPlayPort = project.hasProperty('httpPort') ? project.getProperty('httpPort') : 9000
+tasks.withType(PlayRun) {
+
+    println '[build.gradle] Using configFile: ' + configFile
+    println '[build.gradle] Using httpPort: ' + httpPlayPort
+    
+    if (project.hasProperty('debug')){
+        forkOptions.jvmArgs = ['-Xdebug', '-Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=9999', '-Dfile.encoding=utf-8']
+    }
+    else{
+        forkOptions.jvmArgs = ['-Dconfig.file='+configFile, '-Dfile.encoding=utf-8']
+    }
+    
+    if (project.hasProperty('httpPort')){
+        httpPort = Integer.parseInt(httpPlayPort)
+    }
+}
+
 tasks.withType(Task) {
+
+	//Set UTF-8 encoding when compiling Java source
+	if (it.hasProperty('options') && it.options.hasProperty('encoding')){
+		logger.debug "Set options.encoding UTF-8 to task " + it.name
+		options.encoding = 'UTF-8'
+	}
+	
     if (it.name == 'dist'){
     	
 		dependsOn(':bowerInstall')
