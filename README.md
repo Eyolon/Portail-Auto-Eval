@@ -7,12 +7,17 @@ Play: [![Compilation Status](https://travis-ci.org/shiroverlord/Portail-Auto-Eva
 
 This is a seed Play application with :
 
-Hibernate (+ HikariCp), NodeJs, Grunt, Bower and AngularJS
-==========================================================
+Gradle (replace default SBT), Hibernate (+ HikariCp), NodeJs, Grunt, Bower, and AngularJS
+=========================================================================================
 
 Heroku configuration included
+=============================
+Travis configuration included
 =============================
 
 What you need to begin:
 - Activator
 - NodeJs
+- Bower
+
+OR se Gradlew which will install what you need
