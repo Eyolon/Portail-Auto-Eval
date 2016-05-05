@@ -16,7 +16,7 @@ deploy:
   api_key:
     secure: InGboRDR4KHbIbPhL6pFohMuQsx0281hSyviIbsc+ivDycriaJLOdf6sev5h8wJuxZPkZArm5bC1A6U/+LfrgbEn017wyuwyndRKPwmilRj5Vi4vO3z/yj411qMJmfMfvgQ2T/ONeiTvUEV2oNf10CwbQ8qQ6jkQKNfpsMpvtd0/YCTn9UtCKQDsT6k8s5V7zeJ4DZy+mk07CnGBULM9SOXRzoED8TGf9l8BzVPOtPmlX3X6Uh6Ij5b4OqUGnOK09yvy51NoKZoA1Ea+UG/c3eMaAyagNWuoNg8EHUarIMpFG1Zu4CwPCWBBBjpOwbcRJiEto0Q/DrJ53ALBuWirYIx/PSeMnbbQBU/UmpsUOcY4AdwS1qecVNf2sskEcJL0wNhsWTGUzYwSy/222IJceepI8liRifL8nX1rgMeZweSovvF8h3/0TBZHVQpeAlStxwc4TS81loPokf4zHbBDb85lK0FaNzGqPhmTwTnlvPG9ZQ2epr7WsdHuaT8Po9kVeN0E74LtmtpbSi3NowQPz+2PcBRDTBbYr+4SO9LJJf9IP7sxtdPZKtdM/E8z53hFYNFIuQqlb9za04Nr+eR8BXhytmoEM+cH5HZuwjllvU3NiZDegpWm+Sj5t7ptM4ePBW0iZy2qqSKk5Bvw/88Gic/lZE4+pU2FX8qWR+eRSwg=
   file: 
-    - "build/distributions/playBinary.zip"
-    - "build/distributions/playBinary.tar"
+    - "./build/distributions/playBinary.zip"
+    - "./build/distributions/playBinary.tar"
   on:
     repo: shiroverlord/Portail-Auto-Eval
