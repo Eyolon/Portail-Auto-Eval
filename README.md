@@ -23,4 +23,5 @@ AND:
 - Activator (Or Gradle)
 - NodeJs
 - Bower
+
 OR use Gradlew which will install what you need.
