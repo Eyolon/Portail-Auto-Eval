@@ -15,9 +15,12 @@ Heroku configuration included
 Travis configuration included
 =============================
 
-What you need to begin:
-- Activator
+What you need to begin: 
+- JAVA JDK 8
+- GIT
+
+AND:
+- Activator (Or Gradle)
 - NodeJs
 - Bower
-
-OR se Gradlew which will install what you need
+OR use Gradlew which will install what you need.
