@@ -14,6 +14,8 @@ POST	/api/checkUser/:login		controllers.Personne.checkUser(login: String)
 POST	/api/services				controllers.Personne.getServices()
 POST	/api/typesUser				controllers.Personne.getTypesUser()
 POST	/api/userFull				controllers.Personne.getUserFull()
+POST	/api/userFullByEtablissement/:idEtablissement	controllers.Personne.getUserFullByEtablissement(idEtablissement: Long)
+POST	/api/etablissement			controllers.Personne.getEtablissements()
 
 # Formulaire
 POST	/api/evaluation				controllers.Evaluation.getListFormulaire()

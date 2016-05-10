@@ -27,9 +27,22 @@
             <label for="type" class="col-xs-4 col-sm-4 col-md-3 col-lg-3 control-label">Type d'utilisateur: </label>
        		<select class="form-control col-xs-7 col-sm-7  col-md-5 col-lg-5" ng-model="ProfilCtrl.userToEdit.typeUtilisateur" ng-options="typeUtilisateur as typeUtilisateur.libelle for typeUtilisateur in ProfilCtrl.typesUser track by typeUtilisateur.id" required></select>
         </div> 
-		  <div style="margin-top:15px;">
+        
+        <span id="wrapper" ng-switch="ProfilCtrl.user.typeUtilisateur.libelle">
+	        <div class="form-group" ng-switch-when="administrateur">
+			    <label for="etablissement" class="col-xs-4 col-sm-4  col-md-3 col-lg-3 control-label">Etablissement : </label>
+			    <input type="text" class="form-control col-xs-7  col-sm-7  col-md-5 col-lg-5" id="etablissement" data-ng-model="ProfilCtrl.userToEdit.etablissement.libelle" data-ng-disabled="ProfilCtrl.userToEdit.etablissement.libelle" required>
+		  	</div>
+		 	<div class="form-group" ng-switch-when="super_administrateur">
+			    <label for="etablissement" class="col-xs-4 col-sm-4  col-md-3 col-lg-3 control-label">Etablissement : </label>
+		  		<select class="form-control col-xs-7 col-sm-7  col-md-5 col-lg-5" ng-model="ProfilCtrl.userToEdit.etablissement" ng-options="etablissement as etablissement.libelle for etablissement in ProfilCtrl.etablissements track by etablissement.id" required></select>
+		  	</div>
+	  	</span>
+		  
+		 <div style="margin-top:15px;">
 		  <button type="submit" class="btn btn-default" data-ng-click="ProfilCtrl.saveAdmin()">Enregistrer</button></div>
-    </div>
+    	</div>
+    	
     <div class="alert alert-success col-xs-12 col-lg-offset-4 col-sm-12 col-md-4 col-md-offset-4 col-lg-4" style="margin-top: 20px" data-ng-show="ProfilCtrl.isProfilModified">
         Profile modifié avec succès !
     </div>

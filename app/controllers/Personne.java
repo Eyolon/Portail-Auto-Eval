@@ -18,6 +18,7 @@ import hibernate.dao.ConnexionDAO;
 import hibernate.dao.EtablissementDAO;
 import hibernate.dao.ServiceDAO;
 import hibernate.dao.TypeUtilisateurDAO;
+import hibernate.dao.EtablissementDAO;
 import hibernate.dao.UtilisateurDAO;
 import hibernate.model.Connexion;
 import hibernate.model.Utilisateur;
@@ -172,6 +173,7 @@ public class Personne extends Controller {
 					Utilisateur u = UtilisateurDAO.findById(jsonN.get("id").asLong());
 					u.getConnexion().setPassword(BCrypt.hashpw(jsonN.get("pwd").asText(), BCrypt.gensalt()));
 					u.setLogin(jsonN.get("login").asText());
+					u.setEtablissement(EtablissementDAO.findById(jsonN.get("etablissement").asLong()));
 					UtilisateurDAO.update(u);
 					
 					js = new JSONObject();
@@ -309,6 +311,30 @@ public class Personne extends Controller {
 		});
 	}
 	
+	public static Promise<Result> getEtablissements(){
+		return Promise.promise(() -> 
+		{
+			
+			JSONArray ja = new JSONArray();
+			Transaction tx = null;
+			boolean isActive = BDDUtils.getTransactionStatus();
+			try {
+				tx = BDDUtils.beginTransaction(isActive);
+				
+				ja = ConstructJSONObjects.getJSONArrayforListEtablissements(EtablissementDAO.getAll());
+				
+				BDDUtils.commit(isActive, tx);
+			}
+			catch(Exception ex) {
+				Logger.error("Hibernate failure : "+ ex.getMessage());
+				BDDUtils.rollback(isActive, tx);
+				return internalServerError("Une erreur est survenue pendant la transaction avec la base de données.");
+			}
+			return ok(ja.toString());
+			
+		});
+	}
+	
 	private static String generateToken(Utilisateur user) {
 		String keySource = user.getId() + "/" + user.getLogin() + user.getConnexion().getPassword() + "psj@1802";
 		byte [] tokenByte = Base64.encodeBase64(keySource.getBytes());
@@ -362,5 +388,28 @@ public class Personne extends Controller {
 			return ok(ja.toString());
 			
 		});
+	}
+	
+	public static Promise<Result> getUserFullByEtablissement(Long idEtablissement){
+		Promise<Result> promiseOfResult = Promise.promise(()->{
+
+			JSONArray ja = new JSONArray();
+			Transaction tx = null;
+			boolean isActive = BDDUtils.getTransactionStatus();
+			try {
+				tx = BDDUtils.beginTransaction(isActive);
+				
+				ja = ConstructJSONObjects.getJSONArrayforListUsers(UtilisateurDAO.getAllByEtablissement(idEtablissement));
+				BDDUtils.commit(isActive, tx);
+			}
+			catch(Exception ex) {
+				Logger.error("Hibernate failure : "+ ex.getMessage());
+				BDDUtils.rollback(isActive, tx);
+				return internalServerError("Une erreur est survenue pendant la transaction avec la base de données.");
+			}
+			return ok(ja.toString());
+			
+		});
+		return promiseOfResult;
 	}
 }

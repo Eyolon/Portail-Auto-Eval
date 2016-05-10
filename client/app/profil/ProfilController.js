@@ -9,6 +9,11 @@ function ProfilCtrl($filter, $http, $rootScope, ConnexionService, InscriptionSer
     this.oldLogin = "";
     this.listUser = [];
     this.userToEdit = {};
+    this.etablissements = [];
+    
+    this.getEtablissements = function getEtablissements(){
+    	self.etablissements = InscriptionService.etablissements.post({}, onSuccess, onError);
+    };
 	
 	function getUser() {
 		var id = ipCookie('utilisateur').id;
@@ -17,6 +22,11 @@ function ProfilCtrl($filter, $http, $rootScope, ConnexionService, InscriptionSer
                 self.user = data;
                 self.oldLogin = self.user.login;
                 if(self.user.typeUtilisateur.libelle === "administrateur"){
+                	getAllUserOfEtablissement();
+                }
+                
+                if(self.user.typeUtilisateur.libelle === "super_administrateur"){
+                	self.getEtablissements();
                 	getAllUser();
                 }
                 
@@ -30,8 +40,15 @@ function ProfilCtrl($filter, $http, $rootScope, ConnexionService, InscriptionSer
     	self.services = InscriptionService.services.post({}, onSuccess, onError);
     	self.typesUser = InscriptionService.typesUser.post({}, onSuccess, onError);	
         self.listUser = InscriptionService.listUtilisateur.post({}, onSuccess, onError);
-        console.log(self.listUser);
-            
+        //console.log(self.listUser);       
+	}
+	
+	function getAllUserOfEtablissement() {	
+    	self.services = InscriptionService.services.post({}, onSuccess, onError);
+    	self.typesUser = InscriptionService.typesUser.post({}, onSuccess, onError);	
+        self.listUser = InscriptionService.listUtilisateurByEtablissement.post({
+        	idEtablissement: self.user.etablissement.id
+        }, onSuccess, onError);      
 	}
 	
 	function updateUser() {
@@ -69,7 +86,8 @@ function ProfilCtrl($filter, $http, $rootScope, ConnexionService, InscriptionSer
 				login: self.userToEdit.login,
 	            pwd: pass,
 	            service: self.userToEdit.service,
-	            typeUser: self.userToEdit.typeUtilisateur
+	            typeUser: self.userToEdit.typeUtilisateur,
+	            etablissement: self.userToEdit.etablissement.id
 			})
             .success(function(data, status, headers, config) {
 				self.isProfilModified = true;

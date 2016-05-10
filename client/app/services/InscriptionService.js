@@ -20,6 +20,24 @@ function InscriptionService($resource) {
             isArray: true
         }
     });
+    
+    this.listUtilisateurByEtablissement = $resource('/api/userFullByEtablissement/:idEtablissement', 
+    		{
+    			idEtablissement:'@idEtablissement'
+    		}, {
+    			'post': {
+    				method: 'POST',
+    				isArray: true
+    			}
+    });
+    
+    this.etablissements = $resource('/api/etablissement', {}, {
+        'post': {
+            method: 'POST',
+            isArray: true
+        }
+    });
+    
 }
 angular
     .module('portailAutoEval')

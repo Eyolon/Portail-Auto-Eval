@@ -1,5 +1,6 @@
 package hibernate.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Query;
@@ -68,8 +69,8 @@ public class UtilisateurDAO extends BasicDAO {
 			Query q = BDDUtils.getCurrentSession().createQuery(
 					"SELECT u FROM Utilisateur as u " +
 					"LEFT OUTER JOIN FETCH u.connexion " +
-					"WHERE u.id = :email");
-			q.setParameter("id", id);
+					"WHERE u.id = :id");
+			q.setParameter("id", id); 
 			u = (Utilisateur) q.uniqueResult();
 			BDDUtils.commit(isActive, tx);
 		} catch(Exception ex) {
@@ -77,5 +78,27 @@ public class UtilisateurDAO extends BasicDAO {
 			BDDUtils.rollback(isActive, tx);
 		}
 		return u;
+	}
+	
+	public static List<Utilisateur> getAllByEtablissement(Long idEtablissement){
+		List<Utilisateur> lu = new ArrayList<>();
+		Transaction tx = null;
+		boolean isActive = BDDUtils.getTransactionStatus();
+		try {
+			tx = BDDUtils.beginTransaction(isActive);
+			Query q = BDDUtils.getCurrentSession().createQuery(
+					"SELECT DISTINCT u FROM Utilisateur as u, "
+					+ "Etablissement as e " +
+					"WHERE u.etablissement.id = :idEtablissement "
+					);
+			q.setParameter("idEtablissement", idEtablissement);
+			lu = (List<Utilisateur>)q.list();
+			BDDUtils.commit(isActive, tx);
+		}
+		catch(Exception ex) {
+			Logger.error("Erreur UtilisateurDAO getUtilisateurById : ", ex);
+			BDDUtils.rollback(isActive, tx);
+		}
+		return lu;
 	}
 }
