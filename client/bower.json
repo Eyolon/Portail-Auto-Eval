@@ -36,7 +36,8 @@
     "tinycolor": "latest",
     "ui-router-extras": "latest",
     "angular-cookie": "latest",
-    "angular-carousel": "latest"
+    "angular-carousel": "latest",
+    "d3": "^3.5.17"
   },
   "resolutions": {
     "angular": "1.5.5"
