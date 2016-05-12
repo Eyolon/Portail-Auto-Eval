@@ -37,6 +37,7 @@
     "ui-router-extras": "latest",
     "angular-cookie": "latest",
     "angular-carousel": "latest"
+    
   },
   "resolutions": {
     "angular": "1.5.5"
