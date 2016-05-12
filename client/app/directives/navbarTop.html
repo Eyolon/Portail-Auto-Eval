@@ -22,12 +22,7 @@
                         <li ui-sref-active="active"><a ui-sref="lastEvaluation">Mes pr√©c√©dentes Evaluation</a></li>
                     </ul>
                 </li>
-
-               
-                
-                
-	              
-		     	<!-- Double secu : connectÈ ET on rÈcupËre un statu --> 
+				<!-- Double secu : connectÈ ET on rÈcupËre un statu --> 
 	            <li ui-sref-active="active" data-ng-show="navbarTopCtrl.isConnected" ng-switch-when="utilisateur"><a ui-sref="evaluation">Mes Evaluations</a></li>
 	        
 	            <li ui-sref-active="active" data-ng-show="navbarTopCtrl.isConnected" ng-switch-when="administrateur"><a ui-sref="evaluation">Mes Evaluations</a>
@@ -40,13 +35,14 @@
                 </li>
 	        
 	            <li ui-sref-active="active" data-ng-show="navbarTopCtrl.isConnected" ng-switch-when="super_administrateur"><a ui-sref="evaluation">Mes Evaluations</a></li>
-	            <li class="dropdown" data-ng-show="navbarTopCtrl.isConnected" ng-switch-when="super_administrateur">
+				<li class="dropdown" data-ng-show="navbarTopCtrl.isConnected" ng-switch-when="super_administrateur">
                     <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Gerrer les utilisateurs<span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
                         <li ui-sref-active="active"><a ui-sref="inscription">Ajouter un Utilisateur</a></li>
                         <li ui-sref-active="active"><a ui-sref="profilAdmin">Modifier un utilisateur</a></li>
                     </ul>
-                </li>  
+                </li>
+                <li ui-sref-active="active" data-ng-show="navbarTopCtrl.isConnected" ng-switch-when="super_administrateur"><a ui-sref="consultation">Consultation des resultats</a></li>
 	        
 	            <!-- EST CE QU'ON ACCORDE L'ACCES ? <li ui-sref-active="active" data-ng-show="navbarTopCtrl.isConnected" ng-switch-default><a ui-sref="evaluation" >Mes Evaluations</a></li>-->
 	            <li ui-sref-active="active" data-ng-show="navbarTopCtrl.isConnected" ng-switch-default>ERREUR TYPE INDEFINIS</li>  

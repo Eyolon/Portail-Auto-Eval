@@ -66,6 +66,20 @@ angular
             }
         });
         
+        $stateProvider.state('consultation', {
+            parent: 'main',
+            url: '/consultation',
+            title: 'Consultation',
+            reloadOnSearch: false,
+            views: {
+                'main@': {
+                    templateUrl: '/consultation/consultation.html',
+                    controller: 'ConsultationController',
+                    controllerAs: 'ConsultationCtrl'
+                }
+            }
+        });
+        
         $stateProvider.state('connection', {
             parent: 'main',
             url: '/connection',
