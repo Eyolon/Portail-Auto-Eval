@@ -173,7 +173,7 @@ module.exports = function (grunt) {
                 files: [
                     {
                         src: ['assets/css/*.css'],
-                        dest: '../public/assets/css/'
+                        dest: '../public/'
                     },
                     {
                         src: ['assets/css/**/*.css'],
