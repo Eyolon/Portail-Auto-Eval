@@ -75,7 +75,7 @@ angular
                 'main@': {
                     templateUrl: '/consultation/consultation.html',
                     controller: 'ConsultationController',
-                    controllerAs: 'ConsultationCtrl'
+                    controllerAs: 'ConsultationController'
                 }
             }
         });
