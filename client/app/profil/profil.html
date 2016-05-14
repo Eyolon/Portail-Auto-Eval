@@ -2,11 +2,11 @@
     <h1>Changer les informations de votre profil</h1>
     <br/>
     <div data-ng-show="!ProfilCtrl.isProfilModified">
-		<div class="form-group">
-		    <label for="identifiant" class="col-xs-4 col-sm-4  col-md-3 col-lg-3 control-label">Identifiant: </label>
-		    <input type="text" class="form-control col-xs-7  col-sm-7  col-md-5 col-lg-5" id="nom" data-ng-model="ProfilCtrl.user.login" required>
-	  	</div>
-		  <div class="form-group">
+        <div class="form-group">
+            <label for="identifiant" class="col-xs-4 col-sm-4  col-md-3 col-lg-3 control-label">Identifiant: </label>
+            <input type="text" class="form-control col-xs-7  col-sm-7  col-md-5 col-lg-5" id="nom" data-ng-model="ProfilCtrl.user.login" required>
+        </div>
+        <div class="form-group">
             <label for="newpwd" class="col-xs-4 col-sm-4 col-md-3 col-lg-3 control-label">Nouveau Mot de passe:</label>
             <input type="password" class="form-control col-xs-7 col-sm-7 col-sm-7 col-md-5 col-lg-5" id="newpwd" data-ng-model="ProfilCtrl.user.pwd">
         </div>
@@ -14,12 +14,13 @@
             <label for="pwdC" class="col-xs-4 col-sm-4 col-md-3 col-lg-3 control-label">Confirmer Mot de passe:</label>
             <input type="password" class="form-control col-xs-7 col-sm-7 col-sm-7 col-md-5 col-lg-5" id="pwdC" data-ng-model="ProfilCtrl.userPwd">
         </div>
-		   <div class="form-group">
+        <div class="form-group">
             <label for="pwd" class="col-xs-4 col-sm-4 col-md-3 col-lg-3 control-label">Mot de passe:</label>
             <input type="password" class="form-control col-xs-7 col-sm-7 col-sm-7 col-md-5 col-lg-5" id="pwd" data-ng-model="ProfilCtrl.currentPwd" required>
         </div>
-		  <div style="margin-top:15px;">
-		  <button type="submit" class="btn btn-default" data-ng-click="ProfilCtrl.save()">Enregistrer</button></div>
+        <div style="margin-top:15px;">
+            <button type="submit" class="btn btn-default" data-ng-click="ProfilCtrl.save()">Enregistrer</button>
+        </div>
     </div>
     <div class="alert alert-success col-xs-12 col-lg-offset-4 col-sm-12 col-md-4 col-md-offset-4 col-lg-4" style="margin-top: 20px" data-ng-show="ProfilCtrl.isProfilModified">
         Profile modifié avec succès !
