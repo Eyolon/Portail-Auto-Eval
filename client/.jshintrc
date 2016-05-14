@@ -49,6 +49,7 @@
         "aquiwebJS",
         "angular",
         "d3",
+		"nv",
         "tinycolor",
         "console",
         "BigNumber",

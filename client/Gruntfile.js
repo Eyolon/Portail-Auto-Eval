@@ -14,7 +14,8 @@ module.exports = function (grunt) {
                     'grunt-contrib-watch': ['']
                 },
                 dependencies: {
-                    'angular': 'jquery'
+                    'angular': 'jquery',
+					'nvd3': 'd3'
                 },
                 exclude: [
                     'pdfjs-bower', 'angular-i18n'
@@ -80,13 +81,13 @@ module.exports = function (grunt) {
             all: {
                 src: ['<%= concat.prod.src %>'],
                 options: {
-                    jshintrc: './.jshintrc.json'
+                    jshintrc: './.jshintrc'
                 }
             },
             sum: {
                 src: ['<%= concat.prod.dest %>'],
                 options: {
-                    jshintrc: './.jshintrc.json'
+                    jshintrc: './.jshintrc'
                 }
             }
         },
@@ -94,7 +95,7 @@ module.exports = function (grunt) {
             all: {
                 src: ['client/app/**/*.html'],
                 options: {
-                    htmlhintrc: './.htmlhintrc.json'
+                    htmlhintrc: './.htmlhintrc'
                 }
             },
         },
@@ -202,7 +203,7 @@ module.exports = function (grunt) {
             bowerComponentsFiles: {
                 files: [
                     {
-                        src: ['bower_components/angularjs-nvd3-directives/dist/angularjs-nvd3-directives.js', 'bower_components/angular/angular.js', 'bower_components/angular-nvd3/dist/angular-nvd3.js', 'bower_components/nvd3/build/nv.d3.*', 'bower_components/d3/*.js', 'bower_components/moment/locale/*.js', 'bower_components/**/*.min.css', 'bower_components/angular-utils-pagination/dirPagination.tpl.html'],
+                        src: ['bower_components/moment/locale/*.js', 'bower_components/**/*.min.css', 'bower_components/angular-utils-pagination/dirPagination.tpl.html'],
                         dest: '../public/',
                         expand: true
                     }
@@ -211,7 +212,7 @@ module.exports = function (grunt) {
         },
         focus: {
             all: {
-                exclude: [ /*'copyI18N',*/ 'classAquiwebServerJar'],
+                exclude: [],
                 include: ['copyHTML', 'copyCSS', 'copyImg', 'copyJSLibrarie', 'lessApp', 'jsApp', 'bowerUpdate', 'npmUpdate']
             },
             min: {
@@ -243,7 +244,7 @@ module.exports = function (grunt) {
                 }
             },
             copyJSLibrarie: {
-                files: ['bower_components/angularjs-nvd3-directives/dist/angularjs-nvd3-directives.js', 'bower_components/angular/angular.js', 'bower_components/angular-nvd3/dist/angular-nvd3.js', 'bower_components/nvd3/build/nv.d3.*', 'bower_components/d3/*.js', 'bower_components/moment/locale/*.js', 'bower_components/**/*.min.css', 'bower_components/angular-utils-pagination/dirPagination.tpl.html'/*, 'bower_components/spectrum/spectrum.css'*/, 'client/fonts/*'/*, 'bower_components/pickadate/lib/themes/classic.css', 'bower_components/pickadate/lib/themes/classic.date.css', 'bower_components/angular-ui-select/dist/select.min.css'*/],
+                files: ['bower_components/moment/locale/*.js', 'bower_components/**/*.min.css', 'bower_components/angular-utils-pagination/dirPagination.tpl.html', 'client/fonts/*'],
                 tasks: ['newer:copy:bowerComponentsFiles', 'notify:copyJSLibrarie'],
                 options: {
                     livereload: true
