@@ -285,8 +285,10 @@
                 message: "Application Compile completed successfully."
         }));
     });
-    gulp.task('build', ['clean:public', 'htmlminNoNotification', 'jsminNoNotification', 'lessmin', 'imgNoNotification', 'faviconNoNotification', 'cssmin', 'soundNoNotification', 'bowerNoNotification']);
-    gulp.task('build:clean', ['htmlminNoNotification', 'jsminNoNotification', 'lessmin', 'imgNoNotification', 'faviconNoNotification', 'cssmin', 'soundNoNotification', 'bowerNoNotification', 'clean:client']);
+    gulp.task('build', ['htmlminNoNotification', 'jsminNoNotification', 'lessmin', 'imgNoNotification', 'faviconNoNotification', 'cssmin', 'soundNoNotification', 'bowerNoNotification']);
+    
+    /* DO NOT USE (CLEAN 'client' folder) -> only for deployment */
+    gulp.task('buildClean', ['htmlminNoNotification', 'jsminNoNotification', 'lessmin', 'imgNoNotification', 'faviconNoNotification', 'cssmin', 'soundNoNotification', 'bowerNoNotification'], cleanClient);
     /* FIN TASKS */
     
     function watch() {
