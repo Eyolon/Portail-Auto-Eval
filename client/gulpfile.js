@@ -272,7 +272,7 @@
                 message: "Application Compile completed successfully."
         }));
     });
-    gulp.task('build', ['htmlminNoNotification', 'jsminNoNotification', 'lessmin', 'imgNoNotification', 'faviconNoNotification', 'cssMin', 'soundNoNotification', 'bowerNoNotification']);
+    gulp.task('build', ['htmlminNoNotification', 'jsminNoNotification', 'lessmin', 'imgNoNotification', 'faviconNoNotification', 'cssmin', 'soundNoNotification', 'bowerNoNotification']);
     /* FIN TASKS */
     
     function watch() {
