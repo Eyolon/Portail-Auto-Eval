@@ -110,6 +110,8 @@ installGulp.dependsOn 'npmInstall'
 
 gulp_build.dependsOn 'installGulp'
 gulp_build.dependsOn 'bowerInstall'
+gulp_buildClean.dependsOn 'installGulp'
+gulp_buildClean.dependsOn 'bowerInstall'
 gulp_compile.dependsOn 'installGulp'
 gulp_compile.dependsOn 'bowerInstall'
 
