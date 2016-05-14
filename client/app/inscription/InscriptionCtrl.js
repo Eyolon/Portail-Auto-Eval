@@ -36,11 +36,11 @@ function InscriptionCtrl($http, $state, ConnexionService, InscriptionService, ip
     
     this.setUserLocal = function setUserLocal(){
     	self.userLocal = ipCookie('utilisateur');
-    }
+    };
 
     function insertUser() {
     	
-    	if(self.user.etablissement != "" && self.user.etablissement != null){
+    	if(self.user.etablissement !== undefined && self.user.etablissement !== ""){
     		$http.post('/api/insertUser', {
                 login: self.user.identifiant,
                 pwd: self.user.pwd,

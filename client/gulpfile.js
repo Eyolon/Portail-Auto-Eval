@@ -3,6 +3,7 @@
 
     /* Chargement de GULP et des plugins */
     var gulp = require('gulp');
+    var del = require('del');
     var plugins = require('gulp-load-plugins')({
         pattern: ['gulp-*', 'gulp.*', 'jshint-*', 'htmlhint-*'],
 		rename: {
@@ -240,6 +241,15 @@
     }
     /* FIN LESS */
     
+    /* CLEAN (DO NOT USE cleanClient IN DEV) */
+    function cleanClient() {
+        return del(['../client'], {force: true});
+    }
+    function cleanPublic() {
+        return del(['../public'], {force: true});
+    }
+    /* FIN CLEAN */
+    
     /* TASKS */
     gulp.task('htmlhint', htmlhintWithNotification);
     gulp.task('html', functionWithNotification(html, "GULP HTML", "Application HTML copied successfully.", true));
@@ -266,13 +276,17 @@
     gulp.task('faviconNoNotification', favicon);
     gulp.task('soundNoNotification', sound);
     
+    gulp.task('clean:client', cleanClient);
+    gulp.task('clean:public', cleanPublic);
+    
     gulp.task('compile', ['htmlNoNotification', 'jsNoNotification', 'less', 'imgNoNotification', 'faviconNoNotification', 'css', 'soundNoNotification', 'bowerNoNotification'], function notifyCompile() {
         return gulp.src('.').pipe(plugins.notify({
                 title:"GULP Compile",
                 message: "Application Compile completed successfully."
         }));
     });
-    gulp.task('build', ['htmlminNoNotification', 'jsminNoNotification', 'lessmin', 'imgNoNotification', 'faviconNoNotification', 'cssmin', 'soundNoNotification', 'bowerNoNotification']);
+    gulp.task('build', ['clean:public', 'htmlminNoNotification', 'jsminNoNotification', 'lessmin', 'imgNoNotification', 'faviconNoNotification', 'cssmin', 'soundNoNotification', 'bowerNoNotification']);
+    gulp.task('build:clean', ['htmlminNoNotification', 'jsminNoNotification', 'lessmin', 'imgNoNotification', 'faviconNoNotification', 'cssmin', 'soundNoNotification', 'bowerNoNotification', 'clean:client']);
     /* FIN TASKS */
     
     function watch() {

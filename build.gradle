@@ -139,6 +139,18 @@ tasks.withType(Task) {
 		options.encoding = 'UTF-8'
 	}
 	
+	if (it.name == 'stage'){
+    	
+		dependsOn(':bowerInstall')
+		dependsOn(':installGulp')
+		dependsOn(':gulp_build:clean')
+    }
+	if (it.name == 'stagePlayBinaryDist'){
+    	
+		dependsOn(':bowerInstall')
+		dependsOn(':installGulp')
+		dependsOn(':gulp_build:clean')
+    }
     if (it.name == 'dist'){
     	
 		dependsOn(':bowerInstall')
