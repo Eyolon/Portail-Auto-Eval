@@ -1,6 +1,14 @@
 /*************************************************************************************************************************************************************************************
 COMMANDE		|	DEPENDS ON FOLLOWING COMMANDS										|	DESCRIPTION										
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+gulp_compile	|	installGulp, bowerInstall							 				| 	(DEV) Peuple le dossier "public" en executant la tache "gulp compile"
+gulp_build		|	installGulp, bowerInstall							 				| 	(PROD) Peuple le dossier "public" en executant la tache "gulp build"
+gulp_*			|	installGulp, bowerInstall							 				| 	Start the "*" Gulp task in gulpfile (ex: 'html', 'jshint', etc)
+				|																		|
+installGulp		|	npmInstall															|	Install Gulp
+bowerInstall	|	npmInstall															| 	Install toutes les dépendances du fichier "bower.json"
+npmInstall		|																		| 	Install toutes les dépendances du fichier "package.json"
+				|																		|
 playBinary 		|	All compile tasks for source sets added to the Play application. 	| 	Performs a build of just the Play application.
 dist 			|	createPlayBinaryZipDist, createPlayBinaryTarDist 					| 	Assembles the Play distribution.
 stage 			|	stagePlayBinaryDist 												| 	Stages the Play distribution.
@@ -14,7 +22,7 @@ plugins {
     id 'play'
 	id 'eclipse'
 	id "com.moowork.node" version "0.12"
-	id "com.moowork.grunt" version "0.12"
+	id "com.moowork.gulp" version "0.12"
 }
 
 model {
@@ -76,14 +84,14 @@ node {
 	nodeModulesDir = file("${project.projectDir}/client")
 }
 
-grunt {
-    // Set the directory where Gruntfile.js should be found
+gulp {
+    // Set the directory where gulpfile.js should be found
     workDir = file("${project.projectDir}/client")
 
     // Whether colors should output on the terminal
     colors = true
 
-    // Whether output from Grunt should be buffered - useful when running tasks in parallel
+    // Whether output from Gulp should be buffered - useful when running tasks in parallel
     bufferOutput = false
 }
 
@@ -98,9 +106,12 @@ task bowerInstall(dependsOn: npmInstall, type: NodeTask) {
     outputs.dir "client/bower_components"
 }
 
-installGrunt.dependsOn bowerInstall
-grunt_build.dependsOn installGrunt
-grunt_compile.dependsOn installGrunt
+installGulp.dependsOn 'npmInstall'
+
+gulp_build.dependsOn 'installGulp'
+gulp_build.dependsOn 'bowerInstall'
+gulp_compile.dependsOn 'installGulp'
+gulp_compile.dependsOn 'bowerInstall'
 
 ext.configFile = project.hasProperty('configFile') ? project.getProperty('configFile') : './conf/application.conf'
 ext.httpPlayPort = project.hasProperty('httpPort') ? project.getProperty('httpPort') : 9000
@@ -131,13 +142,13 @@ tasks.withType(Task) {
     if (it.name == 'dist'){
     	
 		dependsOn(':bowerInstall')
-		dependsOn(':installGrunt')
-    	dependsOn(':grunt_build')
+		dependsOn(':installGulp')
+		dependsOn(':gulp_build')
     }
 	if (it.name == 'playBinary'){
 		
 		dependsOn('bowerInstall')
-		dependsOn('installGrunt')
-		dependsOn(':grunt_compile')
+		dependsOn(':installGulp')
+		dependsOn(':gulp_compile')
     }
 }
