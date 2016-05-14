@@ -106,14 +106,14 @@ task bowerInstall(dependsOn: npmInstall, type: NodeTask) {
     outputs.dir "client/bower_components"
 }
 
-installGulp.dependsOn 'npmInstall'
+installGulp.dependsOn(':npmInstall')
 
-gulp_build.dependsOn 'installGulp'
-gulp_build.dependsOn 'bowerInstall'
-gulp_buildClean.dependsOn 'installGulp'
-gulp_buildClean.dependsOn 'bowerInstall'
-gulp_compile.dependsOn 'installGulp'
-gulp_compile.dependsOn 'bowerInstall'
+gulp_build.dependsOn(':installGulp')
+gulp_build.dependsOn(':bowerInstall')
+gulp_buildClean.dependsOn(':installGulp')
+gulp_buildClean.dependsOn(':bowerInstall')
+gulp_compile.dependsOn(':installGulp')
+gulp_compile.dependsOn(':bowerInstall')
 
 ext.configFile = project.hasProperty('configFile') ? project.getProperty('configFile') : './conf/application.conf'
 ext.httpPlayPort = project.hasProperty('httpPort') ? project.getProperty('httpPort') : 9000
@@ -145,18 +145,18 @@ tasks.withType(Task) {
     	
 		dependsOn(':bowerInstall')
 		dependsOn(':installGulp')
-		dependsOn(':gulp_buildClean')
+		dependsOn(':gulp_build')
     }
-    if (it.name == 'dist'){
+    if (it.name == 'createPlayBinaryZipDist'){
     	
 		dependsOn(':bowerInstall')
 		dependsOn(':installGulp')
 		dependsOn(':gulp_build')
     }
-	if (it.name == 'playBinary'){
-		
-		dependsOn('bowerInstall')
+	if (it.name == 'createPlayBinaryTarDist'){
+    	
+		dependsOn(':bowerInstall')
 		dependsOn(':installGulp')
-		dependsOn(':gulp_compile')
+		dependsOn(':gulp_build')
     }
 }
