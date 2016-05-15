@@ -1,1 +1,1 @@
-web: build/stage/playBinary/bin/playBinary -Dhttp.port=${PORT} -DapplyEvolutions.default=true -Dconfig.resource=heroku.conf ${java_opts}
+web: build/stage/playBinary/bin/playBinary

@@ -19,6 +19,7 @@ testPlayBinary 	|	playBinary to build Play application and compilePlayBinaryTest
 *************************************************************************************************************************************************************************************/
 
 plugins {
+	id 'java-base'
     id 'play'
 	id 'eclipse'
 	id "com.moowork.node" version "0.12"
@@ -48,6 +49,7 @@ repositories {
 
 dependencies {
     play (
+		[group: 'org.apache.commons', name: 'commons-lang3', version: '3.4'],
 		[group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.7.4'],
 		[group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.7.4'],
 		[group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.7.4'],
