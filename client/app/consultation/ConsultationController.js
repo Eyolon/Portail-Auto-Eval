@@ -12,6 +12,14 @@ function ConsultationController($http, $state, $scope, ConsultationService) {
     var colorArray = ['#000000', '#582900', '#FE1B00', '#ED7F10', '#FFFF00', '#9EFD38'];
     // NOIR,MARON,ROUGE,ORANGE,JAUNE,VERT
     
+    function cleanArray(array) {
+    	var cache = {};
+    	array = array.filter(function(elem,index,array){
+	    		return cache[elem.id]?0:cache[elem.id]=1;
+	    	});
+    	  return array;
+    	}
+    
     this.getListEtablissement = function getListEtablissement(){
     	self.etablissements = ConsultationService.etablissements.post({}, onSuccess, onError);    	
     };
@@ -82,7 +90,7 @@ function ConsultationController($http, $state, $scope, ConsultationService) {
     	 * sont assignés aux différent critère si ils existe
     	 * */
     	self.notes = ConsultationService.listNotes.post({idEtablissement:this.etablissement.id}, onSuccess, onError);
-    
+    	
     	var palier1=0;
     	var palier2=0;
     	var palier3=0;
@@ -90,11 +98,11 @@ function ConsultationController($http, $state, $scope, ConsultationService) {
     	var palier5=0;
     	var palier6=0;
     	
+    	self.services = [];
+    	var votant = [];
     	self.notes.$promise.then(function(messages){
     	     //Since you are overwriting the object here, there will no longer be a $Promise property so be careful about it when you try to chain through elsewhere after this
     		self.notes = messages.filter(function(obj) {
-    	    	 
-    			console.log(obj.valeur);
     			
     	    	 if(obj.valeur>0 && obj.valeur<11)palier1++;
     	    	 if(obj.valeur>10 && obj.valeur<26)palier2++;
@@ -103,7 +111,8 @@ function ConsultationController($http, $state, $scope, ConsultationService) {
     	    	 if(obj.valeur>75 && obj.valeur<91)palier5++;
     	    	 if(obj.valeur>90 && obj.valeur<=100)palier6++;
     	    	 
-    	    	 self.nbrVotant++;
+    	    	 self.services.push(obj.utilisateur.service);
+    	    	 votant.push(obj.utilisateur);
     	      });
     		
     		$scope.data = [
@@ -114,24 +123,57 @@ function ConsultationController($http, $state, $scope, ConsultationService) {
         	               {key: "76-90",y: palier5},
         	               {key: "91-100",y: palier6}];
         	
-        	console.log(self.nbrVotant);
-    		
+    		self.services = cleanArray(self.services);
+    		votant = cleanArray(votant);
+    		self.nbrVotant = votant.length;
     	  });
-    	
-    	/*var objs = self.notes.map(JSON.parse);
-    	console.log(objs); // result : []... WHAT ??,?
-    	*/
-    	
-    
-    	//A montrer que je trouve ce qui me faut dans le promise
-
-    	
-    	self.getListServices();
     }
     
     this.update2 = function update2(){
-    	self.getListQuestions();
     	
+    	self.notes = ConsultationService.listNotes.post({idEtablissement:this.etablissement.id}, onSuccess, onError);
+    	
+    	var palier1=0;
+    	var palier2=0;
+    	var palier3=0;
+    	var palier4=0;
+    	var palier5=0;
+    	var palier6=0;
+    	
+    	self.questions = [];
+    	var votant = [];
+    	
+    	console.log(self.service);
+    	
+    	self.notes.$promise.then(function(messages){
+    	     //Since you are overwriting the object here, there will no longer be a $Promise property so be careful about it when you try to chain through elsewhere after this
+    		self.notes = messages.filter(function(obj) {
+    			
+    				
+    			
+    	    	 if(obj.valeur>0 && obj.valeur<11 && obj.utilisateur.service.id === self.service.id)palier1++;
+    	    	 if(obj.valeur>10 && obj.valeur<26 && obj.utilisateur.service.id === self.service.id)palier2++;
+    	    	 if(obj.valeur>25 && obj.valeur<51 && obj.utilisateur.service.id === self.service.id)palier3++;
+    	    	 if(obj.valeur>50 && obj.valeur<76 && obj.utilisateur.service.id === self.service.id)palier4++;
+    	    	 if(obj.valeur>75 && obj.valeur<91 && obj.utilisateur.service.id === self.service.id)palier5++;
+    	    	 if(obj.valeur>90 && obj.valeur<=100 && obj.utilisateur.service.id === self.service.id)palier6++;
+    	    	 
+    	    	 //self.questions.push(obj.utilisateur.service);
+    	    	 votant.push(obj.utilisateur.id);
+    	      });
+    		
+    		$scope.data = [
+        	               {key: "0-10",y: palier1},
+        	               {key: "11-25",y: palier2},
+        	               {key: "26-50",y: palier3},
+        	               {key: "51-75",y: palier4},
+        	               {key: "76-90",y: palier5},
+        	               {key: "91-100",y: palier6}];
+        	
+    		//self.questions = cleanArray(self.services);
+    		votant = cleanArray(votant);
+    		self.nbrVotant = votant.length;
+    	  });
     }
 
     this.update3 = function update3(){
