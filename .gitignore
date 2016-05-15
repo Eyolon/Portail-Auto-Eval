@@ -96,8 +96,7 @@ target/
 public/
 build/
 client/cache/
+client/~/
 */bower_components/
 */node_modules/
-public/app/index.html
 *.backup
-portail-auto-eval.sql
