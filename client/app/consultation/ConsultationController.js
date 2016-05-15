@@ -1,8 +1,8 @@
 function ConsultationController($http, $state, $scope, ConsultationService) {
 	var self = this;
-    this.etablissement = {};
+    this.etablissement = null;
     this.etablissements = [];
-    this.service = {};
+    this.service = null;
     this.services = [];
     this.question = {};
     this.questions = [];
