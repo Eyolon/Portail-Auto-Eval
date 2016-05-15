@@ -8,6 +8,7 @@ function ConsultationController($http, $state, $scope, ConsultationService) {
     this.questions = [];
     this.isSuccess = true;
     this.notes = [];
+    this.nbrVotant = 0;
     var colorArray = ['#000000', '#582900', '#FE1B00', '#ED7F10', '#FFFF00', '#9EFD38'];
     // NOIR,MARON,ROUGE,ORANGE,JAUNE,VERT
     
@@ -81,13 +82,7 @@ function ConsultationController($http, $state, $scope, ConsultationService) {
     	 * sont assignés aux différent critère si ils existe
     	 * */
     	self.notes = ConsultationService.listNotes.post({idEtablissement:this.etablissement.id}, onSuccess, onError);
-    	
-    	console.log(self.notes);
-    	
-    	var objs = self.notes.map(JSON.parse);
-    	
-    	console.log(objs); // result : []... WHAT ??,?
-    	
+    
     	var palier1=0;
     	var palier2=0;
     	var palier3=0;
@@ -95,13 +90,41 @@ function ConsultationController($http, $state, $scope, ConsultationService) {
     	var palier5=0;
     	var palier6=0;
     	
-    	$scope.data = [
-    	               {key: "0-10",y: palier1},
-    	               {key: "10-25",y: palier2},
-    	               {key: "25-50",y: palier3},
-    	               {key: "50-75",y: palier4},
-    	               {key: "75-90",y: palier5},
-    	               {key: "90-100",y: palier6}];
+    	self.notes.$promise.then(function(messages){
+    	     //Since you are overwriting the object here, there will no longer be a $Promise property so be careful about it when you try to chain through elsewhere after this
+    		self.notes = messages.filter(function(obj) {
+    	    	 
+    			console.log(obj.valeur);
+    			
+    	    	 if(obj.valeur>0 && obj.valeur<11)palier1++;
+    	    	 if(obj.valeur>10 && obj.valeur<26)palier2++;
+    	    	 if(obj.valeur>25 && obj.valeur<51)palier3++;
+    	    	 if(obj.valeur>50 && obj.valeur<76)palier4++;
+    	    	 if(obj.valeur>75 && obj.valeur<91)palier5++;
+    	    	 if(obj.valeur>90 && obj.valeur<=100)palier6++;
+    	    	 
+    	    	 self.nbrVotant++;
+    	      });
+    		
+    		$scope.data = [
+        	               {key: "0-10",y: palier1},
+        	               {key: "11-25",y: palier2},
+        	               {key: "26-50",y: palier3},
+        	               {key: "51-75",y: palier4},
+        	               {key: "76-90",y: palier5},
+        	               {key: "91-100",y: palier6}];
+        	
+        	console.log(self.nbrVotant);
+    		
+    	  });
+    	
+    	/*var objs = self.notes.map(JSON.parse);
+    	console.log(objs); // result : []... WHAT ??,?
+    	*/
+    	
+    
+    	//A montrer que je trouve ce qui me faut dans le promise
+
     	
     	self.getListServices();
     }

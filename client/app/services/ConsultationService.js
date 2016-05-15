@@ -1,4 +1,4 @@
-function ConsultationService($resource) {
+function ConsultationService($http, $resource) {
 	
 	this.etablissements = $resource('/api/etablissement', {}, {
         'post': {
