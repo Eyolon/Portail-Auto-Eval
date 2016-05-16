@@ -10,6 +10,7 @@ angular.module('portailAutoEval', [
         'ct.ui.router.extras',
         'ui.bootstrap',
         'angularUtils.directives.dirPagination',
+        'nvd3',
         //'angular-coverflow',
 		//'angular-cardflow',
         'angular-carousel'])

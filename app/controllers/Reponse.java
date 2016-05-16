@@ -5,8 +5,12 @@ import java.time.Instant;
 import org.hibernate.HibernateException;
 import org.hibernate.Transaction;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import com.fasterxml.jackson.databind.JsonNode;
 
+import Tools.ConstructJSONObjects;
 import hibernate.dao.NoteDAO;
 import hibernate.dao.QuestionDAO;
 import hibernate.dao.UtilisateurDAO;
@@ -78,4 +82,28 @@ public class Reponse extends Controller{
 		});
 	}
 	
+	public static Promise<Result> getReponsesPerEtablissement(Long idEtablissement){
+		Promise<Result> promiseOfResult = Promise.promise(()->{
+
+			
+			JSONArray ja = new JSONArray();
+			Transaction tx = null;
+			boolean isActive = BDDUtils.getTransactionStatus();
+			try {
+				tx = BDDUtils.beginTransaction(isActive);
+				
+				ja = ConstructJSONObjects.getJSONArrayforNoteWithQuestion(NoteDAO.getListNoteAndDetailByEtablissementId(idEtablissement));
+				
+				BDDUtils.commit(isActive, tx);
+			}
+			catch(Exception ex) {
+				Logger.error("Hibernate failure : "+ ex.getMessage());
+				BDDUtils.rollback(isActive, tx);
+				return internalServerError("Une erreur est survenue pendant la transaction avec la base de données.");
+			}
+			return ok(ja.toString());
+			
+		});
+		return promiseOfResult;
+	}
 }

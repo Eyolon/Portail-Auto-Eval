@@ -56,7 +56,7 @@ function InscriptionCtrl($http, $state, ConnexionService, InscriptionService, ip
             .error(function (data, status, headers, config) {
                 console.log(data);
             });
-    	}else{
+    	} else {
     		$http.post('/api/insertUser', {
                 login: self.user.identifiant,
                 pwd: self.user.pwd,

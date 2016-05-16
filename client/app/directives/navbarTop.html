@@ -1,4 +1,4 @@
-<nav class="navbar navbar-inverse navbar-fixed-top">
+﻿<nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container-fluid">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -22,7 +22,6 @@
                 <li ui-sref-active="active"><a ui-sref="lastEvaluation">Mes précédentes Evaluation</a></li>
             </ul>
             </li>
-
             <!-- Double secu : connecté ET on récupère un status -->
             <li ui-sref-active="active" data-ng-show="navbarTopCtrl.isConnected" ng-switch-when="utilisateur"><a ui-sref="evaluation">Mes Evaluations</a></li>
 
@@ -43,10 +42,10 @@
                         <li ui-sref-active="active"><a ui-sref="profilAdmin">Modifier un utilisateur</a></li>
                     </ul>
                 </li>
+                <li ui-sref-active="active" data-ng-show="navbarTopCtrl.isConnected" ng-switch-when="super_administrateur"><a ui-sref="consultation">Consultation des resultats</a></li>
 
                 <!-- EST CE QU'ON ACCORDE L'ACCES ? <li ui-sref-active="active" data-ng-show="navbarTopCtrl.isConnected" ng-switch-default><a ui-sref="evaluation" >Mes Evaluations</a></li>-->
                 <li ui-sref-active="active" data-ng-show="navbarTopCtrl.isConnected" ng-switch-default>ERREUR TYPE INDEFINIS</li>
-
 
                 <li ui-sref-active="active" data-ng-show="!navbarTopCtrl.isConnected"><a ui-sref="connection">Connexion</a></li>
             </li>
