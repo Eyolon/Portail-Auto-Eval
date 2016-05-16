@@ -49,6 +49,35 @@ public class ConstructJSONObjects {
 		 * Il semble que si je décomente, sa plante. mais de toute facon c'est tout se dont j'ai besoin
 		 */
 	}
+	
+	public static JSONArray getJSONArrayforNoteWithQuestion(List<Note> ln) throws JSONException{
+		if(ln != null) {
+			JSONArray ja = new JSONArray();
+			for (Note note : ln) {
+				ja.put(getJSONforNoteWithQuestion(note));
+			}
+			return ja;
+		}
+		return null;
+	}
+	
+	private static JSONObject getJSONforNoteWithQuestion(Note note) throws JSONException {
+		return note == null ? null : new JSONObject()
+				.put("id", note.getId())
+				.put("valeur", note.getValeur())
+				.put("remarque", note.getRemarque())
+				.put("utilisateur" ,getJSONforUser(note.getUtilisateur()))
+				.put("question", getJSONforQuestionWithoutNote(note.getQuestion())); // on a vaincu la boucle infinis !
+	}
+	
+	public static JSONObject getJSONforQuestionWithoutNote(Question q) throws JSONException {
+		return q == null ? null : new JSONObject()
+				.put("id", q.getId())
+				.put("valeur", q.getValeur())
+				.put("critere", getJSONforCritere(q.getCritere()))
+				.put("formulaire", getJSONforFormulaire(q.getFormulaire()));
+				//.put("notes", getJSONArrayforNote(q.getNotes()));
+	}
 
 	public static JSONArray getJSONArrayforListUsers(List<Utilisateur> lu) throws JSONException {
 		if(lu != null) {

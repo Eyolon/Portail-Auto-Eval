@@ -12,12 +12,19 @@
 	</div>
 	
 	<div class="form-group">
+		<label for="formulaire" class="col-xs-4 col-sm-4  col-md-3 col-lg-3 control-label">Formulaire : </label>
+		<select name="formulaire" class="form-control col-xs-7 col-sm-7  col-md-5 col-lg-5" data-ng-disabled="!ConsultationController.service" ng-model="ConsultationController.formulaire" ng-options="formulaire.nom for formulaire in ConsultationController.formulaires track by formulaire.id" ng-change="ConsultationController.update3()"></select>
+	</div>
+	
+	<div class="form-group">
 		<label for="question" class="col-xs-4 col-sm-4  col-md-3 col-lg-3 control-label">Question : </label>
-		<select name="question" class="form-control col-xs-7 col-sm-7  col-md-5 col-lg-5" data-ng-disabled="!ConsultationController.service" ng-model="ConsultationController.question" ng-options="question.libelle for question in ConsultationController.questions track by question.id" ng-change="ConsultationController.update3()"></select>
+		<select name="question" class="form-control col-xs-7 col-sm-7  col-md-5 col-lg-5" data-ng-disabled="!ConsultationController.formulaire" ng-model="ConsultationController.question" ng-options="question.valeur for question in ConsultationController.questions track by question.id" ng-change="ConsultationController.update4()"></select>
 	</div>
 </form>
 
 <div>Nombre de votant : {{ConsultationController.nbrVotant}}</div>
 
 <nvd3 options="options" data="data" config="config"></nvd3>
+
+<button type="submit" class="btn btn-default" data-ng-disabled="!ConsultationController.etablissement" data-ng-click="ConsultationController.download()">Exporter Resultats CSV</button>
 

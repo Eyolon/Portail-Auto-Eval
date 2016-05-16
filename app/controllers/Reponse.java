@@ -92,7 +92,7 @@ public class Reponse extends Controller{
 			try {
 				tx = BDDUtils.beginTransaction(isActive);
 				
-				ja = ConstructJSONObjects.getJSONArrayforNote(NoteDAO.getListNoteAndDetailByEtablissementId(idEtablissement));
+				ja = ConstructJSONObjects.getJSONArrayforNoteWithQuestion(NoteDAO.getListNoteAndDetailByEtablissementId(idEtablissement));
 				
 				BDDUtils.commit(isActive, tx);
 			}
