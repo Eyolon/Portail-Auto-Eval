@@ -262,7 +262,6 @@ function ConsultationController($http, $state, $scope, ConsultationService) {
 		result += lineDelimiter;
 
 		data.forEach(function(item) {
-			console.log(item);
 			
 			result += item['id'];
 			result += columnDelimiter;
