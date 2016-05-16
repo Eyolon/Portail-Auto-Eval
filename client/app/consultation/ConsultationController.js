@@ -245,8 +245,6 @@ function ConsultationController($http, $state, $scope, ConsultationService) {
 	}
 
 	function convertArrayOfObjectsToCSV(args) {  
-		//Le probleme est qu'il "éclate" pas les objets et il faudrait l'empecher de donner l'id ou l'utilisateur 
-
 		var result, ctr, keys, columnDelimiter, lineDelimiter, data;
 
 		data = args.data || null;
@@ -264,14 +262,18 @@ function ConsultationController($http, $state, $scope, ConsultationService) {
 		result += lineDelimiter;
 
 		data.forEach(function(item) {
-			ctr = 0;
-			keys.forEach(function(key) {
-				if (ctr > 0) result += columnDelimiter;
-
-				result += item[key];
-				ctr++;
-			});
+			console.log(item);
+			
+			result += item['id'];
+			result += columnDelimiter;
+			result += item['question'].valeur;
+			result += columnDelimiter;
+			result += item['utilisateur'].service.libelle;
+			result += columnDelimiter;
+			result += item['valeur'];
+			
 			result += lineDelimiter;
+			
 		});
 
 		return result;
@@ -291,9 +293,6 @@ function ConsultationController($http, $state, $scope, ConsultationService) {
 	}
 
 	this.download = function download(){
-		//TODO : Download File CSV
-		//var file = new Blob([ConvertToCSV(self.notes)], { type: 'application/csv' });
-		//console.log(file);
 		var data;
 		saveFile(self.etablissement.libelle+'_Export.csv','application/csv',convertArrayOfObjectsToCSV({data: self.notes}));
 	}
