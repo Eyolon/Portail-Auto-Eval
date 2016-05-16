@@ -29,23 +29,3 @@
 <button type="submit" class="btn btn-default" data-ng-disabled="!ConsultationController.etablissement" data-ng-click="ConsultationController.download()">Exporter Resultats CSV</button>
 
 
-	<div class="form-group">
-		<label for="etablissement" class="col-xs-4 col-sm-4  col-md-3 col-lg-3 control-label">Etablissement : </label>
-		<select name="etablissement" class="form-control col-xs-7 col-sm-7  col-md-5 col-lg-5" ng-model="ConsultationController.etablissement" ng-options="etablissement.libelle for etablissement in ConsultationController.etablissements track by etablissement.id" ng-change="ConsultationController.update()"></select>
-	</div>
-	
-	<div class="form-group">
-		<label for="service" class="col-xs-4 col-sm-4  col-md-3 col-lg-3 control-label">Service : </label>
-		<select name="service" class="form-control col-xs-7 col-sm-7  col-md-5 col-lg-5" data-ng-disabled="!ConsultationController.etablissement" ng-model="ConsultationController.service" ng-options="service.libelle for service in ConsultationController.services track by service.id" ng-change="ConsultationController.update2()"></select>
-	</div>
-	
-	<div class="form-group">
-		<label for="question" class="col-xs-4 col-sm-4  col-md-3 col-lg-3 control-label">Question : </label>
-		<select name="question" class="form-control col-xs-7 col-sm-7  col-md-5 col-lg-5" data-ng-disabled="!ConsultationController.service" ng-model="ConsultationController.question" ng-options="question.libelle for question in ConsultationController.questions track by question.id" ng-change="ConsultationController.update3()"></select>
-	</div>
-</form>
-
-<div>Nombre de votant : {{ConsultationController.nbrVotant}}</div>
-
-<nvd3 options="options" data="data" config="config"></nvd3>
-
