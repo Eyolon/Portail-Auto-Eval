@@ -10,32 +10,32 @@
             <a class="navbar-brand" ui-sref="home">PoC</a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
-         <span id="wrapper" ng-switch="navbarTopCtrl.user.typeUtilisateur.libelle">
+            <span id="wrapper" ng-switch="navbarTopCtrl.user.typeUtilisateur.libelle">
             <ul class="nav navbar-nav">
                 <li ui-sref-active="active"><a ui-sref="home">Accueil</a></li>
 
                 <li class="dropdown" data-ng-show="navbarTopCtrl.isConnected">
                     <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Mon Compte<span class="caret"></span></a>
-                    <ul class="dropdown-menu" role="menu">
-                        <li ui-sref-active="active"><a ui-sref="profil">Mon Profile</a></li>
-                        <li style="cursor: pointer"><a ui-sref="home" data-ng-click="navbarTopCtrl.logout()">Déconnexion</a></li>
-                        <li ui-sref-active="active"><a ui-sref="lastEvaluation">Mes précédentes Evaluation</a></li>
-                    </ul>
-                </li>
-		     	<!-- Double secu : connecté ET on récupère un status --> 
-	            <li ui-sref-active="active" data-ng-show="navbarTopCtrl.isConnected" ng-switch-when="utilisateur"><a ui-sref="evaluation">Mes Evaluations</a></li>
-	        
-	            <li ui-sref-active="active" data-ng-show="navbarTopCtrl.isConnected" ng-switch-when="administrateur"><a ui-sref="evaluation">Mes Evaluations</a>
-	        	<li class="dropdown" data-ng-show="navbarTopCtrl.isConnected" ng-switch-when="administrateur">
+            <ul class="dropdown-menu" role="menu">
+                <li ui-sref-active="active"><a ui-sref="profil">Mon Profile</a></li>
+                <li style="cursor: pointer"><a ui-sref="home" data-ng-click="navbarTopCtrl.logout()">Déconnexion</a></li>
+                <li ui-sref-active="active"><a ui-sref="lastEvaluation">Mes précédentes Evaluation</a></li>
+            </ul>
+            </li>
+            <!-- Double secu : connecté ET on récupère un status -->
+            <li ui-sref-active="active" data-ng-show="navbarTopCtrl.isConnected" ng-switch-when="utilisateur"><a ui-sref="evaluation">Mes Evaluations</a></li>
+
+            <li ui-sref-active="active" data-ng-show="navbarTopCtrl.isConnected" ng-switch-when="administrateur"><a ui-sref="evaluation">Mes Evaluations</a>
+                <li class="dropdown" data-ng-show="navbarTopCtrl.isConnected" ng-switch-when="administrateur">
                     <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Gerrer les utilisateurs<span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
                         <li ui-sref-active="active"><a ui-sref="inscription">Ajouter un Utilisateur</a></li>
                         <li ui-sref-active="active"><a ui-sref="profilAdmin">Modifier un utilisateur</a></li>
                     </ul>
                 </li>
-	        
-	            <li ui-sref-active="active" data-ng-show="navbarTopCtrl.isConnected" ng-switch-when="super_administrateur"><a ui-sref="evaluation">Mes Evaluations</a></li>
-				<li class="dropdown" data-ng-show="navbarTopCtrl.isConnected" ng-switch-when="super_administrateur">
+
+                <li ui-sref-active="active" data-ng-show="navbarTopCtrl.isConnected" ng-switch-when="super_administrateur"><a ui-sref="evaluation">Mes Evaluations</a></li>
+                <li class="dropdown" data-ng-show="navbarTopCtrl.isConnected" ng-switch-when="super_administrateur">
                     <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Gerrer les utilisateurs<span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
                         <li ui-sref-active="active"><a ui-sref="inscription">Ajouter un Utilisateur</a></li>
@@ -43,21 +43,12 @@
                     </ul>
                 </li>
                 <li ui-sref-active="active" data-ng-show="navbarTopCtrl.isConnected" ng-switch-when="super_administrateur"><a ui-sref="consultation">Consultation des resultats</a></li>
-	        
-	            <!-- EST CE QU'ON ACCORDE L'ACCES ? <li ui-sref-active="active" data-ng-show="navbarTopCtrl.isConnected" ng-switch-default><a ui-sref="evaluation" >Mes Evaluations</a></li>-->
-	            <li ui-sref-active="active" data-ng-show="navbarTopCtrl.isConnected" ng-switch-default>ERREUR TYPE INDEFINIS</li>  
-		       
-				   
- 
-                
-                
-                
-                
-                
-                
-                
+
+                <!-- EST CE QU'ON ACCORDE L'ACCES ? <li ui-sref-active="active" data-ng-show="navbarTopCtrl.isConnected" ng-switch-default><a ui-sref="evaluation" >Mes Evaluations</a></li>-->
+                <li ui-sref-active="active" data-ng-show="navbarTopCtrl.isConnected" ng-switch-default>ERREUR TYPE INDEFINIS</li>
 
                 <li ui-sref-active="active" data-ng-show="!navbarTopCtrl.isConnected"><a ui-sref="connection">Connexion</a></li>
+            </li>
             </ul>
             </span>
         </div>

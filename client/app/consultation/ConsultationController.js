@@ -1,5 +1,5 @@
 function ConsultationController($http, $state, $scope, ConsultationService) {
-	var self = this;
+    var self = this;
     this.etablissement = null;
     this.etablissements = [];
     this.service = null;
@@ -13,26 +13,26 @@ function ConsultationController($http, $state, $scope, ConsultationService) {
     this.nbrVotant = 0;
     var colorArray = ['#000000', '#582900', '#FE1B00', '#ED7F10', '#FFFF00', '#9EFD38'];
     // NOIR,MARON,ROUGE,ORANGE,JAUNE,VERT
-    
+
     function cleanArray(array) {
-    	var cache = {};
-    	array = array.filter(function(elem,index,array){
-	    		return cache[elem.id]?0:cache[elem.id]=1;
-	    	});
-    	  return array;
-    	}
-    
-    this.getListEtablissement = function getListEtablissement(){
-    	self.etablissements = ConsultationService.etablissements.post({}, onSuccess, onError);    	
+        var cache = {};
+        array = array.filter(function (elem, index, array) {
+            return cache[elem.id] ? 0 : cache[elem.id] = 1;
+        });
+        return array;
+    }
+
+    this.getListEtablissement = function getListEtablissement() {
+        self.etablissements = ConsultationService.etablissements.post({}, onSuccess, onError);
     };
     
     function onSuccess() {
         self.isSuccess = true;
-	}
-	
-	function onError() {
-		self.isSuccess = false;
-	}
+    }
+
+    function onError() {
+        self.isSuccess = false;
+    }
 
     $scope.options = {
         chart: {
@@ -57,7 +57,7 @@ function ConsultationController($http, $state, $scope, ConsultationService) {
                 }
             },
             legendPosition: 'right',
-            color:colorArray 
+            color: colorArray
         }
     };
 
@@ -71,7 +71,7 @@ function ConsultationController($http, $state, $scope, ConsultationService) {
         deepWatchDataDepth: 2, // default: 2
         debounce: 10 // default: 10
     };
-    
+
     self.getListEtablissement();
     
     this.update = function update(){
