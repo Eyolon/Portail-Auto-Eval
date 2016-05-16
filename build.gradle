@@ -143,22 +143,15 @@ tasks.withType(Task) {
 		options.encoding = 'UTF-8'
 	}
 	
-	if (it.name == 'stagePlayBinaryDist'){
+	if(it.name == 'stagePlayBinaryDist') {
+		createPlayBinaryAssetsJar.dependsOn(':bowerInstall')
+		createPlayBinaryAssetsJar.dependsOn(':installGulp')
+		createPlayBinaryAssetsJar.dependsOn(':gulp_build')
+	}
+    if (it.name == 'playBinary'){
     	
 		dependsOn(':bowerInstall')
 		dependsOn(':installGulp')
-		dependsOn(':gulp_build')
-    }
-    if (it.name == 'createPlayBinaryZipDist'){
-    	
-		dependsOn(':bowerInstall')
-		dependsOn(':installGulp')
-		dependsOn(':gulp_build')
-    }
-	if (it.name == 'createPlayBinaryTarDist'){
-    	
-		dependsOn(':bowerInstall')
-		dependsOn(':installGulp')
-		dependsOn(':gulp_build')
+		dependsOn(':gulp_compile')
     }
 }
