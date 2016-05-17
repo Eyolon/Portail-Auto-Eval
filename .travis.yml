@@ -19,6 +19,7 @@ deploy:
     - "$TRAVIS_BUILD_DIR/build/distributions/playBinary.zip"
     - "$TRAVIS_BUILD_DIR/build/distributions/playBinary.tar"
   skip_cleanup: true
+  overwrite: true
   on:
     tags: true
     repo: shiroverlord/Portail-Auto-Eval
