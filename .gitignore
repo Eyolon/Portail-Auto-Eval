@@ -95,7 +95,7 @@ target/
 #Play
 public/
 build/
-client/cache/
+client/caches/
 client/~/
 */bower_components/
 */node_modules/

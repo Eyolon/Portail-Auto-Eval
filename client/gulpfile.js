@@ -106,7 +106,6 @@
     }
     function htmlMin() {
         return gulp.src(pathsSrc.html)
-			.pipe(plugins.newer(pathsDest.html))
             .pipe(plugins.htmlmin({collapseWhitespace: true, minifyCSS: true, minifyJS: true, removeComments: true, removeCommentsFromCDATA: true}))
             .pipe(gulp.dest(pathsDest.html));
     }
@@ -155,7 +154,6 @@
     }
     function cssMin() {
         return gulp.src(pathsSrc.css)
-			.pipe(plugins.newer(pathsDest.css))
             .pipe(plugins.cssnano())
             .pipe(gulp.dest(pathsDest.css))
             .on("error", plugins.notify.onError({
@@ -217,6 +215,43 @@
             .pipe(filterJS.restore)
             .pipe(gulp.dest(pathsDest.bower));
     }
+	function bowerBuild() {
+        return gulp.src('./bower.json')
+            .pipe(plugins.mainBowerFiles({
+                overrides: {
+                    bootstrap: {
+                        main: [
+                            './dist/js/bootstrap.min.js',
+                            './dist/css/*.min.css',
+                            './dist/fonts/*.*'
+                        ]
+                    },
+                    nvd3: {
+                        main: [
+                            './build/nv.d3.min.js',
+                            './build/nv.d3.min.css'
+                        ]
+                    },
+                    'angular-loading-bar': {
+                        main: [
+                            './build/loading-bar.min.js',
+                            './build/loading-bar.min.css'
+                        ]
+                    },
+                    moment: {
+                        main: [
+                            './min/moment-with-locales.min.js'
+                        ]
+                    }
+                }
+            }))
+            .pipe(filterJS)
+            .pipe(plugins.concat('bower.js'))
+			.pipe(plugins.uglify())
+            .pipe(gulp.dest(pathsDest.bowerJs))
+            .pipe(filterJS.restore)
+            .pipe(gulp.dest(pathsDest.bower));
+    }
     /* FIN BOWER */
     
     /* LESS */
@@ -270,6 +305,7 @@
     gulp.task('cssmin', cssMin);
     
     gulp.task('bowerNoNotification', bower);
+	gulp.task('bowerBuildNoNotification', bowerBuild);
     gulp.task('bower', functionWithNotification(bower, "Gulp BOWER", "Application BOWER copied successfully.", true));
     
     gulp.task('imgNoNotification', img);
@@ -278,17 +314,19 @@
     
     gulp.task('clean:client', cleanClient);
     gulp.task('clean:public', cleanPublic);
-    
-    gulp.task('compile', ['htmlNoNotification', 'jsNoNotification', 'less', 'imgNoNotification', 'faviconNoNotification', 'css', 'soundNoNotification', 'bowerNoNotification'], function notifyCompile() {
+	
+	gulp.task('compileNoNotification', ['htmlminNoNotification', 'jsminNoNotification', 'lessmin', 'imgNoNotification', 'faviconNoNotification', 'cssmin', 'soundNoNotification', 'bowerNoNotification']);
+	gulp.task('compileCleanClient', ['compileNoNotification'], cleanClient);
+	gulp.task('build', ['htmlminNoNotification', 'jsminNoNotification', 'lessmin', 'imgNoNotification', 'faviconNoNotification', 'cssmin', 'soundNoNotification', 'bowerBuildNoNotification']);
+    gulp.task('compile', ['compileNoNotification'], function notifyCompile() {
         return gulp.src('.').pipe(plugins.notify({
                 title:"GULP Compile",
                 message: "Application Compile completed successfully."
         }));
     });
-    gulp.task('build', ['htmlminNoNotification', 'jsminNoNotification', 'lessmin', 'imgNoNotification', 'faviconNoNotification', 'cssmin', 'soundNoNotification', 'bowerNoNotification']);
-    
+	
     /* DO NOT USE (CLEAN 'client' folder) -> only for deployment */
-    gulp.task('buildClean', ['htmlminNoNotification', 'jsminNoNotification', 'lessmin', 'imgNoNotification', 'faviconNoNotification', 'cssmin', 'soundNoNotification', 'bowerNoNotification'], cleanClient);
+    gulp.task('buildClean', ['htmlminNoNotification', 'jsminNoNotification', 'less', 'imgNoNotification', 'faviconNoNotification', 'cssmin', 'soundNoNotification', 'bowerBuildNoNotification'], cleanClient);
     /* FIN TASKS */
     
     function watch() {
