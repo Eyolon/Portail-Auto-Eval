@@ -108,6 +108,17 @@ task bowerInstall(dependsOn: npmInstall, type: NodeTask) {
     outputs.dir "client/bower_components"
 }
 
+task bowerUpdate(dependsOn: npmInstall, type: NodeTask) {
+    script = file("client/node_modules/bower/bin/bower")
+    args = ['--config.cwd=client',
+			'--config.storage.cache=client/caches/bower/cache',
+            '--config.storage.packages=client/caches/bower/packages',
+            '--config.storage.registry=client/caches/bower/registry',
+            'update']
+    inputs.file "client/bower.json"
+    outputs.dir "client/bower_components"
+}
+
 installGulp.dependsOn(':npmInstall')
 
 gulp_build.dependsOn(':installGulp')

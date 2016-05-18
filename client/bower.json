@@ -14,7 +14,7 @@
     "caches"
   ],
   "dependencies": {
-    "jquery": "latest",
+    "jquery": "^2.2.3",
     "angular": "latest",
     "angular-mocks": "latest",
     "angular-sanitize": "latest",
@@ -37,8 +37,8 @@
     "ui-router-extras": "latest",
     "angular-cookie": "latest",
     "angular-carousel": "latest",
-    "d3": "latest",
-    "nvd3": "latest",
+    "d3": "^3.5.17",
+    "nvd3": "^1.8.3",
     "angular-nvd3": "^1.0.7"
   },
   "resolutions": {
