@@ -80,6 +80,34 @@ angular
             }
         });
         
+        $stateProvider.state('formulaire', {
+            parent: 'main',
+            url: '/formulaire',
+            title: 'Formulaire',
+            reloadOnSearch: false,
+            views: {
+                'main@': {
+                    templateUrl: '/question/formulaire.html',
+                    controller: 'QuestionController',
+                    controllerAs: 'QuestionController'
+                }
+            }
+        });
+        
+        $stateProvider.state('question', {
+            parent: 'main',
+            url: '/question',
+            title: 'Question',
+            reloadOnSearch: false,
+            views: {
+                'main@': {
+                    templateUrl: '/question/question.html',
+                    controller: 'QuestionController',
+                    controllerAs: 'QuestionController'
+                }
+            }
+        });
+        
         $stateProvider.state('connection', {
             parent: 'main',
             url: '/connection',

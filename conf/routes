@@ -21,7 +21,7 @@ POST	/api/etablissement			controllers.Personne.getEtablissements()
 POST	/api/evaluation				controllers.Evaluation.getListFormulaire()
 #POST	/api/evaluation/:nomForm	controllers.Evaluation.getFormulaire(nomForm: String)
 POST	/api/evaluation/:idUser		controllers.Evaluation.getFormulaireFullForUser(idUser: Long)
-
+POST	/api/question				controllers.Question.getListQuestion()
 
 # Reponse
 POST	/api/reponse				controllers.Reponse.insertReponses()

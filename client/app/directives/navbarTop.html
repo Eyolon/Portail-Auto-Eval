@@ -1,4 +1,4 @@
-ï»¿<nav class="navbar navbar-inverse navbar-fixed-top">
+<nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container-fluid">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -18,11 +18,11 @@
                     <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Mon Compte<span class="caret"></span></a>
             <ul class="dropdown-menu" role="menu">
                 <li ui-sref-active="active"><a ui-sref="profil">Mon Profile</a></li>
-                <li style="cursor: pointer"><a ui-sref="home" data-ng-click="navbarTopCtrl.logout()">DÃ©connexion</a></li>
-                <li ui-sref-active="active"><a ui-sref="lastEvaluation">Mes prÃ©cÃ©dentes Evaluation</a></li>
+                <li style="cursor: pointer"><a ui-sref="home" data-ng-click="navbarTopCtrl.logout()">Déconnexion</a></li>
+                <li ui-sref-active="active"><a ui-sref="lastEvaluation">Mes précédentes Evaluation</a></li>
             </ul>
             </li>
-            <!-- Double secu : connectÃ© ET on rÃ©cupÃ¨re un status -->
+            <!-- Double secu : connecté ET on récupère un status -->
             <li ui-sref-active="active" data-ng-show="navbarTopCtrl.isConnected" ng-switch-when="utilisateur"><a ui-sref="evaluation">Mes Evaluations</a></li>
 
             <li ui-sref-active="active" data-ng-show="navbarTopCtrl.isConnected" ng-switch-when="administrateur"><a ui-sref="evaluation">Mes Evaluations</a>
@@ -43,6 +43,14 @@
                     </ul>
                 </li>
                 <li ui-sref-active="active" data-ng-show="navbarTopCtrl.isConnected" ng-switch-when="super_administrateur"><a ui-sref="consultation">Consultation des resultats</a></li>
+				
+                <li class="dropdown" data-ng-show="navbarTopCtrl.isConnected" ng-switch-when="super_administrateur">
+                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Gerrer les questionnaires<span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li ui-sref-active="active"><a ui-sref="question">Ajouter/Editer une Question</a></li>
+                        <li ui-sref-active="active"><a ui-sref="formulaire">Ajouter/Editer un Formulaire</a></li>
+                    </ul>
+                </li>
 
                 <!-- EST CE QU'ON ACCORDE L'ACCES ? <li ui-sref-active="active" data-ng-show="navbarTopCtrl.isConnected" ng-switch-default><a ui-sref="evaluation" >Mes Evaluations</a></li>-->
                 <li ui-sref-active="active" data-ng-show="navbarTopCtrl.isConnected" ng-switch-default>ERREUR TYPE INDEFINIS</li>
