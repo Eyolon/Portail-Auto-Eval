@@ -39,7 +39,7 @@
     "angular-carousel": "latest",
     "d3": "latest",
     "nvd3": "latest",
-    "angular-nvd3": "latest"
+    "angular-nvd3": "^1.0.7"
   },
   "resolutions": {
     "angular": "1.5.5"
