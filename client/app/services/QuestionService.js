@@ -8,7 +8,7 @@ function QuestionService($resource, $http) {
 	    );
 	
 	this.setQuestion = function setQuestion(question){
-		$http.post('/api/question',{question: question});		
+		$http.post('/api/editQuestion',{question: question});		
 	};
 }
 angular
