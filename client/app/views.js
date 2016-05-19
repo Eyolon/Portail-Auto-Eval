@@ -87,9 +87,9 @@ angular
             reloadOnSearch: false,
             views: {
                 'main@': {
-                    templateUrl: '/question/formulaire.html',
-                    controller: 'QuestionController',
-                    controllerAs: 'QuestionController'
+                    templateUrl: '/formulaire/formulaire.html',
+                    controller: 'FormulaireController',
+                    controllerAs: 'FormulaireController'
                 }
             }
         });
@@ -102,6 +102,34 @@ angular
             views: {
                 'main@': {
                     templateUrl: '/question/question.html',
+                    controller: 'QuestionController',
+                    controllerAs: 'QuestionController'
+                }
+            }
+        });
+        
+        $stateProvider.state('editFormulaire', {
+            parent: 'main',
+            url: '/editFormulaire',
+            title: 'EditFormulaire',
+            reloadOnSearch: false,
+            views: {
+                'main@': {
+                    templateUrl: '/formulaire/editFormulaire.html',
+                    controller: 'FormulaireController',
+                    controllerAs: 'FormulaireController'
+                }
+            }
+        });
+        
+        $stateProvider.state('editQuestion', {
+            parent: 'main',
+            url: '/editQuestion',
+            title: 'EditQuestion',
+            reloadOnSearch: false,
+            views: {
+                'main@': {
+                    templateUrl: '/question/editQuestion.html',
                     controller: 'QuestionController',
                     controllerAs: 'QuestionController'
                 }

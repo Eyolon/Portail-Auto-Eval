@@ -1,4 +1,4 @@
-function QuestionService($resource) {
+function QuestionService($resource, $http) {
 
 	this.listQuestion = $resource('/api/question',
 	        {},
@@ -6,6 +6,10 @@ function QuestionService($resource) {
 	            'post': {method:'POST', isArray:true}
 	        }
 	    );
+	
+	this.setQuestion = function setQuestion(question){
+		$http.post('/api/question',{question: question});		
+	};
 }
 angular
     .module('portailAutoEval')

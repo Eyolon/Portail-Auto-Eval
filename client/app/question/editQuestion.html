@@ -1,0 +1,15 @@
+<form role="form" class="form-horizontal">
+	<h1>Edition de Question</h1>
+	
+	<div class="form-group">
+        <label for="service" class="col-xs-4 col-sm-4 col-md-3 col-lg-3 control-label">Selectionner une Question: </label>
+        <select class="form-control col-xs-7 col-sm-7  col-md-5 col-lg-5" ng-model="QuestionController.questionSelected" ng-options="question.valeur for question in QuestionController.listQuestion" ng-change="QuestionController.update()" required></select>
+    </div>
+    <div class="form-group">
+        <label for="pwd" class="col-xs-4 col-sm-4 col-md-3 col-lg-3 control-label">Editer la question : </label>
+        <input type="text" class="form-control col-xs-7 col-sm-7  col-md-5 col-lg-5" id="qust" data-ng-model="QuestionController.questionToEdit.valeur" >
+    </div>
+    
+    <button class="btn btn-default" data-ng-disabled="!QuestionController.questionToEdit" type="submit" data-ng-click="QuestionController.validerEdit()">Enregistrer</button>
+    
+</form>

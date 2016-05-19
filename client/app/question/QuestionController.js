@@ -3,6 +3,7 @@ function QuestionController($http, $state, $scope, QuestionService) {
 	this.listQuestion = [];
 	this.listFormulaire = [];
 	this.questionSelected = {};
+	this.questionToEdit = undefined;
 	this.formulaireSelected = {};
 	this.isSuccess = true;
 	
@@ -18,7 +19,19 @@ function QuestionController($http, $state, $scope, QuestionService) {
 		self.isSuccess = false;
 	}
 	
-	this.getListQuestion();
+	this.update = function update() {
+		self.questionToEdit = self.questionSelected;
+	};
+	
+	this.validerEdit = function validerEdit(){
+		QuestionService.setQuestion(self.questionToEdit);	
+	};
+	
+	this.validerAdd = function validerAdd(){
+		
+	};
+	
+	self.getListQuestion();
 	
 }
 angular
