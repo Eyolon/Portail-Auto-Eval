@@ -1,28 +1,20 @@
 package controllers;
 
-import Tools.ConstructJSONObjects;
-import hibernate.dao.QuestionDAO;
-
-import org.apache.commons.codec.binary.Base64;
 import org.hibernate.HibernateException;
 import org.hibernate.Transaction;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.mindrot.jbcrypt.BCrypt;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
+import Tools.ConstructJSONObjects;
 import hibernate.dao.QuestionDAO;
-import hibernate.model.Connexion;
-import hibernate.model.Question;
 import hibernate.model.Question;
 import hibernate.utils.BDDUtils;
 import play.Logger;
 import play.libs.F.Promise;
 import play.mvc.Controller;
 import play.mvc.Result;
-
-import play.mvc.Controller;
 
 public class Questions extends Controller {
 	

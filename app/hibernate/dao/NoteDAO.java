@@ -6,10 +6,6 @@ import org.hibernate.Query;
 import org.hibernate.Transaction;
 
 import hibernate.model.Note;
-import hibernate.model.Service;
-import hibernate.model.Question;
-import hibernate.model.Utilisateur;
-import hibernate.model.Etablissement;
 import hibernate.utils.BDDUtils;
 import play.Logger;
 
@@ -43,6 +39,7 @@ public class NoteDAO extends BasicDAO {
 		return ln;
 	}
 	
+	@SuppressWarnings("unchecked")
 	public static List<Note> getListNoteAndDetailByEtablissementId(Long idEtablissement) {
 		List<Note> ln = null;
 		Transaction tx = null;

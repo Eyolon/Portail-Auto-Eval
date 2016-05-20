@@ -4,9 +4,7 @@ import java.time.Instant;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Transaction;
-
 import org.json.JSONArray;
-import org.json.JSONObject;
 
 import com.fasterxml.jackson.databind.JsonNode;
 

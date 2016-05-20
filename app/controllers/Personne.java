@@ -18,7 +18,6 @@ import hibernate.dao.ConnexionDAO;
 import hibernate.dao.EtablissementDAO;
 import hibernate.dao.ServiceDAO;
 import hibernate.dao.TypeUtilisateurDAO;
-import hibernate.dao.EtablissementDAO;
 import hibernate.dao.UtilisateurDAO;
 import hibernate.model.Connexion;
 import hibernate.model.Utilisateur;
