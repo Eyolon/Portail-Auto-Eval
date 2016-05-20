@@ -19,11 +19,29 @@ testPlayBinary 	|	playBinary to build Play application and compilePlayBinaryTest
 *************************************************************************************************************************************************************************************/
 
 plugins {
-	id 'java-base'
-    id 'play'
-	id 'eclipse'
 	id "com.moowork.node" version "0.12"
 	id "com.moowork.gulp" version "0.12"
+}
+apply plugin: 'java-base'
+apply plugin: 'play'
+apply plugin: 'eclipse'
+
+// Add play dependencies to Eclipse project
+eclipse.classpath.plusConfigurations += [ configurations.play ]
+eclipse.classpath.plusConfigurations += [ configurations.playTest ]
+	
+// Add app folder to Eclipse classpath	
+sourceSets {
+	main {
+		java {
+			srcDir 'app'
+		}        
+	}
+	test {
+		java {
+			srcDir 'test'
+		}        
+	}	    
 }
 
 model {
