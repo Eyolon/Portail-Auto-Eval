@@ -80,7 +80,6 @@ public class UtilisateurDAO extends BasicDAO {
 		return u;
 	}
 	
-	@SuppressWarnings("unchecked")
 	public static List<Utilisateur> getAllByEtablissement(Long idEtablissement){
 		List<Utilisateur> lu = new ArrayList<>();
 		Transaction tx = null;
