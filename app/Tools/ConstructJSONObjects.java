@@ -103,6 +103,17 @@ public class ConstructJSONObjects {
 				.put("categorie", getJSONforCategorie(c.getCategorie()));
 	}
 	
+	public static JSONArray getJSONArrayforListCritere(List<Critere> lc) throws JSONException {
+		if(lc != null) {
+			JSONArray ja = new JSONArray();
+			for (Critere critere : lc) {
+				ja.put(getJSONforCritere(critere));
+			}
+			return ja;
+		}
+		return null;
+	}
+	
 	public static JSONObject getJSONforQuestion(Question q) throws JSONException {
 		return q == null ? null : new JSONObject()
 				.put("id", q.getId())

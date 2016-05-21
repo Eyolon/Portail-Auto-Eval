@@ -8,7 +8,11 @@ import org.json.JSONObject;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import Tools.ConstructJSONObjects;
+import hibernate.dao.CritereDAO;
+import hibernate.dao.FormulaireDAO;
 import hibernate.dao.QuestionDAO;
+import hibernate.model.Critere;
+import hibernate.model.Formulaire;
 import hibernate.model.Question;
 import hibernate.utils.BDDUtils;
 import play.Logger;
@@ -41,8 +45,32 @@ public class Questions extends Controller {
 		});
 		return promiseOfResult;
 	}
+	
+	public static Promise<Result> getListCritere(){
+		Promise<Result> promiseOfResult = Promise.promise(()->{
 
-	public static Promise<Result> insertQuestion(){
+			JSONArray ja = new JSONArray();
+			Transaction tx = null;
+			boolean isActive = BDDUtils.getTransactionStatus();
+			try {
+				tx = BDDUtils.beginTransaction(isActive);
+				
+				ja = ConstructJSONObjects.getJSONArrayforListCritere(CritereDAO.getAll());
+				
+				BDDUtils.commit(isActive, tx);
+			}
+			catch(Exception ex) {
+				Logger.error("Hibernate failure : "+ ex.getMessage());
+				BDDUtils.rollback(isActive, tx);
+				return internalServerError("Une erreur est survenue pendant la transaction avec la base de données.");
+			}
+			return ok(ja.toString());
+			
+		});
+		return promiseOfResult;
+	}
+
+	public static Promise<Result> saveQuestion(){
 		return Promise.promise(() -> 
 		{
 			JsonNode jsonN = request().body().asJson();
@@ -51,12 +79,41 @@ public class Questions extends Controller {
 				Transaction tx = null;
 				boolean isActive = BDDUtils.getTransactionStatus();
 				try {
-					Question q = new Question();
-					
-					if(jsonN.has("question") && jsonN.get("question").get("valeur").asText() != null) {
-						q.setValeur(jsonN.get("question").get("valeur").asText());
+					//Il s'avere qu'il se réfère a la primary key, qu'importe si l'objet est initialisé avec un new ou pas
+					//Ici , la PK est l'id de la question donc si y a pas d'id on est tranquil, il créer une nouvelle clef et question
+					if(jsonN.has("question") && jsonN.get("question").has("id")){
+						Question q = new Question();
+						q.setId(jsonN.get("question").get("id").asLong());
+						
+						if(jsonN.get("question").get("valeur").asText() != ""){
+							q.setValeur(jsonN.get("question").get("valeur").asText());
+						}
+						
+						Formulaire f = FormulaireDAO.findById(jsonN.get("question").get("formulaire").get("id").asLong());
+						Critere c = CritereDAO.findById(jsonN.get("question").get("critere").get("id").asLong());
+						q.setCritere(c);
+						q.setFormulaire(f);
+						QuestionDAO.save(q);
 					}
-						QuestionDAO.insert(q);
+					
+					else if(jsonN.has("question")&& jsonN.get("question").has("valeur")){
+						Question q = new Question();
+						q.setValeur(jsonN.get("question").get("valeur").asText());
+						Formulaire f = FormulaireDAO.findById(jsonN.get("question").get("formulaire").get("id").asLong());
+						Critere c = CritereDAO.findById(jsonN.get("question").get("critere").get("id").asLong());
+						q.setCritere(c);
+						q.setFormulaire(f);
+						QuestionDAO.save(q);
+					}
+
+					else{
+						return notFound();
+					}
+						
+					
+					
+					
+				
 					} catch(HibernateException ex) {
 						Logger.error("Hibernate failure : "+ ex.getMessage());
 						BDDUtils.rollback(isActive, tx);

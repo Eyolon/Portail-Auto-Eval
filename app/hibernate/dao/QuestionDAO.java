@@ -20,6 +20,10 @@ public class QuestionDAO extends BasicDAO {
 		return getAll(Question.class);
 	}
 	
+	public static boolean save(Question object){
+		return insertOrUpdate(object);
+	}
+	
 	@SuppressWarnings("unchecked")
 	public static List<Question> getListQuestionByFormulaireId(long idForm) {
 		List<Question> lq = new ArrayList<>();

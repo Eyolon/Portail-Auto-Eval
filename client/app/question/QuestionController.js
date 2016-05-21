@@ -2,13 +2,23 @@ function QuestionController($http, $state, $scope, QuestionService) {
 	var self = this;
 	this.listQuestion = [];
 	this.listFormulaire = [];
+	this.listCritere = [];
 	this.questionSelected = {};
 	this.questionToEdit = undefined;
 	this.formulaireSelected = {};
 	this.isSuccess = true;
+	this.readyToSubmit = false;
 	
 	this.getListQuestion = function getListQuestion(){
 		self.listQuestion = QuestionService.listQuestion.post({}, onSuccess, onError);
+	};
+	
+	this.getListFormulaire = function getListFormuaire(){
+		self.listFormulaire = QuestionService.listFormulaire.post({}, onSuccess, onError);
+	};
+	
+	this.getListCritere = function getListCritere(){
+		self.listCritere = QuestionService.listCritere.post({}, onSuccess, onError);
 	};
 	
 	function onSuccess() {
@@ -28,10 +38,19 @@ function QuestionController($http, $state, $scope, QuestionService) {
 	};
 	
 	this.validerAdd = function validerAdd(){
-		
+		console.log(this.questionToEdit);
+		if(this.questionToEdit !== undefined && 
+			this.questionToEdit.critere !== undefined && 
+			this.questionToEdit.formulaire !== undefined && 
+			this.questionToEdit.valeur !== undefined){
+
+				this.readyToSubmit = true;
+		}
 	};
 	
 	self.getListQuestion();
+	self.getListCritere();
+	self.getListFormulaire();
 	
 }
 angular
