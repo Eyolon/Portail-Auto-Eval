@@ -9,7 +9,7 @@ function navbarTop(){
 function NavbarTopController($scope, ConnexionService, ipCookie) {
 	var self = this;
 	this.isConnected = ConnexionService.checkIsConnected();
-	this.user = {};
+	this.user = ipCookie('utilisateur');
 	
 	this.logout = function logout() {
 		ConnexionService.logout();

@@ -3,22 +3,12 @@ function ConnexionService($http, $resource, $rootScope, ipCookie) {
 	var isConnected = false;
 
     this.init = function init() {
-		if(ipCookie('token') && ipCookie('utilisateur')) {
+		if(ipCookie('token')) {
             self.seConnecter();
-			isConnected = true;
 		} else {
 			isConnected = false;
 		}
     };
-    
-    var connection = $resource('/api/logger/:login', 
-			{
-                login: '@login',
-                password: '@password',
-                token: '@token' 
-            }, 
-			{'get': { method: 'GET'}
-    });
 
     this.seConnecter = function seConnecter(login, password, onSuccess, onError) {
         var loginToSend = login === undefined ? '' : '/' + login;
