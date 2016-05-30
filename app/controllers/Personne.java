@@ -263,6 +263,39 @@ public class Personne extends Controller {
 		});
 	}
 	
+	
+	public static Promise<Result> seLoggerWithToken() {
+		
+		return Promise.promise(() -> 
+		{
+			String token = null;
+			JsonNode jsonN = request().body().asJson();
+			if(jsonN != null && jsonN.has("token") && jsonN.get("token").asText() != null) {
+				token = jsonN.get("token").asText();
+			}
+			JSONObject js = null;
+			Transaction tx = null;
+			boolean isActive = BDDUtils.getTransactionStatus();
+			try {
+				tx = BDDUtils.beginTransaction(isActive);
+				
+				Utilisateur u = Personne.getUtilisateurFromToken(token);
+				if(u != null) {
+					js = new JSONObject()
+							.put("utilisateur", ConstructJSONObjects.getJSONforUser(u))
+							.put("token", generateToken(u));
+				}
+				
+				BDDUtils.commit(isActive, tx);
+			} catch(Exception ex) {
+				Logger.error("Hibernate failure : "+ ex.getMessage());
+				BDDUtils.rollback(isActive, tx);
+				return internalServerError("Une erreur est survenue pendant la transaction avec la base de données.");
+			}
+			return js == null ? notFound("Utilisateur introuvable.") : ok(js.toString());
+		});
+	}
+	
 	public static Promise<Result> getServices(){
 		return Promise.promise(() -> 
 		{
@@ -357,11 +390,10 @@ public class Personne extends Controller {
 		if (tokenSplited.length > 0){
 			try {
 				Long userId = Long.valueOf(tokenSplited[0]);
-				UtilisateurDAO.findById(userId);
+				 return UtilisateurDAO.findById(userId);
 			} catch(NumberFormatException e) {
 				Logger.error("Token invalide: ", e);
 			}
-			
 		}
 		return null;
 	}

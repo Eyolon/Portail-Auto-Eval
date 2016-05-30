@@ -54,6 +54,7 @@ model {
 
 repositories {
     jcenter()
+	mavenCentral()
     maven {
         name "typesafe-maven-release"
         url "https://repo.typesafe.com/typesafe/maven-releases"

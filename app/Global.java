@@ -17,6 +17,9 @@ public class Global extends GlobalSettings {
 			tx = BDDUtils.beginTransaction(isActive);
 			
 			//Default values for TypeUtilisateur
+			if(TypeUtilisateurDAO.getTypeUtilisateurByLibelle("super_administrateur") == null) {
+				BDDUtils.insert(new TypeUtilisateur("super_administrateur"));
+			}
 			if(TypeUtilisateurDAO.getTypeUtilisateurByLibelle("administrateur") == null) {
 				BDDUtils.insert(new TypeUtilisateur("administrateur"));
 			}

@@ -6,7 +6,8 @@
 GET     /                           controllers.Assets.at(path="/public/app", file="index.html")
 
 # Personne
-POST	/api/logger/:email			controllers.Personne.seLogger(email: String)
+POST	/api/logger/:login			controllers.Personne.seLogger(login: String)
+POST	/api/logger					controllers.Personne.seLoggerWithToken()
 POST	/api/user					controllers.Personne.updateUser()
 POST	/api/userFull/:idUser		controllers.Personne.getUserByIdFull(idUser: Long)
 POST	/api/insertUser				controllers.Personne.insertUser()
