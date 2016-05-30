@@ -206,6 +206,12 @@
                         main: [
                             './min/moment-with-locales.min.js'
                         ]
+                    },
+                    'angular-ui-notification': {
+                        main: [
+                            './dist/angular-ui-notification.min.js',
+                            './dist/angular-ui-notification.min.css'
+                        ]
                     }
                 }
             }))
@@ -241,6 +247,12 @@
                     moment: {
                         main: [
                             './min/moment-with-locales.min.js'
+                        ]
+                    },
+                    'angular-ui-notification': {
+                        main: [
+                            './dist/angular-ui-notification.min.js',
+                            './dist/angular-ui-notification.min.css'
                         ]
                     }
                 }

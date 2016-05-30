@@ -9,7 +9,7 @@ function InscriptionCtrl($http, $state, ConnexionService, InscriptionService, ip
     this.userLocal ={};
 
     this.sInscrire = function sInscrire() {
-        if (self.pwdCheck !== undefined && self.pwdCheck !== "" && self.user.pwd !== undefined && self.user.pwd !== "" && self.pwdCheck === self.user.pwd) {
+        if (self.pwdCheck !== undefined && self.pwdCheck !== "" && self.user.pwd !== undefined && self.user.pwd !== "" && self.pwdCheck === self.user.pwd && ipCookie('utilisateur') !== undefined && ipCookie('token') !== undefined) {
             insertUser();
         }
     };

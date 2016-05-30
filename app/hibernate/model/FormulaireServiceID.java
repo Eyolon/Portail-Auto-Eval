@@ -25,6 +25,10 @@ public class FormulaireServiceID implements Serializable {
 	@JoinColumn(name="id_type_utilisateur", nullable=false)
 	private TypeUtilisateur typeUtilisateur;
 	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="id_etablissement", nullable=false)
+	private Etablissement etablissement;
+	
 	public FormulaireServiceID(){}
 	
 	public FormulaireServiceID(Formulaire formulaire, Service service) {
@@ -61,11 +65,20 @@ public class FormulaireServiceID implements Serializable {
 	public void setTypeUtilisateur(TypeUtilisateur typeUtilisateur) {
 		this.typeUtilisateur = typeUtilisateur;
 	}
+	
+	public Etablissement getEtablissement() {
+		return etablissement;
+	}
+
+	public void setEtablissement(Etablissement etablissement) {
+		this.etablissement = etablissement;
+	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((etablissement == null) ? 0 : etablissement.hashCode());
 		result = prime * result + ((formulaire == null) ? 0 : formulaire.hashCode());
 		result = prime * result + ((service == null) ? 0 : service.hashCode());
 		result = prime * result + ((typeUtilisateur == null) ? 0 : typeUtilisateur.hashCode());
@@ -81,6 +94,11 @@ public class FormulaireServiceID implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		FormulaireServiceID other = (FormulaireServiceID) obj;
+		if (etablissement == null) {
+			if (other.etablissement != null)
+				return false;
+		} else if (!etablissement.equals(other.etablissement))
+			return false;
 		if (formulaire == null) {
 			if (other.formulaire != null)
 				return false;

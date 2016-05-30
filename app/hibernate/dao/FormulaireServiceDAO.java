@@ -11,7 +11,7 @@ import play.Logger;
 
 public class FormulaireServiceDAO extends BasicDAO {
 	
-	public static FormulaireService findById(Long formulaireId, Long serviceId, Long typeUtilisateurId) {
+	public static FormulaireService findById(Long formulaireId, Long serviceId, Long typeUtilisateurId, Long etablissementId) {
 		FormulaireService fs = null;
 		Transaction tx = null;
 		boolean isActive = BDDUtils.getTransactionStatus();
@@ -21,10 +21,12 @@ public class FormulaireServiceDAO extends BasicDAO {
 					"SELECT fs FROM FormulaireService as fs " +
 					"WHERE f.formulaireServiceID.formulaire.id = :formulaireId " +
 					"AND f.formulaireServiceID.service.id = :serviceId " +
-					"AND f.formulaireServiceID.typeUtilisateur.id = :typeUtilisateurId");
+					"AND f.formulaireServiceID.typeUtilisateur.id = :typeUtilisateurId " +
+					"AND f.formulaireServiceID.etablissement.id = :etablissementId");
 			q.setParameter("formulaireId", formulaireId);
 			q.setParameter("serviceId", serviceId);
 			q.setParameter("typeUtilisateurId", typeUtilisateurId);
+			q.setParameter("etablissementId", etablissementId);
 			fs = (FormulaireService) q.uniqueResult();
 			BDDUtils.commit(isActive, tx);
 		} catch(Exception ex) {

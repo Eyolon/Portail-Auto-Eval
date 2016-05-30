@@ -10,6 +10,9 @@ function ConsultationController($http, $state, $scope, ConsultationService) {
     this.questions = [];
     this.isSuccess = true;
     this.notes = [];
+    
+    this.formulairesByService = {};
+    this.questionsByFormulaires = {};
     this.nbrVotant = 0;
     var colorArray = ['#000000', '#582900', '#FE1B00', '#ED7F10', '#FFFF00', '#9EFD38'];
     // NOIR,MARON,ROUGE,ORANGE,JAUNE,VERT
@@ -99,9 +102,12 @@ function ConsultationController($http, $state, $scope, ConsultationService) {
         self.services = [];
         self.questions = [];
         var votant = [];
-        tampon.$promise.then(function (messages) {
+        tampon.$promise.then(function (message) {
             //Since you are overwriting the object here, there will no longer be a $Promise property so be careful about it when you try to chain through elsewhere after this
-            tampon = messages.filter(function (obj) {
+            self.services = message.listService;
+            self.formulairesByService = message.listFormulaire;
+            self.questionsByFormulaires = message.listQuestion;
+            tampon = message.listNote.filter(function (obj) {
                 if (obj.valeur > 0 && obj.valeur < 11) {
                     palier1++;
                 }
@@ -120,8 +126,7 @@ function ConsultationController($http, $state, $scope, ConsultationService) {
                 if (obj.valeur > 90 && obj.valeur <= 100) {
                     palier6++;
                 }
-
-                self.services.push(obj.utilisateur.service);
+                
                 votant.push(obj.utilisateur);
                 self.notes.push(obj); //On fait de l'exploit pour plus avoir a le refaire
             });
@@ -168,7 +173,7 @@ function ConsultationController($http, $state, $scope, ConsultationService) {
         var palier5 = 0;
         var palier6 = 0;
 
-        self.formulaires = [];
+        self.formulaires = self.formulairesByService[self.service.id];
         self.questions = [];
         var votant = [];
 
@@ -194,9 +199,9 @@ function ConsultationController($http, $state, $scope, ConsultationService) {
                 palier6++;
             }
 
-            if (obj.utilisateur.service.id === self.service.id) {
+            /*if (obj.utilisateur.service.id === self.service.id) {
                 self.formulaires.push(obj.question.formulaire);
-            }
+            }*/
             if (obj.utilisateur.service.id === self.service.id) {
                 votant.push(obj.utilisateur.id);
             }
@@ -242,7 +247,7 @@ function ConsultationController($http, $state, $scope, ConsultationService) {
         var palier5 = 0;
         var palier6 = 0;
 
-        self.questions = [];
+        self.questions = self.questionsByFormulaires[self.formulaire.id];
         var votant = [];
 
         for (var key in self.notes) {

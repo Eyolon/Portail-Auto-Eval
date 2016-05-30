@@ -10,8 +10,7 @@ function ConsultationService($http, $resource) {
 	this.listNotes = $resource('/api/reponse/:idEtablissement', 
 			{idEtablissement:'@idEtablissement'}, 
 			{'post': {
-            method: 'POST',
-            isArray: true
+            method: 'POST'
         }
     });
 	

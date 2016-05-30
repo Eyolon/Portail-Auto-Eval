@@ -1,5 +1,6 @@
 package hibernate.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Query;
@@ -74,5 +75,26 @@ public class FormulaireDAO extends BasicDAO {
 		return lf;
 	}
 	
-	
+	@SuppressWarnings("unchecked")
+	public static List<Formulaire> getAllServiceByEtablissement(List<Long> idEtablissement, List<Long> idService) {
+		List<Formulaire> lf = new ArrayList<>();
+		Transaction tx = null;
+		boolean isActive = BDDUtils.getTransactionStatus();
+		try {
+			tx = BDDUtils.beginTransaction(isActive);
+			Query q = BDDUtils.getCurrentSession().createQuery(
+					"SELECT DISTINCT fs.formulaireServiceID.formulaire FROM FormulaireService as fs " +
+					"WHERE fs.formulaireServiceID.etablissement.id IN :idEtablissement " +
+					"AND fs.formulaireServiceID.service.id IN :idService");
+			q.setParameterList("idEtablissement", idEtablissement);
+			q.setParameterList("idService", idService);
+			lf = (List<Formulaire>)q.list();
+			BDDUtils.commit(isActive, tx);
+		}
+		catch(Exception ex) {
+			Logger.error("Erreur FormulaireDAO getAllServiceByEtablissement : ", ex);
+			BDDUtils.rollback(isActive, tx);
+		}
+		return lf;
+	}
 }

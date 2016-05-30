@@ -42,6 +42,7 @@ angular
             parent: 'main',
             url: '/inscription',
             title: 'Registration',
+            right: ['administrateur', 'super_administrateur'],
             reloadOnSearch: false,
             views: {
                 'main@': {
@@ -56,6 +57,7 @@ angular
             parent: 'main',
             url: '/evaluation',
             title: 'Evaluation',
+            right: ['utilisateur', 'administrateur', 'super_administrateur'],
             reloadOnSearch: false,
             views: {
                 'main@': {
@@ -70,6 +72,7 @@ angular
             parent: 'main',
             url: '/consultation',
             title: 'Consultation',
+            right: ['administrateur', 'super_administrateur'],
             reloadOnSearch: false,
             views: {
                 'main@': {
@@ -84,6 +87,7 @@ angular
             parent: 'main',
             url: '/formulaire',
             title: 'Formulaire',
+            right: ['utilisateur', 'administrateur', 'super_administrateur'],
             reloadOnSearch: false,
             views: {
                 'main@': {
@@ -98,6 +102,7 @@ angular
             parent: 'main',
             url: '/question',
             title: 'Question',
+            right: ['utilisateur', 'administrateur', 'super_administrateur'],
             reloadOnSearch: false,
             views: {
                 'main@': {
@@ -112,6 +117,7 @@ angular
             parent: 'main',
             url: '/editFormulaire',
             title: 'EditFormulaire',
+            right: ['administrateur', 'super_administrateur'],
             reloadOnSearch: false,
             views: {
                 'main@': {
@@ -126,6 +132,7 @@ angular
             parent: 'main',
             url: '/editQuestion',
             title: 'EditQuestion',
+            right: ['administrateur', 'super_administrateur'],
             reloadOnSearch: false,
             views: {
                 'main@': {
@@ -154,6 +161,7 @@ angular
             parent: 'connection',
             url: '/profil',
             title: 'My Account',
+            right: ['utilisateur', 'administrateur', 'super_administrateur'],
             reloadOnSearch: true,
             views: {
                 'main@': {
@@ -168,6 +176,7 @@ angular
             parent: 'connection',
             url: '/profilAdmin',
             title: 'Account of User',
+            right: ['administrateur', 'super_administrateur'],
             reloadOnSearch: true,
             views: {
                 'main@': {

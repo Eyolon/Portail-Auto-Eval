@@ -14,14 +14,14 @@
                         <div data-ng-repeat="note in question.notes">
 
                             <div data-ng-if="note.utilisateur.login === EvaluationCtrl.user.login">
-                                <input type="number" name="valeur" class="form-control" data-ng-disabled="note.valeur" data-ng-model="note.valeur" />
+                                <input type="number" name="manyQuestion" class="form-control pull-right" data-ng-disabled="note.valeur" data-ng-model="note.valeur" />
                             </div>
 
                         </div>
                         <!-- marche! <input type="text" name="remarque" data-ng-model="question.notes.remarque"/> -->
                     </div>
                     <div data-ng-if="question.notes.length === 0">
-                        <input type="number" name="valeur" class="form-control" data-ng-model="question.notes.valeur" min="0" max="100" />
+                        <input type="number" name="zeroQuestion" class="form-control pull-right" data-ng-model="question.notes.valeur" min="0" max="100" />
                     </div>
                 </div>
             </li>

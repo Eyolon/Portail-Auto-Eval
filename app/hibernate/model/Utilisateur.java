@@ -17,6 +17,8 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.ColumnDefault;
+
 @Entity
 @Table(name="utilisateur")
 public class Utilisateur implements Serializable {
@@ -28,6 +30,7 @@ public class Utilisateur implements Serializable {
 	private Connexion connexion = null;
 	private Service service = null;
 	private Etablissement etablissement = null;
+	private Boolean isActif = null;
 	private List<Note> notes = null;
 	
 	public Utilisateur(){}
@@ -110,6 +113,16 @@ public class Utilisateur implements Serializable {
 		this.etablissement = etablissement;
 	}
 
+	@Column(name="actif", nullable = false)
+	@ColumnDefault(value = "true")
+	public Boolean getIsActif() {
+		return isActif;
+	}
+
+	public void setIsActif(Boolean isActif) {
+		this.isActif = isActif;
+	}
+
 	@OneToMany(mappedBy="utilisateur")
 	public List<Note> getNotes() {
 		return notes;
@@ -119,19 +132,16 @@ public class Utilisateur implements Serializable {
 		this.notes = notes;
 	}
 
-	@Transient
-	@Override
-	public String toString() {
-		return "User:{ id:"+id+"\', typeUtilisateur: \'"+typeUtilisateur.toString()+"\', connexion: \'"+connexion.toString()+"}";
-	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((connexion == null) ? 0 : connexion.hashCode());
+		result = prime * result + ((etablissement == null) ? 0 : etablissement.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((isActif == null) ? 0 : isActif.hashCode());
 		result = prime * result + ((login == null) ? 0 : login.hashCode());
+		result = prime * result + ((notes == null) ? 0 : notes.hashCode());
 		result = prime * result + ((service == null) ? 0 : service.hashCode());
 		result = prime * result + ((typeUtilisateur == null) ? 0 : typeUtilisateur.hashCode());
 		return result;
@@ -151,15 +161,30 @@ public class Utilisateur implements Serializable {
 				return false;
 		} else if (!connexion.equals(other.connexion))
 			return false;
+		if (etablissement == null) {
+			if (other.etablissement != null)
+				return false;
+		} else if (!etablissement.equals(other.etablissement))
+			return false;
 		if (id == null) {
 			if (other.id != null)
 				return false;
 		} else if (!id.equals(other.id))
 			return false;
+		if (isActif == null) {
+			if (other.isActif != null)
+				return false;
+		} else if (!isActif.equals(other.isActif))
+			return false;
 		if (login == null) {
 			if (other.login != null)
 				return false;
 		} else if (!login.equals(other.login))
+			return false;
+		if (notes == null) {
+			if (other.notes != null)
+				return false;
+		} else if (!notes.equals(other.notes))
 			return false;
 		if (service == null) {
 			if (other.service != null)
@@ -172,5 +197,11 @@ public class Utilisateur implements Serializable {
 		} else if (!typeUtilisateur.equals(other.typeUtilisateur))
 			return false;
 		return true;
+	}
+
+	@Transient
+	@Override
+	public String toString() {
+		return "User:{ id:"+id+"\', typeUtilisateur: \'"+typeUtilisateur.toString()+"\', connexion: \'"+connexion.toString()+"}";
 	}
 }

@@ -1,19 +1,25 @@
 package controllers;
 
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Transaction;
-import org.json.JSONArray;
+import org.json.JSONObject;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
 import Tools.ConstructJSONObjects;
+import hibernate.dao.FormulaireDAO;
 import hibernate.dao.NoteDAO;
 import hibernate.dao.QuestionDAO;
+import hibernate.dao.ServiceDAO;
 import hibernate.dao.UtilisateurDAO;
+import hibernate.model.Formulaire;
 import hibernate.model.Note;
 import hibernate.model.Question;
+import hibernate.model.Service;
 import hibernate.model.Utilisateur;
 import hibernate.utils.BDDUtils;
 import play.Logger;
@@ -84,13 +90,38 @@ public class Reponse extends Controller{
 		Promise<Result> promiseOfResult = Promise.promise(()->{
 
 			
-			JSONArray ja = new JSONArray();
+			JSONObject ja = new JSONObject();
 			Transaction tx = null;
 			boolean isActive = BDDUtils.getTransactionStatus();
 			try {
 				tx = BDDUtils.beginTransaction(isActive);
 				
-				ja = ConstructJSONObjects.getJSONArrayforNoteWithQuestion(NoteDAO.getListNoteAndDetailByEtablissementId(idEtablissement));
+				List<Long> le = new ArrayList<>();
+				le.add(idEtablissement);
+				
+				List<Long> ls = new ArrayList<>();
+				
+				List<Service> listService = ServiceDAO.getAllServiceByEtablissement(idEtablissement);
+				listService.stream().mapToLong((e) -> e.getId()).forEach(ls::add);
+				
+				ja.put("listService", ConstructJSONObjects.getJSONArrayforListServices(listService));
+				JSONObject jsonFormulaire = new JSONObject();
+				JSONObject jsonQuestion = new JSONObject();
+				for (Service service : listService) {
+					List<Long> listServiceId = new ArrayList<>();
+					listServiceId.add(service.getId());
+					
+					List<Formulaire> listFormulaire = FormulaireDAO.getAllServiceByEtablissement(le, listServiceId);
+					jsonFormulaire.put(Long.toString(service.getId()), ConstructJSONObjects.getJSONArrayforListFormulairesFull(listFormulaire));
+				
+					for (Formulaire formulaire : listFormulaire) {
+						jsonQuestion.put(Long.toString(formulaire.getId()), ConstructJSONObjects.getJSONArrayforListQuestions(QuestionDAO.getListQuestionByFormulaireId(formulaire.getId())));
+					}
+				}
+				
+				ja.put("listFormulaire", jsonFormulaire);
+				ja.put("listQuestion", jsonQuestion);
+				ja.put("listNote", ConstructJSONObjects.getJSONArrayforNoteWithQuestion(NoteDAO.getListNoteByEtablissementsAndServices(le, ls)));
 				
 				BDDUtils.commit(isActive, tx);
 			}

@@ -25,16 +25,16 @@ public class QuestionDAO extends BasicDAO {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public static List<Question> getListQuestionByFormulaireId(long idForm) {
+	public static List<Question> getListQuestionByFormulaireId(long idFormulaire) {
 		List<Question> lq = new ArrayList<>();
 		Transaction tx = null;
 		boolean isActive = BDDUtils.getTransactionStatus();
 		try {
 			tx = BDDUtils.beginTransaction(isActive);
 			Query q = BDDUtils.getCurrentSession().createQuery(
-					"SELECT q FROM question as q " +
+					"SELECT q FROM Question as q " +
 					"WHERE q.formulaire.id = :idFormulaire");
-			q.setParameter("idFormulaire", idForm);
+			q.setParameter("idFormulaire", idFormulaire);
 			lq = (List<Question>)q.list();
 			BDDUtils.commit(isActive, tx);
 		}
