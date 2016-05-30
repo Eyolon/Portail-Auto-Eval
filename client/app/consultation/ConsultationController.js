@@ -107,29 +107,31 @@ function ConsultationController($http, $state, $scope, ConsultationService) {
             self.services = message.listService;
             self.formulairesByService = message.listFormulaire;
             self.questionsByFormulaires = message.listQuestion;
-            tampon = message.listNote.filter(function (obj) {
-                if (obj.valeur > 0 && obj.valeur < 11) {
-                    palier1++;
-                }
-                if (obj.valeur > 10 && obj.valeur < 26) {
-                    palier2++;
-                }
-                if (obj.valeur > 25 && obj.valeur < 51) {
-                    palier3++;
-                }
-                if (obj.valeur > 50 && obj.valeur < 76) {
-                    palier4++;
-                }
-                if (obj.valeur > 75 && obj.valeur < 91) {
-                    palier5++;
-                }
-                if (obj.valeur > 90 && obj.valeur <= 100) {
-                    palier6++;
-                }
-                
-                votant.push(obj.utilisateur);
-                self.notes.push(obj); //On fait de l'exploit pour plus avoir a le refaire
-            });
+            if(message.listNote !== undefined && message.listNote.length > 0) {
+                tampon = message.listNote.filter(function (obj) {
+                    if (obj.valeur > 0 && obj.valeur < 11) {
+                        palier1++;
+                    }
+                    if (obj.valeur > 10 && obj.valeur < 26) {
+                        palier2++;
+                    }
+                    if (obj.valeur > 25 && obj.valeur < 51) {
+                        palier3++;
+                    }
+                    if (obj.valeur > 50 && obj.valeur < 76) {
+                        palier4++;
+                    }
+                    if (obj.valeur > 75 && obj.valeur < 91) {
+                        palier5++;
+                    }
+                    if (obj.valeur > 90 && obj.valeur <= 100) {
+                        palier6++;
+                    }
+                    
+                    votant.push(obj.utilisateur);
+                    self.notes.push(obj); //On fait de l'exploit pour plus avoir a le refaire
+                });
+            }
 
             $scope.data = [{
                     key: "0-10",

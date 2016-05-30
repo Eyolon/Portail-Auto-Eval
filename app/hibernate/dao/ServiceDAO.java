@@ -35,7 +35,7 @@ public class ServiceDAO extends BasicDAO {
 			BDDUtils.commit(isActive, tx);
 		}
 		catch(Exception ex) {
-			Logger.error("Erreur QuestionDAO getListQuestionByFormulaireId : ", ex);
+			Logger.error("Erreur ServiceDAO getAllServiceByEtablissement : ", ex);
 			BDDUtils.rollback(isActive, tx);
 		}
 		return lq;

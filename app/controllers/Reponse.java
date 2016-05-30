@@ -121,7 +121,9 @@ public class Reponse extends Controller{
 				
 				ja.put("listFormulaire", jsonFormulaire);
 				ja.put("listQuestion", jsonQuestion);
-				ja.put("listNote", ConstructJSONObjects.getJSONArrayforNoteWithQuestion(NoteDAO.getListNoteByEtablissementsAndServices(le, ls)));
+				if(listService != null && !listService.isEmpty()) {
+					ja.put("listNote", ConstructJSONObjects.getJSONArrayforNoteWithQuestion(NoteDAO.getListNoteByEtablissementsAndServices(le, ls)));
+				}
 				
 				BDDUtils.commit(isActive, tx);
 			}
