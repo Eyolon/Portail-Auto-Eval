@@ -21,7 +21,7 @@
         js: ['app/*.js', 'app/**/*.js'],
         css: ['assets/css/*.css'],
         less: ['assets/less/*.less'],
-        img: ['assets/images/*.ico', 'assets/img/*.png', 'assets/img/*.jpeg', 'assets/img/*.gif'],
+        img: ['assets/images/*.ico', 'assets/images/*.png', 'assets/images/*.jpeg', 'assets/images/*.gif'],
         sound: ['assets/sounds/*.*'],
         favicon: ['assets/images/favicon.ico'],
         fonts: ['assets/fonts/*']
