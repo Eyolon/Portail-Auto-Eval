@@ -7,7 +7,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" ui-sref="home">PoC</a>
+            <a class="navbar-brand" ui-sref="home">Portail d'Auto-Evaluation</a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
             <span id="wrapper" ng-switch="navbarTopCtrl.user.typeUtilisateur.libelle">
@@ -18,11 +18,11 @@
                     <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Mon Compte<span class="caret"></span></a>
             <ul class="dropdown-menu" role="menu">
                 <li ui-sref-active="active"><a ui-sref="profil">Mon Profile</a></li>
-                <li style="cursor: pointer"><a ui-sref="home" data-ng-click="navbarTopCtrl.logout()">Déconnexion</a></li>
-                <li ui-sref-active="active"><a ui-sref="lastEvaluation">Mes précédentes Evaluation</a></li>
+                <li style="cursor: pointer"><a ui-sref="home" data-ng-click="navbarTopCtrl.logout()">DÃ©connexion</a></li>
+                <li ui-sref-active="active"><a ui-sref="lastEvaluation">Mes prÃ©cÃ©dentes Evaluation</a></li>
             </ul>
             </li>
-            <!-- Double secu : connecté ET on récupère un status -->
+            <!-- Double secu : connectÃ© ET on rÃ©cupÃ¨re un status -->
             <li ui-sref-active="active" data-ng-show="navbarTopCtrl.isConnected" ng-switch-when="utilisateur"><a ui-sref="evaluation">Mes Evaluations</a></li>
 
             <li ui-sref-active="active" data-ng-show="navbarTopCtrl.isConnected" ng-switch-when="administrateur"><a ui-sref="evaluation">Mes Evaluations</a>

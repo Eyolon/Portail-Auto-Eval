@@ -177,6 +177,20 @@ angular
                 }
             }
         });
+        
+        $stateProvider.state('about', {
+            parent: 'main',
+            url: '/about',
+            title: 'A propos',
+            reloadOnSearch: true,
+            views: {
+                'main@': {
+                    templateUrl: '/about/about.html',
+                    controller: 'AboutCtrl',
+                    controllerAs: 'AboutCtrl'
+                }
+            }
+        });
 		
 		/*$stateProvider.state('cgu', {
             parent: 'main',
