@@ -274,9 +274,9 @@ function ConsultationController($http, $state, $scope, ConsultationService) {
                 palier6++;
             }
 
-            if (obj.utilisateur.service.id === self.service.id && obj.question.formulaire.id === self.formulaire.id) {
+            /*if (obj.utilisateur.service.id === self.service.id && obj.question.formulaire.id === self.formulaire.id) {
                 self.questions.push(obj.question);
-            }
+            }*/
 
             if (obj.utilisateur.service.id === self.service.id && obj.question.formulaire.id === self.formulaire.id) {
                 votant.push(obj.utilisateur.id);

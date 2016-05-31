@@ -35,7 +35,7 @@ sourceSets {
 	main {
 		java {
 			srcDir 'app'
-		}        
+		}
 	}
 	test {
 		java {
@@ -173,7 +173,7 @@ tasks.withType(Task) {
 		options.encoding = 'UTF-8'
 	}
 	
-	if(it.name == 'stage') {
+	if (it.name == 'stage') {
 		createPlayBinaryAssetsJar.dependsOn(':bowerInstall')
 		createPlayBinaryAssetsJar.dependsOn(':installGulp')
 		createPlayBinaryAssetsJar.dependsOn(':gulp_build')
