@@ -28,6 +28,15 @@ function FormulaireService($resource, $http) {
 	        }
 	    );
 	
+	this.listEtablissement = $resource('/api/etablissement',
+			{},
+			{
+				'post': {method:'POST', isArray:true}
+			}
+		);
+	
+	
+	
 	this.setFormulaire = function setFormulaire(formulaire){
 		$http.post('/api/editFormulaire',{formulaire: formulaire});		
 	};

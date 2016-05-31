@@ -45,6 +45,7 @@ public class Personne extends Controller {
 				newLogin = jsonN.get("login").asText();
 				
 			}
+			JSONObject jo = null;
 			Utilisateur u = null;
 			Transaction tx = null;
 			boolean isActive = BDDUtils.getTransactionStatus();
@@ -60,23 +61,17 @@ public class Personne extends Controller {
 					} else {
 				
 						newToken = generateToken(u);
-						
-						/*quick fix BUG : Il choppe l'id mais pas le libelle ?*/
-						u.setService(ServiceDAO.findById(u.getService().getId()));
-						u.setTypeUtilisateur(TypeUtilisateurDAO.findById(u.getTypeUtilisateur().getId()));
-					
 					}
 				} else if(BCrypt.checkpw(pwd, u.getConnexion().getPassword())) {
 					
 					newToken = generateToken(u);
 					
-					/*quick fix BUG : Il choppe l'id mais pas le libelle ?*/
-					u.setService(ServiceDAO.findById(u.getService().getId()));
-					u.setTypeUtilisateur(TypeUtilisateurDAO.findById(u.getTypeUtilisateur().getId()));
-					
 				} else {
 					u = null;
 				}
+				jo = new JSONObject()
+						.put("utilisateur", ConstructJSONObjects.getJSONforUser(u))
+						.put("token", newToken);
 				
 				BDDUtils.commit(isActive, tx);
 			}
@@ -85,12 +80,10 @@ public class Personne extends Controller {
 				BDDUtils.rollback(isActive, tx);
 				return internalServerError("Une erreur est survenue pendant la transaction avec la base de données.");
 			}
-			if(u == null){
+			if(jo == null){
 				return notFound("Utilisateur introuvable.");
 			} else {
-				return ok(new JSONObject()
-					.put("utilisateur", ConstructJSONObjects.getJSONforUser(u))
-					.put("token", newToken).toString());
+				return ok(jo.toString());
 			}
 		});
 	}
@@ -172,7 +165,9 @@ public class Personne extends Controller {
 					Utilisateur u = UtilisateurDAO.findById(jsonN.get("id").asLong());
 					u.getConnexion().setPassword(BCrypt.hashpw(jsonN.get("pwd").asText(), BCrypt.gensalt()));
 					u.setLogin(jsonN.get("login").asText());
-					u.setEtablissement(EtablissementDAO.findById(jsonN.get("etablissement").asLong()));
+					u.setEtablissement(EtablissementDAO.findById(jsonN.get("etablissement").get("id").asLong()));
+					u.setService(ServiceDAO.findById(jsonN.get("service").get("id").asLong()));
+					u.setTypeUtilisateur(TypeUtilisateurDAO.findById(jsonN.get("typeUtilisateur").get("id").asLong()));
 					UtilisateurDAO.update(u);
 					
 					js = new JSONObject();

@@ -36,7 +36,7 @@ angular.module('portailAutoEval', [
             if(toState.right === undefined || (utilisateur !== undefined && utilisateur.typeUtilisateur !== undefined && toState.right.includes(utilisateur.typeUtilisateur.libelle))) {
                 console.log('Nouvel état: ' + toState.url); 
             } else {
-                Notification.info("Vous n'avez pas accès à cet écran avec cette session.");
+                Notification.error("Vous n'avez pas accès à cet écran avec cette session.");
                 console.log('Accès refusé pour: ' + toState.url); 
                 event.preventDefault();
             }

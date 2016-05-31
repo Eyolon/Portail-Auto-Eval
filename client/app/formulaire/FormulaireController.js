@@ -1,26 +1,44 @@
-function FormulaireController($http, $state, $scope, FormulaireService) {
+function FormulaireController($scope, FormulaireService, Notification) {
 	var self = this;
 	this.listType = [];
 	this.listFormulaire = [];
+	this.listEtablissement = [];
 	this.listService = [];
 	this.listQuestion = [];
 	this.formulaireSelected = {};
-	this.formulaireToEdit = undefined;
+	$scope.formulaireToEdit = {
+		formulaire: {},
+		service: {},
+		etablissement: {}
+	};
 	this.isSuccess = true;
 	this.readyToSubmit = false;
 	this.linkToAdd = [];
+	this.questionToAdd = {};
 	
+	this.getListEtablissement = function getListEtablissement(){
+		self.listEtablissement = FormulaireService.listEtablissement.post({}, function (results) {
+			onSuccess();
+			$scope.formulaireToEdit.etablissement = results[0];
+		}, onError);
+	};
 	
 	this.getListType = function getListType(){
 		self.listType = FormulaireService.listType.post({}, onSuccess, onError);
 	};
 	
 	this.getListFormulaire = function getListFormuaire(){
-		self.listFormulaire = FormulaireService.listFormulaire.post({}, onSuccess, onError);
+		self.listFormulaire = FormulaireService.listFormulaire.post({}, function (results) {
+			onSuccess();
+			$scope.formulaireToEdit = results[0];
+		}, onError);
 	};
 	
 	this.getListService = function getListService(){
-		self.listService = FormulaireService.listService.post({}, onSuccess, onError);
+		self.listService = FormulaireService.listService.post({}, function (results) {
+			onSuccess();
+			$scope.formulaireToEdit.service = results[0];
+		}, onError);
 	};
 	
 	this.getListQuestion = function getListQuestion(){
@@ -35,41 +53,41 @@ function FormulaireController($http, $state, $scope, FormulaireService) {
 		self.isSuccess = false;
 	}
 	
-	this.update = function update() {
-		self.formulaireToEdit = self.formulaireSelected;
+	this.validerEdit = function validerEdit(){
+		FormulaireService.setFormulaire($scope.formulaireToEdit);
+		Notification.success("Echange Achevé");
 	};
 	
-	this.validerEdit = function validerEdit(){
-		FormulaireService.setFormulaire(self.formulaireToEdit);	
+	this.ajoutQuestion = function ajoutQuestion(){
+		$scope.formulaireToEdit.listQuestion.push(self.questionToAdd);
+	};
+	
+	this.supprimerQuest = function supprimerQuest(question){
+		var index = $scope.formulaireToEdit.listQuestion.indexOf(question);
+		$scope.formulaireToEdit.listQuestion.splice(index, 1);	
 	};
 	
 	this.validerLink = function validerLink(){
-		FormulaireService.setFormulaire(self.formulaireToEdit);		
-	};
-	
-	this.deleteQuestion = function deleteQuestion(id){
-		/*if(self.formulaireToEdit !== undefined){
-			//self.formulaireToEdit.listQuestion
-			
-		} */
-		
+		FormulaireService.setFormulaire($scope.formulaireToEdit);		
 	};
 	
 	this.validerAdd = function validerAdd(){
-		console.log(this.formulaireToEdit);
-		if(this.formulaireToEdit !== undefined && 
-			this.formulaireToEdit.type !== undefined && 
-			this.formulaireToEdit.service !== undefined && 
-			this.formulaireToEdit.nom !== undefined){
+	
+		if($scope.formulaireToEdit !== undefined && 
+			$scope.formulaireToEdit.type !== undefined && 
+			$scope.formulaireToEdit.service !== undefined && 
+			$scope.formulaireToEdit.formulaire !== undefined &&
+			$scope.formulaireToEdit.etablissement !== undefined){
 
-				this.readyToSubmit = true;
+				$scope.readyToSubmit = true;
 		}
 	};
 	
+	self.getListFormulaire();
 	self.getListType();
 	self.getListService();
-	self.getListFormulaire();
 	self.getListQuestion();
+	self.getListEtablissement();
 	
 }
 angular

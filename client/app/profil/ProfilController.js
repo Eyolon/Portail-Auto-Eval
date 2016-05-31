@@ -52,18 +52,10 @@ function ProfilCtrl($filter, $http, $rootScope, ConnexionService, InscriptionSer
 	}
 	
 	function updateUser() {
-		var pass = self.currentPwd;
-		if(self.user.pwd !== undefined && self.user.pwd !== "") {
-			pass = self.user.pwd;
+		if(self.user.pwd === undefined || self.user.pwd === "") {
+			self.user.pwd = self.currentPwd;
 		}
-		$http.post('/api/user', 
-			{
-				id: self.user.id,
-				login: self.user.login,
-	            pwd: pass,
-	            service: self.user.service,
-	            typeUser: self.user.typeUtilisateur
-			})
+		$http.post('/api/user', self.user)
             .success(function(data, status, headers, config) {
                 ipCookie('utilisateur', data.user, {expires : 7});
                 ipCookie('token', data.token, {expires : 7});

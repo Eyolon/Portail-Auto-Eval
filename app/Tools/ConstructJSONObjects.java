@@ -10,6 +10,7 @@ import hibernate.model.Categorie;
 import hibernate.model.Critere;
 import hibernate.model.Etablissement;
 import hibernate.model.Formulaire;
+import hibernate.model.FormulaireService;
 import hibernate.model.Note;
 import hibernate.model.Question;
 import hibernate.model.Service;
@@ -25,6 +26,30 @@ public class ConstructJSONObjects {
 		.put("service", getJSONforService(u.getService()))
 		.put("etablissement", getJSONforEtablissement(u.getEtablissement()))
 		.put("typeUtilisateur", getJSONforTypeUtilisateur(u.getTypeUtilisateur()));
+	}
+	
+	public static JSONObject getJSONforFormulaireService(FormulaireService f) throws JSONException{
+		return f == null ? null : new JSONObject()
+			.put("idFormulaire", f.getFormulaireServiceID().getFormulaire().getId())
+			.put("idEtablissement", f.getFormulaireServiceID().getEtablissement().getId())
+			.put("idService", f.getFormulaireServiceID().getService().getId())
+			.put("idTypeUtilisateur", f.getFormulaireServiceID().getTypeUtilisateur().getId())
+			.put("listQuestion", getJSONArrayforListQuestions(f.getFormulaireServiceID().getFormulaire().getQuestions()))
+			.put("formulaire", getJSONforFormulaire(f.getFormulaireServiceID().getFormulaire()))
+			.put("service", getJSONforService(f.getFormulaireServiceID().getService()))
+			.put("etablissement", getJSONforEtablissement(f.getFormulaireServiceID().getEtablissement()))
+			.put("typeUtilisateur", getJSONforTypeUtilisateur(f.getFormulaireServiceID().getTypeUtilisateur()));
+	}
+	
+	public static JSONArray getJSONArrayforListFormulaireService(List<FormulaireService> ls) throws JSONException{
+		if(ls != null) {
+			JSONArray ja = new JSONArray();
+			for (FormulaireService fs : ls) {
+				ja.put(getJSONforFormulaireService(fs));
+			}
+			return ja;
+		}
+		return null;
 	}
 	
 	public static JSONArray getJSONArrayforNote(List<Note> ln) throws JSONException{
@@ -161,10 +186,10 @@ public class ConstructJSONObjects {
 		return null;
 	}
 	
-	public static JSONObject getJSONforFormulaire(Formulaire f) throws JSONException {
-		return f == null ? null : new JSONObject()
-				.put("id", f.getId())
-				.put("nom", f.getNom());
+	public static JSONObject getJSONforFormulaire(Formulaire formulaire) throws JSONException {
+		return formulaire == null ? null : new JSONObject()
+				.put("id", formulaire.getId())
+				.put("nom", formulaire.getNom());
 	}
 	
 	public static JSONArray getJSONArrayforListFormulaires(List<Formulaire> lf) throws JSONException {
