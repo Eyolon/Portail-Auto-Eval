@@ -2,6 +2,7 @@ function EvaluationController(EvaluationService, ipCookie) {
 	var self = this;
 	this.isSuccess = true;
     this.listQuestionnaire = [];
+    this.listQuestionnaireSelectionnee = [];
 	this.questionnaire = {};
 	this.user = ipCookie('utilisateur');
 	
@@ -14,13 +15,18 @@ function EvaluationController(EvaluationService, ipCookie) {
 	}
 	
 	this.repondre = function repondre() {
-        //il faut faire passer l'id utilisateur et la remarque sera le path du drive pour la preuve
-        EvaluationService.setAnswer(self.listQuestionnaire,self.user);
-        //on actualise un coup
-        self.getListQuestionnaires();
+        //il faut faire passer l'id utilisateur et la remarque sera le path du drive pour la preuve		
+		var temp = self.listQuestionnaireSelectionnee;
+		self.listQuestionnaireSelectionnee = [];
+		
+		//MERCI D'AVOIR REPONDU ?
+		
+		EvaluationService.setAnswer(temp,self.user);
+		
     };
     
     this.getListQuestionnaires = function getListQuestionnaires(){
+    	console.log(self.user);
     	self.listQuestionnaire = EvaluationService.listFormulaireFull.post({idUser: self.user.id}, onSuccess, onError);    	
     };
 	

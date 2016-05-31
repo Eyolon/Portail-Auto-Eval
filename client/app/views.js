@@ -143,6 +143,21 @@ angular
             }
         });
         
+        $stateProvider.state('priorisation', {
+            parent: 'main',
+            url: '/priorisation',
+            title: 'Priorisation',
+            right: ['utilisateur', 'administrateur', 'super_administrateur'],
+            reloadOnSearch: false,
+            views: {
+                'main@': {
+                    templateUrl: '/priorisation/priorisation.html',
+                    controller: 'PriorisationController',
+                    controllerAs: 'PriorisationController'
+                }
+            }
+        });
+        
         $stateProvider.state('connection', {
             parent: 'main',
             url: '/connection',

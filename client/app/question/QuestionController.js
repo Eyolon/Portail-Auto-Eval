@@ -38,7 +38,7 @@ function QuestionController($http, $state, $scope, QuestionService) {
 	};
 	
 	this.validerAdd = function validerAdd(){
-		console.log(this.questionToEdit);
+
 		if(this.questionToEdit !== undefined && 
 			this.questionToEdit.critere !== undefined && 
 			this.questionToEdit.formulaire !== undefined && 

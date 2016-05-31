@@ -1,34 +1,81 @@
 <div>
     <div data-ng-show="EvaluationCtrl.isSuccess">
         <h2>Mon Evaluation</h2>
-        <ul class="eval-container">
+        
+        <div class="form-group">
+        	<label for="listCtr" class="col-xs-4 col-sm-4 col-md-3 col-lg-3 control-label">Formulaire : </label>
+	        <select class="form-control col-xs-7 col-sm-7  col-md-5 col-lg-5" ng-model="EvaluationCtrl.listQuestionnaireSelectionnee" ng-options="questionnaireAprendre.nom for questionnaireAprendre in EvaluationCtrl.listQuestionnaire" required></select>
+	    </div>
+        <br>
+        <br>
+        <ul class="eval-container">   
             <form>
-                <li class="eval-repeat" data-ng-repeat="questionnaire in EvaluationCtrl.listQuestionnaire">
-                <h3>Formulaire <span data-ng-bind="$index + 1"></span> : <span data-ng-bind="questionnaire.nom"></span></h3>
-                <div class="quest-repeat" data-ng-repeat="question in questionnaire.listQuestions">
-
+            	<li class="eval-repeat" data-ng-repeat="listQuestions in EvaluationCtrl.listQuestionnaireSelectionnee">
+                <!-- <h3>Formulaire <span data-ng-bind="$index + 1"></span> : <span data-ng-bind="questionnaire.nom"></span></h3>-->
+                <div class="quest-repeat" data-ng-repeat="question in listQuestions">
+					
                     Question {{$index + 1}} : <span data-ng-bind="question.valeur"></span>
                     <br/>
                     <br/>
-                    <div data-ng-if="question.notes != null">
+                    <div data-ng-if="question.notes !== undefined">
                         <div data-ng-repeat="note in question.notes">
 
-                            <div data-ng-if="note.utilisateur.login === EvaluationCtrl.user.login">
+                            <div data-ng-if="note.valeur !== undefined">
                                 <input type="number" name="manyQuestion" class="form-control col-md-4" data-ng-disabled="note.valeur" data-ng-model="note.valeur" />
                             </div>
+                            
+                            <div data-ng-if="note.valeur > 75 && note.valeur != undefined ">
+		                    	<label for="listForm" class="col-xs-4 col-sm-4 col-md-3 col-lg-3 control-label">Ma force:</label>
+		                        <input type="text" name="remarque" class="form-control" data-ng-disabled="note.id" data-ng-model="note.remarque" required/>
+		                    </div>
+		                    <div data-ng-if="note.valeur < 25 && note.valeur != undefined ">
+		                    	
+		                    		<label for="listForm" class="col-xs-4 col-sm-4 col-md-3 col-lg-3 control-label">Ma faiblesse :</label>
+		                        	<input type="text" name="remarque" class="form-control" data-ng-disabled="note.id" data-ng-model="note.remarque" required/>
+		                        
+		                        	<label for="priority" class="col-xs-4 col-sm-4 col-md-3 col-lg-3 control-label">Ma Priorisation de cette question :</label>
+		                        	<input type="number" name="priority" class="form-control" data-ng-disabled="note.id" data-ng-model="note.utilisateur.priorisation" required/>
+		                    	
+		                    		<label for="axe1" class="col-xs-4 col-sm-4 col-md-3 col-lg-3 control-label">Point pour m'améliorer 1:</label>
+		                        	<input type="text" name="axe1" class="form-control" data-ng-disabled="note.id" data-ng-model="note.utilisateur.axeAmelioration1" required/>
+		                    	
+			                    	<label for="axe2" class="col-xs-4 col-sm-4 col-md-3 col-lg-3 control-label">Point pour m'améliorer 2:</label>
+			                        <input type="text" name="axe2" class="form-control" data-ng-disabled="note.id" data-ng-model="note.utilisateur.axeAmelioration2" required/>
+			                   
+		                    </div>
 
                         </div>
-                        <!-- marche! <input type="text" name="remarque" data-ng-model="question.notes.remarque"/> -->
+                    
                     </div>
                     <div data-ng-if="question.notes.length === 0">
                         <input type="number" name="zeroQuestion" class="form-control col-md-4" data-ng-model="question.notes.valeur" min="0" max="100" />
                     </div>
+                    <div data-ng-if="question.notes.valeur > 75 && question.notes != undefined ">
+                    	<label for="listForm" class="col-xs-4 col-sm-4 col-md-3 col-lg-3 control-label">Ma force:</label>
+                        <input type="text" name="remarque" class="form-control" data-ng-model="question.notes.remarque"/>
+                    </div>
+                    <div data-ng-if="question.notes.valeur < 25 && question.notes != undefined ">
+                    	<label for="listForm" class="col-xs-4 col-sm-4 col-md-3 col-lg-3 control-label">Ma faiblesse :</label>
+                       	<input type="text" name="remarque" class="form-control" data-ng-model="question.notes.remarque" required/>
+                       
+                       	<label for="priority" class="col-xs-4 col-sm-4 col-md-3 col-lg-3 control-label">Ma Priorisation de cette question :</label>
+                       	<input type="number" name="priority" class="form-control" data-ng-model="question.notes.priorisation" required/>
+                   	
+                   		<label for="axe1" class="col-xs-4 col-sm-4 col-md-3 col-lg-3 control-label">Point pour m'améliorer 1:</label>
+                       	<input type="text" name="axe1" class="form-control" data-ng-model="question.notes.axeAmelioration1" required/>
+                   	
+                    	<label for="axe2" class="col-xs-4 col-sm-4 col-md-3 col-lg-3 control-label">Point pour m'améliorer 2:</label>
+                        <input type="text" name="axe2" class="form-control" data-ng-model="question.notes.axeAmelioration2" required/>
+                    </div>
                 </div>
+                
             </li>
             <div class="submitAnswer">
-                <button type="submit" class="btn btn-default" data-ng-click="EvaluationCtrl.repondre()">Envoyer mes reponses</button>
-            </div>
+	                <button type="submit" class="btn btn-default" data-ng-click="EvaluationCtrl.repondre()">Envoyer mes reponses</button>
+	            </div>
             </form>
+            
+            
             <!-- UseLess in most case -->
             <li class="eval-repeat" data-ng-if="results.length == 0">
                 <strong>Pas de résultats trouvés</strong>

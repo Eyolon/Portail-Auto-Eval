@@ -20,6 +20,10 @@ public class FormulaireDAO extends BasicDAO {
 		return getAll(Formulaire.class);
 	}
 	
+	public static boolean save(Formulaire object){
+		return insertOrUpdate(object);
+	}
+	
 	public static Formulaire getFormulaireByNom(String nom) {
 		Formulaire f = null;
 		Transaction tx = null;

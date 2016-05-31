@@ -31,24 +31,34 @@ function EvaluationService($resource,$http){
             }
             
     		var obj = answers[key];// On extrait le formulaire
-    		var obj2 = obj.listQuestions;//list de question
+    		//var obj2 = obj.listQuestions;//list de question
             
-    		for(var key2 in obj2){
-    			if(!obj2.hasOwnProperty(key2)) {
+    		for(var key2 in obj){
+    			if(!obj.hasOwnProperty(key2)) {
                     continue;
                 }
     			
-    			var questionFull = obj2[key2];// notre question
-    			
-    			if(questionFull.notes.valeur !== undefined) {
+    			var reponseFull = obj[key2];// notre question
+ 
+    			reponseFull = reponseFull.notes;//notre réponse
+    			   			
+    			if(reponseFull.valeur !== undefined) {
     				//Donc la on envois toute les questions répondue uniquement
-    		
-    				var notePatched = [];
-    				var noteComplement = {valeur :questionFull.notes.valeur, remarque : questionFull.notes.remarque};
-    				notePatched.push(noteComplement);
-    				questionFull.notes = notePatched;
+    		   			
+    				//var notePatched = [];
+    				var noteComplement = {
+    						id :reponseFull.id,
+    						valeur :reponseFull.valeur, 
+    						remarque : reponseFull.remarque, 
+    						priorisation :reponseFull.priorisation, 
+    						axeAmelioration1 :reponseFull.axeAmelioration1,
+    						axeAmelioration2 :reponseFull.axeAmelioration2,
+    						idQuestion :obj[key2].id};
+    						
+    				//notePatched.push(noteComplement);
+    				reponseFull = noteComplement;
     				
-    				$http.post('/api/reponse',{questionFull: questionFull,utilisateur:user});
+    				$http.post('/api/reponse',{reponseFull:reponseFull, utilisateur:user});
     				
     			}
     		}

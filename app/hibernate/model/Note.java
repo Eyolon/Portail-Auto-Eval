@@ -26,22 +26,32 @@ public class Note implements Serializable {
 	private Question question = null;
 	private Utilisateur utilisateur = null;
 	private Instant dateSaisie = null;
+	private Integer priorisation = null;
+	private String axeAmelioration1 = null;
+	private String axeAmelioration2 = null;
+	
 	
 	public Note(){}
 	
-	public Note(Long id, Integer valeur, String remarque, Question question, Utilisateur utilisateur) {
+	public Note(Long id, Integer valeur, String remarque, Question question, Utilisateur utilisateur, Integer priorisation ,String axeAmelioration1, String axeAmelioration2) {
 		this.id = id;
 		this.valeur = valeur;
 		this.remarque = remarque;
 		this.setQuestion(question);
 		this.setUtilisateur(utilisateur);
+		this.priorisation = priorisation;
+		this.axeAmelioration1 = axeAmelioration1;
+		this.axeAmelioration2 = axeAmelioration2;
 	}
 	
-	public Note(Integer valeur, String remarque, Question question, Utilisateur utilisateur) {
+	public Note(Integer valeur, String remarque, Question question, Utilisateur utilisateur, Integer priorisation,String axeAmelioration1, String axeAmelioration2) {
 		this.valeur = valeur;
 		this.remarque = remarque;
 		this.setQuestion(question);
 		this.setUtilisateur(utilisateur);
+		this.priorisation = priorisation;
+		this.axeAmelioration1 = axeAmelioration1;
+		this.axeAmelioration2 = axeAmelioration2;
 	}
 	
 	@Id 
@@ -72,6 +82,33 @@ public class Note implements Serializable {
 
 	public void setRemarque(String remarque) {
 		this.remarque = remarque;
+	}
+	
+	@Column(name="axeAmelioration1")
+	public String getAxeAmelioration1() {
+		return axeAmelioration1;
+	}
+
+	public void setAxeAmelioration1(String axeAmelioration1) {
+		this.axeAmelioration1 = axeAmelioration1;
+	}
+	
+	@Column(name="axeAmelioration2")
+	public String getAxeAmelioration2() {
+		return axeAmelioration2;
+	}
+
+	public void setAxeAmelioration2(String axeAmelioration2) {
+		this.axeAmelioration2 = axeAmelioration2;
+	}
+	
+	@Column(name="priorisation")
+	public Integer getPriorisation() {
+		return priorisation;
+	}
+
+	public void setPriorisation(Integer priorisation) {
+		this.priorisation = priorisation;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
