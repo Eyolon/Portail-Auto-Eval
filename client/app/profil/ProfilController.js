@@ -1,4 +1,4 @@
-function ProfilCtrl($filter, $http, $rootScope, ConnexionService, InscriptionService, ipCookie) {
+function ProfilCtrl(Notification, $filter, $http, $rootScope, ConnexionService, InscriptionService, ipCookie) {
 	var self = this;
 	this.currentPwd = "";
 	this.user = {};
@@ -61,9 +61,11 @@ function ProfilCtrl($filter, $http, $rootScope, ConnexionService, InscriptionSer
                 ipCookie('token', data.token, {expires : 7});
 				$rootScope.$broadcast("userLogin", ipCookie('utilisateur'));
 				self.isProfilModified = true;
+				Notification.success("Modification éffectué avec succès");
             })
             .error(function(data, status, headers, config) {
                 console.log(data);
+                Notification.error("Echec de la modification");
             });
 	}
 	
@@ -76,16 +78,18 @@ function ProfilCtrl($filter, $http, $rootScope, ConnexionService, InscriptionSer
 			{
 				id: self.userToEdit.id,
 				login: self.userToEdit.login,
-	            pwd: pass,
+	            pwd: self.userToEdit.pwd,
 	            service: self.userToEdit.service,
-	            typeUser: self.userToEdit.typeUtilisateur,
-	            etablissement: self.userToEdit.etablissement.id
+	            typeUtilisateur: self.userToEdit.typeUtilisateur,
+	            etablissement: self.userToEdit.etablissement
 			})
             .success(function(data, status, headers, config) {
 				self.isProfilModified = true;
+				Notification.success("Modification éffectué avec succès");
             })
             .error(function(data, status, headers, config) {
                 console.log(data);
+                Notification.error("Echec de la modification");
             });
 	}
 	
@@ -106,12 +110,16 @@ function ProfilCtrl($filter, $http, $rootScope, ConnexionService, InscriptionSer
 	this.save = function save() {
 		if((self.user.pwd !== undefined && self.user.pwd !== "" && self.userPwd !== undefined && self.userPwd !== "" && self.user.pwd === self.userPwd && self.currentPwd !== undefined && self.currentPwd !== "") || (self.currentPwd !== undefined && self.currentPwd !== "")) {
 			checkAccount(self.user.login, self.currentPwd, updateUser);
+		}else{
+			Notification.info("Merci de renseigner un nouveau mot de passe et le mot de passe actuel");
 		}
 	};
 	
 	this.saveAdmin = function saveAdmin(){
 		if((self.userToEdit.pwd === self.userPwd)) {
 			updateUserAdmin();
+		}else{
+			Notification.info("Merci de renseigner un nouveau mot de passe et le mot de passe actuel");
 		}
 	};
 

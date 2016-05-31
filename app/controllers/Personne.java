@@ -155,7 +155,7 @@ public class Personne extends Controller {
 		return Promise.promise(() -> 
 		{
 			JsonNode jsonN = request().body().asJson();
-			JSONObject js = null;
+			JSONObject js = null;			
 			if(jsonN != null && jsonN.get("id") != null) {
 				Transaction tx = null;
 				boolean isActive = BDDUtils.getTransactionStatus();
@@ -169,6 +169,8 @@ public class Personne extends Controller {
 					u.setService(ServiceDAO.findById(jsonN.get("service").get("id").asLong()));
 					u.setTypeUtilisateur(TypeUtilisateurDAO.findById(jsonN.get("typeUtilisateur").get("id").asLong()));
 					UtilisateurDAO.update(u);
+					
+					
 					
 					js = new JSONObject();
 					js.put("user", ConstructJSONObjects.getJSONforUser(u))
