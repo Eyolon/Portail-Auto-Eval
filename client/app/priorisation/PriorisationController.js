@@ -21,7 +21,6 @@ function PriorisationController($http, $state, $scope, PriorisationService,  ipC
     
     this.getListPriorites = function getListPriorites(){
     	self.priorisationList = PriorisationService.listPriorisation.post({idUser: self.user.id}, onSuccess, onError);    	
-    	console.log(self.priorisationList);
     };
     
     this.getListNotes = function getListNotes(){
@@ -92,7 +91,6 @@ function PriorisationController($http, $state, $scope, PriorisationService,  ipC
         var palier6 = 0;
         
         tampon.$promise.then(function (message) {
-        	console.log(message);
         	if(message.ListNote !== undefined && message.ListNote.length > 0) {
                 tampon = message.ListNote.filter(function (obj) {
                 	
@@ -164,9 +162,10 @@ function PriorisationController($http, $state, $scope, PriorisationService,  ipC
         lineDelimiter = args.lineDelimiter || '\n';
 
         keys = Object.keys(data[0]);
-
+        
         result = '';
-        result += keys.join(columnDelimiter);
+        //result += keys.join(columnDelimiter);
+        result += "Question ;Justification ;Indice de priorisation ;Axe amelioration 1;Axe amelioration 2";
         result += lineDelimiter;
 
         data.forEach(function (item) {
