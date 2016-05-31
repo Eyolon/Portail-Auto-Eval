@@ -23,9 +23,10 @@
             </li>
             <!-- Double secu : connecté ET on récupère un status -->
             <li ui-sref-active="active" data-ng-show="navbarTopCtrl.isConnected" ng-switch-when="utilisateur"><a ui-sref="evaluation">Mes Evaluations</a></li>
-             <li ui-sref-active="active" data-ng-show="navbarTopCtrl.isConnected" ng-switch-when="utilisateur"><a ui-sref="priorisation">Mes Priorités</a></li>
+            <li ui-sref-active="active" data-ng-show="navbarTopCtrl.isConnected" ng-switch-when="utilisateur"><a ui-sref="priorisation">Mes Priorités</a></li>
 
             <li ui-sref-active="active" data-ng-show="navbarTopCtrl.isConnected" ng-switch-when="administrateur"><a ui-sref="evaluation">Mes Evaluations</a>
+            <li ui-sref-active="active" data-ng-show="navbarTopCtrl.isConnected" ng-switch-when="administrateur"><a ui-sref="priorisation">Mes Priorités</a></li>
                 <li class="dropdown" data-ng-show="navbarTopCtrl.isConnected" ng-switch-when="administrateur">
                     <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Gerrer les utilisateurs<span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
@@ -35,6 +36,7 @@
                 </li>
 
                 <li ui-sref-active="active" data-ng-show="navbarTopCtrl.isConnected" ng-switch-when="super_administrateur"><a ui-sref="evaluation">Mes Evaluations</a></li>
+                <li ui-sref-active="active" data-ng-show="navbarTopCtrl.isConnected" ng-switch-when="super_administrateur"><a ui-sref="priorisation">Mes Priorités</a></li>
                 <li class="dropdown" data-ng-show="navbarTopCtrl.isConnected" ng-switch-when="super_administrateur">
                     <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Gerrer les utilisateurs<span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">

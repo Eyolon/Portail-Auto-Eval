@@ -4,7 +4,7 @@
         
         <div class="form-group">
         	<label for="listCtr" class="col-xs-4 col-sm-4 col-md-3 col-lg-3 control-label">Formulaire : </label>
-	        <select class="form-control col-xs-7 col-sm-7  col-md-5 col-lg-5" ng-model="EvaluationCtrl.listQuestionnaireSelectionnee" ng-options="questionnaireAprendre.nom for questionnaireAprendre in EvaluationCtrl.listQuestionnaire" required></select>
+	        <select id="slctFrm" class="form-control col-xs-7 col-sm-7  col-md-5 col-lg-5" ng-model="EvaluationCtrl.listQuestionnaireSelectionnee" ng-options="questionnaireAprendre.nom for questionnaireAprendre in EvaluationCtrl.listQuestionnaire" required></select>
 	    </div>
         <br>
         <br>
@@ -21,7 +21,7 @@
                         <div data-ng-repeat="note in question.notes">
 
                             <div data-ng-if="note.valeur !== undefined">
-                                <input type="number" name="manyQuestion" class="form-control col-md-4" data-ng-disabled="note.valeur" data-ng-model="note.valeur" />
+                                <input type="number" name="manyQuestion" class="form-control" data-ng-disabled="note.valeur" data-ng-model="note.valeur" />
                             </div>
                             
                             <div data-ng-if="note.valeur > 75 && note.valeur != undefined ">
@@ -48,7 +48,7 @@
                     
                     </div>
                     <div data-ng-if="question.notes.length === 0">
-                        <input type="number" name="zeroQuestion" class="form-control col-md-4" data-ng-model="question.notes.valeur" min="0" max="100" />
+                        <input type="number" name="zeroQuestion" class="form-control" data-ng-model="question.notes.valeur" min="0" max="100" />
                     </div>
                     <div data-ng-if="question.notes.valeur > 75 && question.notes != undefined ">
                     	<label for="listForm" class="col-xs-4 col-sm-4 col-md-3 col-lg-3 control-label">Ma force:</label>
