@@ -183,9 +183,9 @@ tasks.withType(Task) {
 		createPlayBinaryAssetsJar.dependsOn(':installGulp')
 		createPlayBinaryAssetsJar.dependsOn(':gulp_compile')
     }
-	if (it.name == 'runPlayBinary'){
+	/*if (it.name == 'runPlayBinary'){
 		createPlayBinaryAssetsJar.dependsOn(':bowerInstall')
 		createPlayBinaryAssetsJar.dependsOn(':installGulp')
 		createPlayBinaryAssetsJar.dependsOn(':gulp_compile')
-    }
+    }*/
 }
