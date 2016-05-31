@@ -7,12 +7,31 @@
 	<br>
 	<h2>Liste des points que j'ai priorisé : </h2>
 	
-	<div class="frmlqust-repeat" data-ng-repeat="note in PriorisationController.priorisationList">
+	<div id="prio" class="frmlqust-repeat" data-ng-repeat="note in PriorisationController.priorisationList">
 		<br>
-		<span data-ng-bind="note.utilisateur.question.valeur"></span>
+		<div>
+			<span data-ng-bind="note.utilisateur.question.valeur"></span>
+		</div>
+		
+		<div>
+			<label for="prio">Ma note : </label>
+			<span data-ng-bind="note.valeur"></span>  
+   		</div>
+    	
+   		<div>
+    		<label for="prio">Mon indice : </label>
+	    	<span data-ng-bind="note.utilisateur.priorisation"></span>  
+   		</div>
+   		<div>
+    		<label for="prio">Mes Axes : </label>
+	    	<span data-ng-bind="note.utilisateur.axeAmelioration1"></span>  
+	    	<br>
+	    	<span data-ng-bind="note.utilisateur.axeAmelioration2"></span> 
+   		</div>
     	<br>
 	</div>
 	
+	<br>
 	<button type="submit" class="btn btn-default" data-ng-disabled="!PriorisationController.priorisationList" data-ng-click="PriorisationController.download()">Exporter Matrice Priorisation CSV</button>
 
 </form>
