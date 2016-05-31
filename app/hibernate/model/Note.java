@@ -26,32 +26,35 @@ public class Note implements Serializable {
 	private Question question = null;
 	private Utilisateur utilisateur = null;
 	private Instant dateSaisie = null;
-	private Integer priorisation = null;
+	private Integer gravite = null;
 	private String axeAmelioration1 = null;
 	private String axeAmelioration2 = null;
+	private Integer amelioration = null;
 	
 	
 	public Note(){}
 	
-	public Note(Long id, Integer valeur, String remarque, Question question, Utilisateur utilisateur, Integer priorisation ,String axeAmelioration1, String axeAmelioration2) {
+	public Note(Long id, Integer valeur, String remarque, Question question, Utilisateur utilisateur, Integer gravite ,String axeAmelioration1, String axeAmelioration2, Integer amelioration) {
 		this.id = id;
 		this.valeur = valeur;
 		this.remarque = remarque;
 		this.setQuestion(question);
 		this.setUtilisateur(utilisateur);
-		this.priorisation = priorisation;
+		this.gravite = gravite;
 		this.axeAmelioration1 = axeAmelioration1;
 		this.axeAmelioration2 = axeAmelioration2;
+		this.amelioration = amelioration;
 	}
 	
-	public Note(Integer valeur, String remarque, Question question, Utilisateur utilisateur, Integer priorisation,String axeAmelioration1, String axeAmelioration2) {
+	public Note(Integer valeur, String remarque, Question question, Utilisateur utilisateur, Integer gravite,String axeAmelioration1, String axeAmelioration2, Integer amelioration) {
 		this.valeur = valeur;
 		this.remarque = remarque;
 		this.setQuestion(question);
 		this.setUtilisateur(utilisateur);
-		this.priorisation = priorisation;
+		this.gravite = gravite;
 		this.axeAmelioration1 = axeAmelioration1;
 		this.axeAmelioration2 = axeAmelioration2;
+		this.amelioration = amelioration;
 	}
 	
 	@Id 
@@ -102,14 +105,24 @@ public class Note implements Serializable {
 		this.axeAmelioration2 = axeAmelioration2;
 	}
 	
-	@Column(name="priorisation")
-	public Integer getPriorisation() {
-		return priorisation;
+	@Column(name="gravite")
+	public Integer getGravite() {
+		return gravite;
 	}
 
-	public void setPriorisation(Integer priorisation) {
-		this.priorisation = priorisation;
+	public void setGravite(Integer gravite) {
+		this.gravite = gravite;
 	}
+	
+	@Column(name="amelioration")
+	public Integer getAmelioration() {
+		return amelioration;
+	}
+
+	public void setAmelioration(Integer amelioration) {
+		this.amelioration = amelioration;
+	}
+
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_question", nullable = false)

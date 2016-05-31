@@ -1,4 +1,4 @@
-function EvaluationController(EvaluationService, ipCookie) {
+function EvaluationController(Notification, EvaluationService, ipCookie) {
 	var self = this;
 	this.isSuccess = true;
     this.listQuestionnaire = [];
@@ -18,15 +18,13 @@ function EvaluationController(EvaluationService, ipCookie) {
         //il faut faire passer l'id utilisateur et la remarque sera le path du drive pour la preuve		
 		var temp = self.listQuestionnaireSelectionnee;
 		self.listQuestionnaireSelectionnee = [];
-		
-		//MERCI D'AVOIR REPONDU ?
-		
-		EvaluationService.setAnswer(temp,self.user);
+		Notification.success("Réponse(s) prise(s) en compte");
+		EvaluationService.setAnswer(temp.listQuestions,self.user);
+		Notification.info("Réponse(s) prise(s) en compte");
 		
     };
     
     this.getListQuestionnaires = function getListQuestionnaires(){
-    	console.log(self.user);
     	self.listQuestionnaire = EvaluationService.listFormulaireFull.post({idUser: self.user.id}, onSuccess, onError);    	
     };
 	

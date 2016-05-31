@@ -80,24 +80,26 @@ public class ConstructJSONObjects {
 				.put("id", note.getId())
 				.put("valeur", note.getValeur())
 				.put("remarque", note.getRemarque())
-				.put("utilisateur" ,getJSONforUser(note.getUtilisateur())
+				.put("utilisateur" ,getJSONforUser(note.getUtilisateur()))
 				.put("question", getJSONforQuestionWithoutNote(note.getQuestion()))
-				.put("priorisation", note.getPriorisation())
+				.put("gravite", note.getGravite())
 				.put("axeAmelioration1", note.getAxeAmelioration1())
-				.put("axeAmelioration2", note.getAxeAmelioration2()));
+				.put("axeAmelioration2", note.getAxeAmelioration2())
+				.put("amelioration", note.getAmelioration());
 		
 	}
 	
-	private static JSONObject getJSONforNote(Note note) throws JSONException {
+	public static JSONObject getJSONforNote(Note note) throws JSONException {
 		return note == null ? null : new JSONObject()
 				.put("id", note.getId())
 				.put("valeur", note.getValeur())
 				.put("remarque", note.getRemarque())
 				.put("utilisateur" ,getJSONforUser(note.getUtilisateur())
 				//.put("question", getJSONforQuestion(note.getQuestion())); Créer une boucle infinie : la question appel la note et la note appel la question...
-				.put("priorisation", note.getPriorisation())
+				.put("gravite", note.getGravite())
 				.put("axeAmelioration1", note.getAxeAmelioration1())
-				.put("axeAmelioration2", note.getAxeAmelioration2()));
+				.put("axeAmelioration2", note.getAxeAmelioration2())
+				.put("amelioration", note.getAmelioration()));
 		/*
 		 * Il semble que si je décomente, sa plante. mais de toute facon c'est tout se dont j'ai besoin
 		 */

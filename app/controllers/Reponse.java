@@ -43,48 +43,57 @@ public class Reponse extends Controller{
 				try {
 					tx = BDDUtils.beginTransaction(isActive);
 								
-					Note n = new Note();
+					Note n = null;
 					
 					Utilisateur u = null;
 					Question q = null;
 					
 					
+					if(jsonN.get("reponseFull").has("id")) {
+						n = NoteDAO.findById(jsonN.get("reponseFull").get("id").asLong());
+					}else{
+						n = new Note();
+					}
 					
 					if(jsonN.has("utilisateur") && jsonN.get("utilisateur").has("id")) {
 						u = UtilisateurDAO.findById(jsonN.get("utilisateur").get("id").asLong());
+						n.setUtilisateur(u);
+						
 					}
 				
 					if(jsonN.has("reponseFull") && jsonN.get("reponseFull").has("idQuestion")) {
 						q = QuestionDAO.findById(jsonN.get("reponseFull").get("idQuestion").asLong());
+						n.setQuestion(q);
 					}
 					//Tester s'il y a déjà une note pour cette question par cet utilisateur -> nope, voir sms sur l'historisation de réponses
 
-					if(jsonN.get("reponseFull").has("id")) {
-						n.setId(jsonN.get("reponseFull").get("id").asLong());
-					}
+					
 					
 					if(jsonN.get("reponseFull").has("valeur")) {
 						n.setValeur(jsonN.get("reponseFull").get("valeur").asInt());
 					}
 
 					if(jsonN.get("reponseFull").has("remarque")) {
-						n.setRemarque(jsonN.get("reponseFull").get("remarque").toString());
+						n.setRemarque(jsonN.get("reponseFull").get("remarque").asText());
 					}
 
-					if(jsonN.get("reponseFull").has("priorisation")) {
-						n.setPriorisation(jsonN.get("reponseFull").get("priorisation").asInt());
+					if(jsonN.get("reponseFull").has("gravite")) {
+						n.setGravite(jsonN.get("reponseFull").get("gravite").asInt());
 					}
 
 					if(jsonN.get("reponseFull").has("axeAmelioration1")) {
-						n.setAxeAmelioration1(jsonN.get("reponseFull").get("axeAmelioration1").toString());
+						n.setAxeAmelioration1(jsonN.get("reponseFull").get("axeAmelioration1").asText());
 					}
 
 					if(jsonN.get("reponseFull").has("axeAmelioration2")) {
-						n.setAxeAmelioration2(jsonN.get("reponseFull").get("axeAmelioration2").toString());
+						n.setAxeAmelioration2(jsonN.get("reponseFull").get("axeAmelioration2").asText());
+					}
+					
+					if(jsonN.get("reponseFull").has("amelioration")) {
+						n.setAmelioration(jsonN.get("reponseFull").get("amelioration").asInt());
 					}
 
-					n.setUtilisateur(u);
-					n.setQuestion(q);
+					
 					
 					if(n.getUtilisateur() != null && n.getQuestion() != null){
 						n.setDateSaisie(Instant.now());
@@ -190,7 +199,7 @@ public class Reponse extends Controller{
 				List<Note> ln = NoteDAO.getListNoteByUserId(idUser);
 				List<Note> finalLn = new ArrayList<Note>();
 				 for(int i=0;i<ln.size();i++){
-					 if(ln.get(i).getPriorisation() != null)finalLn.add(ln.get(i));
+					 if(ln.get(i).getGravite() != null)finalLn.add(ln.get(i));
 				 }
 				
 				 Comparator<Note> c = new Comparator<Note>() {
@@ -198,7 +207,7 @@ public class Reponse extends Controller{
 				        public int compare(Note n1, Note n2)
 				        {
 
-				            return  n1.getPriorisation().compareTo(n2.getPriorisation());
+				            return  n1.getGravite().compareTo(n2.getGravite());
 				        }
 				    };
 				 
