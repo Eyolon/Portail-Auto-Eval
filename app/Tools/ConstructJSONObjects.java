@@ -25,7 +25,8 @@ public class ConstructJSONObjects {
 		.put("login", u.getLogin())
 		.put("service", getJSONforService(u.getService()))
 		.put("etablissement", getJSONforEtablissement(u.getEtablissement()))
-		.put("typeUtilisateur", getJSONforTypeUtilisateur(u.getTypeUtilisateur()));
+		.put("typeUtilisateur", getJSONforTypeUtilisateur(u.getTypeUtilisateur()))
+		.put("actif", u.getIsActif());
 	}
 	
 	public static JSONObject getJSONforFormulaireService(FormulaireService f) throws JSONException{

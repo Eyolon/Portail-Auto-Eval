@@ -7,6 +7,12 @@
             <select class="form-control col-xs-7 col-sm-7  col-md-5 col-lg-5" ng-model="ProfilCtrl.userToEdit" ng-options="userToEdit.login for userToEdit in ProfilCtrl.listUser" required></select>
         </div>
         <div class="form-group">
+			<label for="type" class="col-xs-4 col-sm-4 col-md-3 col-lg-3 control-label">Utilisateur Actif: </label>
+			<br>
+			<label><input type="radio" data-ng-value="true" data-ng-model="ProfilCtrl.userToEdit.actif">Actif </label>
+			<label><input type="radio" data-ng-value="false" data-ng-model="ProfilCtrl.userToEdit.actif">Inactif </label>
+		</div>
+        <div class="form-group">
             <label for="identifiant" class="col-xs-4 col-sm-4  col-md-3 col-lg-3 control-label">Identifiant: </label>
             <input type="text" class="form-control col-xs-7  col-sm-7  col-md-5 col-lg-5" id="nom" data-ng-model="ProfilCtrl.userToEdit.login" required>
         </div>

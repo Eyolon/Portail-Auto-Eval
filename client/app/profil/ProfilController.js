@@ -74,15 +74,7 @@ function ProfilCtrl(Notification, $filter, $http, $rootScope, ConnexionService, 
 		if(self.userToEdit.pwd !== undefined && self.userToEdit.pwd !== "") {
 			pass = self.userToEdit.pwd;
 		}
-		$http.post('/api/user', 
-			{
-				id: self.userToEdit.id,
-				login: self.userToEdit.login,
-	            pwd: self.userToEdit.pwd,
-	            service: self.userToEdit.service,
-	            typeUtilisateur: self.userToEdit.typeUtilisateur,
-	            etablissement: self.userToEdit.etablissement
-			})
+		$http.post('/api/user', self.userToEdit)
             .success(function(data, status, headers, config) {
 				self.isProfilModified = true;
 				Notification.success("Modification éffectué avec succès");

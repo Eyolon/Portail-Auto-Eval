@@ -168,6 +168,7 @@ public class Personne extends Controller {
 					u.setEtablissement(EtablissementDAO.findById(jsonN.get("etablissement").get("id").asLong()));
 					u.setService(ServiceDAO.findById(jsonN.get("service").get("id").asLong()));
 					u.setTypeUtilisateur(TypeUtilisateurDAO.findById(jsonN.get("typeUtilisateur").get("id").asLong()));
+					u.setIsActif(jsonN.get("actif").asBoolean());
 					UtilisateurDAO.update(u);
 					
 					
