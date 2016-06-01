@@ -6,11 +6,7 @@ function FormulaireController($scope, FormulaireService, Notification) {
 	this.listService = [];
 	this.listQuestion = [];
 	this.formulaireSelected = {};
-	$scope.formulaireToEdit = {
-		formulaire: {},
-		service: {},
-		etablissement: {}
-	};
+	this.formulaireToEdit = {};
 	this.isSuccess = true;
 	this.readyToSubmit = false;
 	this.linkToAdd = [];
@@ -19,7 +15,6 @@ function FormulaireController($scope, FormulaireService, Notification) {
 	this.getListEtablissement = function getListEtablissement(){
 		self.listEtablissement = FormulaireService.listEtablissement.post({}, function (results) {
 			onSuccess();
-			$scope.formulaireToEdit.etablissement = results[0];
 		}, onError);
 	};
 	
@@ -30,14 +25,12 @@ function FormulaireController($scope, FormulaireService, Notification) {
 	this.getListFormulaire = function getListFormuaire(){
 		self.listFormulaire = FormulaireService.listFormulaire.post({}, function (results) {
 			onSuccess();
-			$scope.formulaireToEdit = results[0];
 		}, onError);
 	};
 	
 	this.getListService = function getListService(){
 		self.listService = FormulaireService.listService.post({}, function (results) {
 			onSuccess();
-			$scope.formulaireToEdit.service = results[0];
 		}, onError);
 	};
 	
@@ -54,21 +47,22 @@ function FormulaireController($scope, FormulaireService, Notification) {
 	}
 	
 	this.validerEdit = function validerEdit(){
-		FormulaireService.setFormulaire($scope.formulaireToEdit);
-		Notification.success("Echange Achevé");
+		FormulaireService.setFormulaire(self.formulaireToEdit);
+		Notification.success("Formulaire Edité avec succès");
 	};
 	
 	this.ajoutQuestion = function ajoutQuestion(){
-		$scope.formulaireToEdit.listQuestion.push(self.questionToAdd);
+		self.formulaireToEdit.listQuestion.push(self.questionToAdd);
 	};
 	
 	this.supprimerQuest = function supprimerQuest(question){
-		var index = $scope.formulaireToEdit.listQuestion.indexOf(question);
-		$scope.formulaireToEdit.listQuestion.splice(index, 1);	
+		var index = self.formulaireToEdit.listQuestion.indexOf(question);
+		self.formulaireToEdit.listQuestion.splice(index, 1);	
 	};
 	
 	this.validerLink = function validerLink(){
-		FormulaireService.setFormulaire($scope.formulaireToEdit);		
+		FormulaireService.setFormulaire(self.formulaireToEdit);	
+		Notification.success("Formulaire Creer avec succès");
 	};
 	
 	this.validerAdd = function validerAdd(){

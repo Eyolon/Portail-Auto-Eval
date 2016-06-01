@@ -172,7 +172,7 @@ function PriorisationController($http, $state, $scope, PriorisationService,  ipC
         
         result = '';
         //result += keys.join(columnDelimiter);
-        result += "Question;Priorisation;Justification ;Indice d'impact;Explication Impact;Indice d'amelioration;Point pour m'améliorer";
+        result += "Question;Priorisation;Justification ;Indice d'impact;Explication Impact;Indice d'amelioration;Point pour m'ameliorer";
         result += lineDelimiter;
 
         data.forEach(function (item) {

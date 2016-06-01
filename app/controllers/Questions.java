@@ -111,8 +111,8 @@ public class Questions extends Controller {
 					}
 						
 					
-					
-					
+					BDDUtils.commit(isActive, tx);
+					return ok();
 				
 					} catch(HibernateException ex) {
 						Logger.error("Hibernate failure : "+ ex.getMessage());
@@ -141,10 +141,9 @@ public class Questions extends Controller {
 					
 					QuestionDAO.update(q);
 					
-					js = new JSONObject();
-					js.put("question", ConstructJSONObjects.getJSONforQuestion(q));
-					
 					BDDUtils.commit(isActive, tx);
+					
+					return ok();
 				}
 				catch(Exception ex) {
 					Logger.error("Hibernate failure : "+ ex.getMessage());
@@ -152,11 +151,8 @@ public class Questions extends Controller {
 					return internalServerError("Une erreur est survenue pendant la transaction avec la base de données.");
 				}
 			}
-			if(js == null) {
-				return notFound("Question introuvable.");
-			} else {
-				return ok(js.toString());
-			}
+		return notFound("Question introuvable.");
+			
 		});
 	}
 

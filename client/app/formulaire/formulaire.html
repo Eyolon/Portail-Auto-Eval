@@ -8,19 +8,19 @@
     
     <div class="form-group">
         <label for="listCtr" class="col-xs-4 col-sm-4 col-md-3 col-lg-3 control-label">Service : </label>
-        <select class="form-control col-xs-7 col-sm-7  col-md-5 col-lg-5" ng-model="FormulaireController.formulaireToEdit.service" ng-options="service.libelle for service in FormulaireController.listService" ng-change="FormulaireController.validerAdd()" required></select>
+        <select class="form-control col-xs-7 col-sm-7  col-md-5 col-lg-5" ng-model="FormulaireController.formulaireToEdit.service" ng-options="service.libelle for service in FormulaireController.listService track by service.id" ng-change="FormulaireController.validerAdd()" required></select>
     </div>
     
     <div class="form-group">
         <label for="listForm" class="col-xs-4 col-sm-4 col-md-3 col-lg-3 control-label">Type d'utilisateur : </label>
-        <select class="form-control col-xs-7 col-sm-7  col-md-5 col-lg-5" ng-model="FormulaireController.formulaireToEdit.type" ng-options="type.libelle for type in FormulaireController.listType" ng-change="FormulaireController.validerAdd()" required></select>
+        <select class="form-control col-xs-7 col-sm-7  col-md-5 col-lg-5" ng-model="FormulaireController.formulaireToEdit.type" ng-options="type.libelle for type in FormulaireController.listType track by type.id" ng-change="FormulaireController.validerAdd()" required></select>
     </div> 
     
     <div class="form-group">
         <label for="listForm" class="col-xs-4 col-sm-4 col-md-3 col-lg-3 control-label">Etablissement : </label>
-        <select class="form-control col-xs-7 col-sm-7  col-md-5 col-lg-5" ng-model="FormulaireController.formulaireToEdit.etablissement" ng-options="etablissement.libelle for etablissement in FormulaireController.listEtablissement" ng-change="FormulaireController.validerAdd()" required></select>
+        <select class="form-control col-xs-7 col-sm-7  col-md-5 col-lg-5" ng-model="FormulaireController.formulaireToEdit.etablissement" ng-options="etablissement.libelle for etablissement in FormulaireController.listEtablissement track by etablissement.id" ng-change="FormulaireController.validerAdd()" required></select>
     </div>    
     
-    <button class="btn btn-default" data-ng-disabled="!FormulaireController.readyToSubmit" type="submit" data-ng-click="FormulaireController.validerLink()">Enregistrer</button>
+    <button class="btn btn-default" type="submit" data-ng-click="FormulaireController.validerLink()">Enregistrer</button>
     
 </form>

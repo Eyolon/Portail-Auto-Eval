@@ -7,11 +7,11 @@ function ServiceUtilisateurController(Notification, ServiceUtilisateurService, i
     };
 	
 	function onSuccess() {
-        Notification.success("Etablissement Ajouté");
+        Notification.success("Service Ajouté");
     }
 
     function onError() {
-    	Notification.error("Erreur dans l'ajout de l'établissement");
+    	Notification.error("Erreur dans l'ajout du service");
     }
 	
 }

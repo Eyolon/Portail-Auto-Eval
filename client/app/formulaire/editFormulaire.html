@@ -3,22 +3,22 @@
 	
 	<div class="form-group">
         <label for="litfrmlr" class="col-xs-4 col-sm-4 col-md-3 col-lg-3 control-label">Selectionner un Formulaire: </label>
-        <select class="form-control col-xs-7 col-sm-7  col-md-5 col-lg-5" ng-model="formulaireToEdit" ng-options="formulaireService.formulaire.nom for formulaireService in FormulaireController.listFormulaire" ng-change="FormulaireController.validerAdd()" required></select>
+        <select class="form-control col-xs-7 col-sm-7  col-md-5 col-lg-5" ng-model="FormulaireController.formulaireToEdit" ng-options="formulaireService.formulaire.nom for formulaireService in FormulaireController.listFormulaire" ng-change="FormulaireController.validerAdd()" required></select>
     </div>
     
      <div class="form-group">
         <label for="pwd" class="col-xs-4 col-sm-4 col-md-3 col-lg-3 control-label">Formulaire : </label>
-        <input type="text" class="form-control col-xs-7 col-sm-7  col-md-5 col-lg-5" id="frmlr" data-ng-model="formulaireToEdit.formulaire.nom" ng-change="FormulaireController.validerAdd()" required>
+        <input type="text" class="form-control col-xs-7 col-sm-7  col-md-5 col-lg-5" id="frmlr" data-ng-model="FormulaireController.formulaireToEdit.formulaire.nom" ng-change="FormulaireController.validerAdd()" required>
     </div>
     
     <div class="form-group">
         <label for="listCtr" class="col-xs-4 col-sm-4 col-md-3 col-lg-3 control-label">Service : </label>
-        <select class="form-control col-xs-7 col-sm-7  col-md-5 col-lg-5" ng-model="formulaireToEdit.service" ng-options="service.libelle for service in FormulaireController.listService track by service.id" ng-change="FormulaireController.validerAdd()" required></select>
+        <select class="form-control col-xs-7 col-sm-7  col-md-5 col-lg-5" ng-model="FormulaireController.formulaireToEdit.service" ng-options="service.libelle for service in FormulaireController.listService track by service.id" ng-change="FormulaireController.validerAdd()" required></select>
     </div>
     
     <div class="form-group">
         <label for="listForm" class="col-xs-4 col-sm-4 col-md-3 col-lg-3 control-label">Liste d'etablissement : </label>
-        <select class="form-control col-xs-7 col-sm-7  col-md-5 col-lg-5" ng-model="formulaireToEdit.etablissement" ng-options="etablissement.libelle for etablissement in FormulaireController.listEtablissement track by etablissement.id" ng-change="FormulaireController.validerAdd()" required></select>
+        <select class="form-control col-xs-7 col-sm-7  col-md-5 col-lg-5" ng-model="FormulaireController.formulaireToEdit.etablissement" ng-options="etablissement.libelle for etablissement in FormulaireController.listEtablissement track by etablissement.id" ng-change="FormulaireController.validerAdd()" required></select>
     </div>
     
     <div class="form-group">
@@ -27,13 +27,13 @@
     </div>    
     
     <br>
-	<button class="btn btn-default" data-ng-disabled="!formulaireToEdit" type="submit" data-ng-click="FormulaireController.ajoutQuestion()">Ajouter</button>
+	<button class="btn btn-default" data-ng-disabled="!FormulaireController.questionToAdd" type="submit" data-ng-click="FormulaireController.ajoutQuestion()">Ajouter</button>
 	<br> 
 	
 	<div class="form-group">
 		<h2>Liste de question rattaché :</h2>
 		<br>
-		<div class="frmlqust-repeat" data-ng-repeat="question in formulaireToEdit.listQuestion">
+		<div class="frmlqust-repeat" data-ng-repeat="question in FormulaireController.formulaireToEdit.listQuestion">
 			<br>
 			<span data-ng-bind="question.valeur"></span>
 			<button class="btn btn-default" type="submit" data-ng-click="FormulaireController.supprimerQuest(question)">Supprimer</button>

@@ -1,4 +1,4 @@
-function QuestionController($http, $state, $scope, QuestionService) {
+function QuestionController($http, $state, $scope, QuestionService, Notification) {
 	var self = this;
 	this.listQuestion = [];
 	this.listFormulaire = [];
@@ -35,6 +35,7 @@ function QuestionController($http, $state, $scope, QuestionService) {
 	
 	this.validerEdit = function validerEdit(){
 		QuestionService.setQuestion(self.questionToEdit);	
+		Notification.success("Question Ok");
 	};
 	
 	this.validerAdd = function validerAdd(){

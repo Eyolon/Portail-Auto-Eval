@@ -1,4 +1,4 @@
-function InscriptionCtrl($http, $state, ConnexionService, InscriptionService, ipCookie) {
+function InscriptionCtrl($http, $state, ConnexionService, InscriptionService, ipCookie, Notification) {
     var self = this;
     this.user = {};
     this.pwdCheck = "";
@@ -50,11 +50,10 @@ function InscriptionCtrl($http, $state, ConnexionService, InscriptionService, ip
                 
             })
             .success(function (data, status, headers, config) {
-                //ConnexionService.seConnecter(self.user.adresseMail, self.user.pwd);
-                //$state.go('home');
+                Notification.success("Utilisateur ajouter avec succès");
             })
             .error(function (data, status, headers, config) {
-                console.log(data);
+                Notification.error("Erreur lors de l'ajout de l'utilisateur");
             });
     	} else {
     		$http.post('/api/insertUser', {

@@ -123,28 +123,28 @@ public static Promise<Result> getListFormulaireFull(){
 						
 						
 					}
+				
+					else if(jsonN.has("formulaire")&& jsonN.get("formulaire").has("nom")){
+						Formulaire f = new Formulaire();
+						FormulaireService fs = new FormulaireService();
+						FormulaireServiceID fsID = new FormulaireServiceID();
+						
+						f.setNom(jsonN.get("formulaire").get("nom").asText());
+						FormulaireDAO.save(f);
+						
 					
-//					else if(jsonN.has("formulaire")&& jsonN.get("formulaire").has("nom")){
-//						Formulaire f = new Formulaire();
-//						FormulaireService fs = new FormulaireService();
-//						FormulaireServiceID fsID = new FormulaireServiceID();
-//						
-//						f.setNom(jsonN.get("formulaire").get("nom").asText());
-//						FormulaireDAO.save(f);
-//						
-//						
-//						Service s = ServiceDAO.findById(jsonN.get("formulaire").get("service").get("id").asLong());
-//						TypeUtilisateur tu = TypeUtilisateurDAO.findById(jsonN.get("formulaire").get("type").get("id").asLong());
-//						Etablissement e = EtablissementDAO.findById(jsonN.get("formulaire").get("etablissement").get("id").asLong());
-//						fsID.setFormulaire(f);
-//						fsID.setService(s);
-//						fsID.setTypeUtilisateur(tu);
-//						fsID.setEtablissement(e);
-//						
-//						fs.setFormulaireServiceID(fsID);
-//						
-//						FormulaireServiceDAO.insertOrUpdate(fs);
-//					}
+						Service s = ServiceDAO.findById(jsonN.get("formulaire").get("service").get("id").asLong());
+						TypeUtilisateur tu = TypeUtilisateurDAO.findById(jsonN.get("formulaire").get("type").get("id").asLong());
+						Etablissement e = EtablissementDAO.findById(jsonN.get("formulaire").get("etablissement").get("id").asLong());
+						fsID.setFormulaire(f);
+						fsID.setService(s);
+						fsID.setTypeUtilisateur(tu);
+						fsID.setEtablissement(e);
+					
+						fs.setFormulaireServiceID(fsID);
+						
+						FormulaireServiceDAO.insertOrUpdate(fs);
+					}
 					
 						BDDUtils.commit(isActive, tx);
 					
