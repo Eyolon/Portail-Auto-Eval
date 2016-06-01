@@ -25,5 +25,7 @@ deploy:
         repo: shiroverlord/Portail-Auto-Eval
   - provider: heroku
     api_key: $HEROKU_API_KEY
+    app: portail-auto-eval
+    on: master
     buildpack: gradle
     skip_cleanup: false
