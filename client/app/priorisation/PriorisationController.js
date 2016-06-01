@@ -7,6 +7,7 @@ function PriorisationController($http, $state, $scope, PriorisationService,  ipC
     this.formulairesByService = {};
     this.questionsByFormulaires = {};
     this.nbrVotant = 0;
+    this.moyenne = 0;
     
     var colorArray = ['#000000', '#582900', '#FE1B00', '#ED7F10', '#FFFF00', '#9EFD38'];
     // NOIR,MARON,ROUGE,ORANGE,JAUNE,VERT
@@ -90,6 +91,8 @@ function PriorisationController($http, $state, $scope, PriorisationService,  ipC
         var palier5 = 0;
         var palier6 = 0;
         
+        
+        
         tampon.$promise.then(function (message) {
         	if(message.ListNote !== undefined && message.ListNote.length > 0) {
                 tampon = message.ListNote.filter(function (obj) {
@@ -113,10 +116,14 @@ function PriorisationController($http, $state, $scope, PriorisationService,  ipC
                         palier6++;
                     }
                     
+                    self.moyenne += obj.valeur;
+                    
                     self.notes.push(obj); //On fait de l'exploit pour plus avoir a le refaire
                 });
             }
-
+        	
+        	self.moyenne = self.moyenne/(palier6+palier5+palier4+palier3+palier2+palier1);
+        	
             $scope.data = [{
                     key: "0-10",
                     y: palier1

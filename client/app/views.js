@@ -83,6 +83,36 @@ angular
             }
         });
         
+        $stateProvider.state('addEtablissement', {
+            parent: 'main',
+            url: '/etablissement',
+            title: 'etablissement',
+            right: ['super_administrateur'],
+            reloadOnSearch: false,
+            views: {
+                'main@': {
+                    templateUrl: '/etablissement/etablissement.html',
+                    controller: 'EtablissementController',
+                    controllerAs: 'EtablissementController'
+                }
+            }
+        });
+        
+        $stateProvider.state('serviceUtilisateur', {
+            parent: 'main',
+            url: '/serviceUtilisateur',
+            title: 'serviceUtilisateur',
+            right: ['administrateur','super_administrateur'],
+            reloadOnSearch: false,
+            views: {
+                'main@': {
+                    templateUrl: '/serviceUtilisateur/serviceUtilisateur.html',
+                    controller: 'ServiceUtilisateurController',
+                    controllerAs: 'ServiceUtilisateurController'
+                }
+            }
+        });
+        
         $stateProvider.state('formulaire', {
             parent: 'main',
             url: '/formulaire',

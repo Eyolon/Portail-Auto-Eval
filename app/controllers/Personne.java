@@ -245,7 +245,7 @@ public class Personne extends Controller {
 				tx = BDDUtils.beginTransaction(isActive);
 				
 				Utilisateur u = UtilisateurDAO.getUtilisateurByLogin(login);
-				if(u != null && BCrypt.checkpw(pwd, u.getConnexion().getPassword())) {
+				if(u != null && BCrypt.checkpw(pwd, u.getConnexion().getPassword()) && u.getIsActif()) {
 					js = new JSONObject()
 							.put("utilisateur", ConstructJSONObjects.getJSONforUser(u))
 							.put("token", generateToken(u));
@@ -278,7 +278,7 @@ public class Personne extends Controller {
 				tx = BDDUtils.beginTransaction(isActive);
 				
 				Utilisateur u = Personne.getUtilisateurFromToken(token);
-				if(u != null) {
+				if(u != null  && u.getIsActif()) {
 					js = new JSONObject()
 							.put("utilisateur", ConstructJSONObjects.getJSONforUser(u))
 							.put("token", generateToken(u));
