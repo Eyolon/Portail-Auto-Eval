@@ -7,13 +7,24 @@ Play: [![Compilation Status](https://travis-ci.org/shiroverlord/Portail-Auto-Eva
 
 This is a seed Play application with :
 
-Gradle (replace default SBT), Hibernate (+ HikariCp), NodeJs, Gulp (Grunt will be deleted soon from project), Bower, and AngularJS
+Gradle (replaced default SBT), Hibernate (+ HikariCp), NodeJs, Gulp , Bower, and AngularJS
 =========================================================================================
 
 Heroku configuration included
 =============================
+Add followings Environnement Variables:
+
+'JAVA_OPTS': '-Dhttp.port=${PORT} -Dconfig.resource=heroku.conf    -Xss512k -XX:+UseCompressedOops)'
+
+'JAVA_TOOL_OPTIONS': '-Dhttp.port=${PORT} -Dconfig.resource=heroku.conf    -Xss512k -XX:+UseCompressedOops)'
+
+(Think to add Database pour this project in Heroku -> a new Variable will be created 'DATABASE_URL')
+
 Travis configuration included
 =============================
+Add followings Environnement Variables:
+
+'HEROKU_API_KEY': 'THE_API_KEY_IN_HEROKU'
 
 What you need to begin: 
 - JAVA JDK 8
@@ -25,3 +36,5 @@ AND:
 - Bower
 
 OR use Gradlew which will install what you need.
+
+Some commands to use with Gradle (or Gradlew) are described in 'build.gradle' file.
