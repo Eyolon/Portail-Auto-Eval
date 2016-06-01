@@ -3,6 +3,7 @@ COMMANDE		|	DEPENDS ON FOLLOWING COMMANDS										|	DESCRIPTION
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 gulp_compile	|	installGulp, bowerInstall							 				| 	(DEV) Peuple le dossier "public" en executant la tache "gulp compile"
 gulp_build		|	installGulp, bowerInstall							 				| 	(PROD) Peuple le dossier "public" en executant la tache "gulp build"
+gulp_watch		|	installGulp, bowerInstall							 				| 	(DEV) Peuple le dossier "public" en executant la tache adéquate au type de fichier modifié de façon automatique
 gulp_*			|	installGulp, bowerInstall							 				| 	Start the "*" Gulp task in gulpfile (ex: 'html', 'jshint', etc)
 				|																		|
 installGulp		|	npmInstall															|	Install Gulp
@@ -14,6 +15,7 @@ dist 			|	createPlayBinaryZipDist, createPlayBinaryTarDist 					| 	Assembles the
 stage 			|	stagePlayBinaryDist 												| 	Stages the Play distribution.
 				|																		|
 runPlayBinary 	|	playBinary to build Play application. 								| 	Runs the Play application for local development. See how this works with continuous build.
+	(Pour recompiler la partie java sur modification d'un fichier *.java (développement continue), ajouter '-t' OU '--continuous' soit 'gradlew runPlayBinary -t')
 	(Pour debug, ajouter '-Pdebug' avec la commande runPlayBinary soit 'gradlew runPlayBinary -Pdebug')
 testPlayBinary 	|	playBinary to build Play application and compilePlayBinaryTests. 	| 	Runs JUnit/TestNG tests for the Play application.
 *************************************************************************************************************************************************************************************/
