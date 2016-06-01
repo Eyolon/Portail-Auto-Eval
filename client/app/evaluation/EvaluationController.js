@@ -18,9 +18,8 @@ function EvaluationController(Notification, EvaluationService, ipCookie) {
         //il faut faire passer l'id utilisateur et la remarque sera le path du drive pour la preuve		
 		var temp = self.listQuestionnaireSelectionnee;
 		self.listQuestionnaireSelectionnee = [];
-		Notification.success("Réponse(s) prise(s) en compte");
 		EvaluationService.setAnswer(temp.listQuestions,self.user);
-		Notification.info("Réponse(s) prise(s) en compte");
+		Notification.success("Réponse(s) prise(s) en compte");
 		
     };
     
