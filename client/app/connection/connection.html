@@ -1,58 +1,33 @@
 <div>
     <h1>Connection</h1>
-
     <br/>
     <br/>
-    <br/>
-    <table width="100%">
-        <tr>
-            <th class="alignCenter" width="33%">
-                <h4>S'enregistrer </h4>
-            </th>
-            <th rowspan="2" width="20%">
-                <h4>or</h4>
-            </th>
-            <th class="alignLeft" style="margin-left: 50px" colspan="2">
-                <h4>S'identifier </h4> </th>
-        </tr>
-        <tr>
-            <td>
-                <form role="form">
-                    <button class="connexion btn" ui-sref="inscription">S'enregistrer </button>
-                </form>
-            </td>
-
-            <td>
-                <form role="form">
-                    <div class="alert alert-warning col-xs-12 col-sm-12 col-md-4 col-lg-4" style="margin-top: 20px" data-ng-show="!ConnectionCtrl.isSuccess">
-                        Erreur de connexion, vérifiez votre identifiant ou mot de passe !
-                    </div>
-                    <table>
-                        <tr class="form-group">
-                            <td class="alignLeft" style="margin-right: 20px">
-                                <label class="connexion alignRight" for="login">Identifiant :</label>
-                            </td>
-                            <td>
-                                <input class="connexion" type="text" name="login" id="login" data-ng-model="ConnectionCtrl.connexion.login" required>
-                            </td>
-                        </tr>
-                        <tr class="form-group">
-                            <td class="alignLeft" style="margin-right: 20px">
-                                <label class="connexion alignRight" for="password">Mot de Passe:</label>
-                            </td>
-                            <td>
-                                <input class="connexion" type="password" name="password" id="password" data-ng-model="ConnectionCtrl.connexion.password" required>
-                            </td>
-                        </tr>
-                        <tr class="form-group">
-
-                            <td class="alignCenter" colspan="2">
-                                <button class="connexion btn" data-ng-click="ConnectionCtrl.seConnecter()">S'identifier</button>
-                            </td>
-                        </tr>
-                    </table>
-                </form>
-            </td>
-        </tr>
-    </table>
+    <form role="form">
+        <div class="alert alert-warning col-xs-12 col-sm-12 col-md-4 col-lg-4" style="margin-top: 20px" data-ng-show="!ConnectionCtrl.isSuccess">
+            Erreur de connexion, vérifiez votre identifiant ou mot de passe !
+        </div>
+        <table style="width: 100%;">
+            <tr class="form-group">
+                <td class="alignRight" style="margin-right: 20px">
+                    <label class="connexion alignCenter" for="login">Identifiant :</label>
+                </td>
+                <td class="alignCenter">
+                    <input class="connexion" type="text" name="login" id="login" data-ng-model="ConnectionCtrl.connexion.login" required>
+                </td>
+            </tr>
+            <tr class="form-group">
+                <td class="alignRight" style="margin-right: 20px">
+                    <label class="connexion alignCenter" for="password">Mot de Passe:</label>
+                </td>
+                <td class="alignCenter">
+                    <input class="connexion alignCenter" type="password" name="password" id="password" data-ng-model="ConnectionCtrl.connexion.password" required>
+                </td>
+            </tr>
+            <tr class="form-group">
+                <td class="alignCenter" colspan="2">
+                    <button class="connexion btn" data-ng-click="ConnectionCtrl.seConnecter()">S'identifier</button>
+                </td>
+            </tr>
+        </table>
+    </form>
 </div>
