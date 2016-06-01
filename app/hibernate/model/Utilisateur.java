@@ -30,7 +30,7 @@ public class Utilisateur implements Serializable {
 	private Connexion connexion = null;
 	private Service service = null;
 	private Etablissement etablissement = null;
-	private Boolean isActif = null;
+	private boolean isActif = true;
 	private List<Note> notes = null;
 	
 	public Utilisateur(){}
@@ -114,7 +114,7 @@ public class Utilisateur implements Serializable {
 	}
 
 	@Column(name="actif", nullable = false)
-	@ColumnDefault(value = "true")
+	@ColumnDefault(value = "TRUE")
 	public Boolean getIsActif() {
 		return isActif;
 	}
@@ -139,7 +139,7 @@ public class Utilisateur implements Serializable {
 		result = prime * result + ((connexion == null) ? 0 : connexion.hashCode());
 		result = prime * result + ((etablissement == null) ? 0 : etablissement.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((isActif == null) ? 0 : isActif.hashCode());
+		result = prime * result + (isActif ? 1231 : 1237);
 		result = prime * result + ((login == null) ? 0 : login.hashCode());
 		result = prime * result + ((notes == null) ? 0 : notes.hashCode());
 		result = prime * result + ((service == null) ? 0 : service.hashCode());
@@ -171,10 +171,7 @@ public class Utilisateur implements Serializable {
 				return false;
 		} else if (!id.equals(other.id))
 			return false;
-		if (isActif == null) {
-			if (other.isActif != null)
-				return false;
-		} else if (!isActif.equals(other.isActif))
+		if (isActif != other.isActif)
 			return false;
 		if (login == null) {
 			if (other.login != null)
