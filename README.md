@@ -14,9 +14,9 @@ Heroku configuration included
 =============================
 Add followings Environnement Variables:
 
-'JAVA_OPTS': '-Dhttp.port=${PORT} -Dconfig.resource=heroku.conf    -Xss512k -XX:+UseCompressedOops)'
+'JAVA_OPTS': '-Dhttp.port=${PORT} -Dconfig.resource=heroku.conf -Xss512k -XX:+UseCompressedOops'
 
-'JAVA_TOOL_OPTIONS': '-Dhttp.port=${PORT} -Dconfig.resource=heroku.conf    -Xss512k -XX:+UseCompressedOops)'
+'JAVA_TOOL_OPTIONS': '-Dhttp.port=${PORT} -Dconfig.resource=heroku.conf -Xss512k -XX:+UseCompressedOops'
 
 (Think to add Database pour this project in Heroku -> a new Variable will be created 'DATABASE_URL')
 
