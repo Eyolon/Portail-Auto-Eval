@@ -21,7 +21,6 @@ function PriorisationController($http, $state, $scope, PriorisationService,  ipC
     
     this.getListPriorites = function getListPriorites(){
     	self.priorisationList = PriorisationService.listPriorisation.post({idUser: self.user.id}, onSuccess, onError);    	
-    	console.log(self.priorisationList);
     };
     
     this.getListNotes = function getListNotes(){
@@ -166,21 +165,24 @@ function PriorisationController($http, $state, $scope, PriorisationService,  ipC
         
         result = '';
         //result += keys.join(columnDelimiter);
-        result += "Question ;Justification ;Indice de priorisation ;Axe amelioration 1;Axe amelioration 2";
+        result += "Question;Priorisation;Justification ;Indice d'impact;Explication Impact;Indice d'amelioration;Point pour m'améliorer";
         result += lineDelimiter;
 
         data.forEach(function (item) {
 
-            result += item.utilisateur.question.valeur;
+            result += item.question.valeur;
+            result += columnDelimiter;
+            result += (item.gravite + item.amelioration);
             result += columnDelimiter;
             result += item.remarque;
             result += columnDelimiter;
-            result += item.utilisateur.priorisation;
+            result += item.gravite;
             result += columnDelimiter;
-            result += item.utilisateur.axeAmelioration1;
+            result += item.axeAmelioration1;
             result += columnDelimiter;
-            result += item.utilisateur.axeAmelioration2;
-
+            result += item.amelioration;
+            result += columnDelimiter;
+            result += item.axeAmelioration2;
             result += lineDelimiter;
 
         });
