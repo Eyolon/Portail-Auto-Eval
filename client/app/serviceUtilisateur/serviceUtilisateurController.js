@@ -2,7 +2,7 @@ function ServiceUtilisateurController(Notification, ServiceUtilisateurService, i
 	var self = this;
 	this.serviceToAdd = undefined;
 	
-	this.addBatiment = function addBatiment() {
+	this.addService = function addService() {
 		ServiceUtilisateurService.service.post({service: self.serviceToAdd}, onSuccess, onError);        
     };
 	
