@@ -21,6 +21,7 @@ function PriorisationController($http, $state, $scope, PriorisationService,  ipC
     
     this.getListPriorites = function getListPriorites(){
     	self.priorisationList = PriorisationService.listPriorisation.post({idUser: self.user.id}, onSuccess, onError);    	
+    	console.log(self.priorisationList);
     };
     
     this.getListNotes = function getListNotes(){

@@ -10,25 +10,36 @@
 	<div id="prio" class="frmlqust-repeat" data-ng-repeat="note in PriorisationController.priorisationList">
 		<br>
 		<div>
-			<span data-ng-bind="note.utilisateur.question.valeur"></span>
+			<span data-ng-bind="note.question.valeur"></span>
 		</div>
-		
+		<div>
+			<label for="prio">Indice de priorité</label>
+			{{note.gravite + note.amelioration}} 
+		</div>
+
 		<div>
 			<label for="prio">Ma note : </label>
 			<span data-ng-bind="note.valeur"></span>  
    		</div>
     	
    		<div>
-    		<label for="prio">Mon indice : </label>
-	    	<span data-ng-bind="note.utilisateur.priorisation"></span>  
+    		<label for="prio">Ma faiblesse :</label>
+	    	<span data-ng-bind="note.remarque"></span>  
    		</div>
    		<div>
-    		<label for="prio">Mes Axes : </label>
-	    	<span data-ng-bind="note.utilisateur.axeAmelioration1"></span>  
+   			<label for="prio">Impact du sujet dans mon travail (0-100) :</label>
+   			<span data-ng-bind="note.gravite"></span>  
 	    	<br>
-	    	<span data-ng-bind="note.utilisateur.axeAmelioration2"></span> 
+	    	<label for="prio">Explication Impact :</label>
+    		<span data-ng-bind="note.axeAmelioration1"></span>  
+	    	<br>
+	    	<label for="prio">Capacite a m'ameliore (0-100) :</label>
+	    	<span data-ng-bind="note.amelioration"></span>  
+	    	<br>
+	    	<label for="prio">Point pour m'améliorer :</label>
+	    	<span data-ng-bind="note.axeAmelioration2"></span> 
    		</div>
-    	<br>
+   		<br>
 	</div>
 	
 	<br>
