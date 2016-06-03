@@ -1,4 +1,4 @@
-function ConsultationController($http, $state, $scope, ConsultationService) {
+function ConsultationController($http, $state, $scope, ConsultationService, ipCookie) {
     var self = this;
     this.etablissement = undefined;
     this.etablissements = [];
@@ -10,6 +10,7 @@ function ConsultationController($http, $state, $scope, ConsultationService) {
     this.questions = [];
     this.isSuccess = true;
     this.notes = [];
+    this.user = {};
     
     this.formulairesByService = {};
     this.questionsByFormulaires = {};
@@ -26,7 +27,26 @@ function ConsultationController($http, $state, $scope, ConsultationService) {
     }
 
     this.getListEtablissement = function getListEtablissement() {
-        self.etablissements = ConsultationService.etablissements.post({}, onSuccess, onError);
+        
+        
+        var id = ipCookie('utilisateur').id;
+		$http.post('/api/userFull/' + id, {token: ipCookie("token")})
+            .success(function(data, status, headers, config) {
+                self.user = data;
+                self.oldLogin = self.user.login;
+                if(self.user.typeUtilisateur.libelle === "administrateur"){
+                	self.etablissements.push(self.user.etablissement);
+                }
+                
+                if(self.user.typeUtilisateur.libelle === "super_administrateur"){
+                	self.etablissements = ConsultationService.etablissements.post({}, onSuccess, onError);
+                }
+                
+            })
+            .error(function(data, status, headers, config) {
+                console.log(data);
+            });
+        
     };
 
     function onSuccess() {

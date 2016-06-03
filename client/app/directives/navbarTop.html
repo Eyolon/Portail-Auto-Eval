@@ -32,8 +32,11 @@
                     <ul class="dropdown-menu" role="menu">
                         <li ui-sref-active="active"><a ui-sref="inscription">Ajouter un Utilisateur</a></li>
                         <li ui-sref-active="active"><a ui-sref="profilAdmin">Modifier un utilisateur</a></li>
+                        <li ui-sref-active="active"><a ui-sref="serviceUtilisateur">Ajouter un service</a></li>
                     </ul>
                 </li>
+                <li ui-sref-active="active" data-ng-show="navbarTopCtrl.isConnected" ng-switch-when="administrateur"><a ui-sref="consultation">Consultation des resultats</a></li>
+				
 
                 <li ui-sref-active="active" data-ng-show="navbarTopCtrl.isConnected" ng-switch-when="super_administrateur"><a ui-sref="evaluation">Mes Evaluations</a></li>
                 <li ui-sref-active="active" data-ng-show="navbarTopCtrl.isConnected" ng-switch-when="super_administrateur"><a ui-sref="priorisation">Mes Resultats</a></li>
