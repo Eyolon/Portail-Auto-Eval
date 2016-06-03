@@ -3,7 +3,6 @@ package controllers;
 import org.hibernate.HibernateException;
 import org.hibernate.Transaction;
 import org.json.JSONArray;
-import org.json.JSONObject;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
@@ -128,7 +127,6 @@ public class Questions extends Controller {
 		return Promise.promise(() -> 
 		{
 			JsonNode jsonN = request().body().asJson();
-			JSONObject js = null;
 			if(jsonN != null && jsonN.get("question") != null) {
 				Transaction tx = null;
 				boolean isActive = BDDUtils.getTransactionStatus();
