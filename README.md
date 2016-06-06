@@ -26,6 +26,8 @@ Add followings Environnement Variables:
 
 'HEROKU_API_KEY': 'THE_API_KEY_IN_HEROKU'
 
+Getting Started
+===============
 What you need to begin: 
 - JAVA JDK 8
 - GIT
@@ -35,6 +37,6 @@ AND:
 - NodeJs
 - Bower
 
-OR use Gradlew which will install what you need.
+OR use Gradlew which will install what you need ('Gradlew dist' will do everything + create the package to deploy).
 
 Some commands to use with Gradle (or Gradlew) are described in 'build.gradle' file.
