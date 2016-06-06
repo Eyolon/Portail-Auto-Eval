@@ -78,10 +78,10 @@ dependencies {
 		[group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr353', version: '2.7.4'],
 		[group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-json-org', version: '2.7.4'],
 		[group: 'org.postgresql', name: 'postgresql', version: '9.4.1208'],
-		[group: 'org.hibernate', name: 'hibernate-core', version: '5.1.0.Final'],
+		[group: 'org.hibernate', name: 'hibernate-core', version: '5.2.0.Final'],
 		[group: 'org.hibernate', name: 'hibernate-java8', version: '5.1.0.Final'],
 		[group: 'org.hibernate', name: 'hibernate-entitymanager', version: '5.1.0.Final'],
-		[group: 'org.hibernate', name: 'hibernate-hikaricp', version: '5.1.0.Final'],
+		[group: 'org.hibernate', name: 'hibernate-hikaricp', version: '5.2.0.Final'],
 		[group: 'org.mindrot', name: 'jbcrypt', version: '0.3m']
 	)
 }
